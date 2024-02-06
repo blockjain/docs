@@ -1,6 +1,6 @@
 ---
-title: 'Quickstart'
-description: 'Start contributing data under 10 minutes'
+title: "Quickstart"
+description: "Start contributing data under 10 minutes"
 ---
 
 <iframe
@@ -13,11 +13,10 @@ description: 'Start contributing data under 10 minutes'
   allowFullScreen
 ></iframe>
 
-
 <Steps>
   <Step title="Initialize your Gateway ID">
   
-  Make sure you have created an account using the [dashboard](sandbox.mygateway.xyz). 
+  Make sure you have created an account using the [dashboard](sandbox.mygateway.xyz).
 
   </Step>
   <Step title="Create an Organization">
@@ -29,23 +28,23 @@ description: 'Start contributing data under 10 minutes'
   <Step title="Copy Your Widget Key">
     Find the Widget Key underneath the "Developer Access" section of the Dashboard. Reference images below.
 
-    
   </Step>
 
   <Step title="Find/Create a Schema">
-  Find a schema that is applicable for the data you want to contribute. You can discover existing schemas using the [Gateway Explorer](https://sandbox.mygateway.xyz/explorer). If you are playing around, you can use **1c2c98e4-5cbd-40db-b441-5f6c00dedeb5** to understand how it works! 
+  Find a schema that is applicable for the data you want to contribute. You can discover existing schemas using the <a href= {gatewayExplorerURL} target="_blank">Gateway Explorer </a>. If you are playing around, you can use **1c2c98e4-5cbd-40db-b441-5f6c00dedeb5** to understand how it works!
 
-  <Warning>This ID is for the sandbox/testnet environment.</Warning>
+{" "}
+<Warning>This ID is for the sandbox/testnet environment.</Warning>
 
+To create your own schema, follow the instructions [here]().
 
-  To create your own schema, follow the instructions [here]().
   </Step>
 
   <Step title="Define API Call Body">
 
 Now you can insert the above information into the API call body found below:
 
- ```javascript
+```javascript
 const session = JSON.stringify({
   key: "YOUR-WIDGET-KEY",
   issuer: "YOUR-GATEWAY-ID",
@@ -54,10 +53,14 @@ const session = JSON.stringify({
   callbackUrl: "YOUR-SUCCESS-URL",
   claim: {
     /*OBJECT WITH DATA*/
-  }
+  },
 });
 ```
-<Tip>Claim fields are in JSON format. For example, a string would be "teststring": "value". </Tip>
+
+<Tip>
+  Claim fields are in JSON format. For example, a string would be "teststring":
+  "value".{" "}
+</Tip>
 
   </Step>
 
@@ -75,14 +78,15 @@ async function generateSession() {
 const generateButton = document.getElementById("generateSession");
 
 generateButton.addEventListener("click", generateSession);
-```
+
+````
 <Info>Utilizing a button on the front end is optional, the URL for a user can be passed in other methods. However, having a button is recommended in most cases.</Info>
 
 
   </Step>
 
 <Step title="Get the link from the response and send to user">
-The response that you should receive is something like this: 
+The response that you should receive is something like this:
 
 ```javascript
 {
@@ -90,7 +94,8 @@ The response that you should receive is something like this:
         "url": "https://widget.mygateway.xyz/issue/cc348d85-c723-4183-b174-8424793d481f"
     }
 }
-```
+````
+
 You can now pass this to the user to complete.
 
   </Step>

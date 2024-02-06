@@ -17,18 +17,22 @@
   },
   "topbarLinks": [
     {
+      "name": "Explorer",
+      "url": "https://sandbox.mygateway.xyz/explorer"
+    },
+    {
       "name": "Support",
       "url": "mailto:support@mygateway.xyz"
     }
   ],
   "topbarCtaButton": {
     "name": "Dashboard",
-    "url": "https://dashboard.mygateway.xyz"
+    "url": "https://sandbox.mygateway.xyz/dashboard/user/home"
   },
   "tabs": [
     {
       "name": "API Reference",
-      "url": "api-reference"
+      "url": "https://apidocs.mygateway.xyz/"
     }
   ],
   "anchors": [
