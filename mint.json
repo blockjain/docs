@@ -50,27 +50,29 @@
   ],
   "navigation": [
     {
-        "group": "Getting Started",
-        "pages": [
-            "gateway-network",
-            {
-                "group": "Roles on Network",
-                "pages": ["issuers","owners", "verifiers"]
-            }
-        ]
+      "group": "Getting Started",
+      "pages": [
+        "introduction/gateway-network",
+        {
+          "group": "Roles on Network",
+          "pages": [
+            "introduction/roles/issuers",
+            "introduction/roles/owners",
+            "introduction/roles/verifiers"
+          ]
+        }
+      ]
     },
     {
-        "group": "Widget",
-        "pages": [
-            {
-                "group": "Issuance",
-                "pages": ["quickstart"]
-            }
-        ]
+      "group": "Widget",
+      "pages": [
+        {
+          "group": "Issuance",
+          "pages": ["quickstart"]
+        }
+      ]
     }
-
-],
-
+  ],
 
   "footerSocials": {
     "twitter": "https://twitter.com/mintlify",
