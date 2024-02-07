@@ -1,6 +1,6 @@
 {
   "$schema": "https://mintlify.com/schema.json",
-  "name": "Gateway Docs",
+  "name": "Gateway",
   "logo": {
     "dark": "/logo/dark.svg",
     "light": "/logo/light.svg"
@@ -13,7 +13,13 @@
     "anchors": {
       "from": "#FFFFFF",
       "to": "#771AC9"
+    },
+    "background": {
+      "dark": "#212121"
     }
+  },
+  "modeToggle": {
+    "default": "dark"
   },
   "topbarLinks": [
     {
@@ -28,7 +34,7 @@
   "tabs": [
     {
       "name": "API Reference",
-      "url": "https://apidocs.mygateway.xyz/"
+      "url": "api-reference"
     },
     {
       "name": "SDK",
@@ -39,7 +45,12 @@
     {
       "name": "Documentation",
       "icon": "book-open-cover",
-      "url": "https://mygateway.xyz/docs"
+      "url": "/"
+    },
+    {
+      "name": "Blog",
+      "icon": "newspaper",
+      "url": "https://mygateway.xyz/blog"
     },
     {
       "name": "Explorer",
@@ -50,11 +61,6 @@
       "name": "Community",
       "icon": "slack",
       "url": "https://mygateway.xyz/community"
-    },
-    {
-      "name": "Blog",
-      "icon": "newspaper",
-      "url": "https://mygateway.xyz/blog"
     }
   ],
   "navigation": [
@@ -87,5 +93,11 @@
     "twitter": "https://twitter.com/Gateway_xyz",
     "github": "https://github.com/Gateway-DAO",
     "linkedin": "https://www.linkedin.com/company/mygateway"
+  },
+  "api": {
+    "baseUrl": "https://testnet.protocol.mygateway.xyz/v2/graphql",
+    "auth": {
+      "method": "bearer"
+    }
   }
 }
