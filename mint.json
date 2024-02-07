@@ -7,19 +7,15 @@
   },
   "favicon": "/logo/favicon.png",
   "colors": {
-    "primary": "#0D9373",
-    "light": "#07C983",
-    "dark": "#0D9373",
+    "primary": "#771AC9",
+    "light": "#E6D5FA",
+    "dark": "#212121",
     "anchors": {
-      "from": "#0D9373",
-      "to": "#07C983"
+      "from": "#FFFFFF",
+      "to": "#771AC9"
     }
   },
   "topbarLinks": [
-    {
-      "name": "Explorer",
-      "url": "https://sandbox.mygateway.xyz/explorer"
-    },
     {
       "name": "Support",
       "url": "mailto:support@mygateway.xyz"
@@ -44,6 +40,11 @@
       "name": "Documentation",
       "icon": "book-open-cover",
       "url": "https://mygateway.xyz/docs"
+    },
+    {
+      "name": "Explorer",
+      "icon": "compass",
+      "url": "https://sandbox.mygateway.xyz/explorer"
     },
     {
       "name": "Community",
