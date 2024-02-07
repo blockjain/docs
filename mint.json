@@ -5,7 +5,7 @@
     "dark": "/logo/dark.svg",
     "light": "/logo/light.svg"
   },
-  "favicon": "/favicon.svg",
+  "favicon": "/logo/favicon.png",
   "colors": {
     "primary": "#0D9373",
     "light": "#07C983",
@@ -33,6 +33,10 @@
     {
       "name": "API Reference",
       "url": "https://apidocs.mygateway.xyz/"
+    },
+    {
+      "name": "SDK",
+      "url": "sdk"
     }
   ],
   "anchors": [
@@ -79,8 +83,8 @@
   ],
 
   "footerSocials": {
-    "twitter": "https://twitter.com/mintlify",
-    "github": "https://github.com/mintlify",
-    "linkedin": "https://www.linkedin.com/company/mintsearch"
+    "twitter": "https://twitter.com/Gateway_xyz",
+    "github": "https://github.com/Gateway-DAO",
+    "linkedin": "https://www.linkedin.com/company/mygateway"
   }
 }
