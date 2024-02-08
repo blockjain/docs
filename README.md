@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://docs.mygateway.xyz/">
-    <img alt="Gateway Protocol" src="favicon.png" width="1000" />
+    <img alt="Gateway Protocol" src="favicon.png"  width="100" height="100"/>
     <h3 align="center">Gateway Documentation</h3>
   </a>
 </p>
