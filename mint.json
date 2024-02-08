@@ -75,9 +75,15 @@
     {
       "group": "Architecture & Concepts",
       "pages": [
-        "architecture/roles/issuers",
-        "architecture/roles/owners",
-        "architecture/roles/verifiers"
+        {
+          "group": "Roles",
+          "pages": [
+            "architecture/roles/issuers",
+            "architecture/roles/owners",
+            "architecture/roles/verifiers"
+          ]
+        },
+        "architecture/gatewayID"
       ]
     },
     {
