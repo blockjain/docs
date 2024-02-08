@@ -86,15 +86,30 @@
     },
     {
       "group": "SDK",
-      "pages": ["sdk/introduction"]
+      "pages": [
+        "sdk/introduction",
+        "sdk/quickstart",
+        "sdk/authentication",
+        "sdk/guides",
+        "sdk/examples"
+      ]
     },
     {
       "group": "API Reference",
-      "pages": ["api-reference/introduction"]
+      "pages": [
+        "api-reference/introduction",
+        "api-reference/quickstart",
+        "api-reference/authentication",
+        "api-reference/response-codes"
+      ]
     },
     {
       "group": "Widget",
-      "pages": ["widget/introduction"]
+      "pages": [
+        "widget/introduction",
+        "widget/quickstart",
+        "widget/configuration"
+      ]
     }
   ],
 
