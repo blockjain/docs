@@ -33,12 +33,16 @@
   },
   "tabs": [
     {
-      "name": "API Reference",
+      "name": "SDK",
+      "url": "sdk"
+    },
+    {
+      "name": "Platform API",
       "url": "api-reference"
     },
     {
-      "name": "SDK",
-      "url": "sdk"
+      "name": "Widget",
+      "url": "widget"
     }
   ],
   "anchors": [
@@ -65,27 +69,32 @@
   ],
   "navigation": [
     {
-      "group": "Getting Started",
+      "group": "Gateway Protocol",
+      "pages": ["introduction", "quickstart"]
+    },
+    {
+      "group": "Architecture & Concepts",
       "pages": [
-        "introduction/gateway-network",
-        {
-          "group": "Roles on Network",
-          "pages": [
-            "introduction/roles/issuers",
-            "introduction/roles/owners",
-            "introduction/roles/verifiers"
-          ]
-        }
+        "architecture/roles/issuers",
+        "architecture/roles/owners",
+        "architecture/roles/verifiers"
       ]
     },
     {
+      "group": "Help",
+      "pages": ["support"]
+    },
+    {
+      "group": "SDK",
+      "pages": ["sdk/introduction"]
+    },
+    {
+      "group": "API Reference",
+      "pages": ["api-reference/introduction"]
+    },
+    {
       "group": "Widget",
-      "pages": [
-        {
-          "group": "Issuance",
-          "pages": ["quickstart"]
-        }
-      ]
+      "pages": ["widget/introduction"]
     }
   ],
 
