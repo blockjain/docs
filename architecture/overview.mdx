@@ -1,0 +1,44 @@
+---
+title: Overview
+---
+
+The Gateway Network consists of three main players, each with their unique motivations. Between them, four essential interactions take place within the protocol.
+
+## Network Participants
+
+The network has three main roles. Depending on what you are looking to accomplish, you may fit one or all three roles. Click on one to learn more:
+
+{" "}
+
+<CardGroup cols={3}>
+  <Card
+    title="Data Contributors"
+    icon="gift"
+    href="/architecture/roles/issuers"
+  >
+    They are issuing user data into the network.
+  </Card>
+  <Card title="Owners" icon="crown" href="/architecture/roles/owners">
+    They are the controllers of the data.
+  </Card>
+  <Card
+    title="Data Consumers"
+    icon="shield-check"
+    href="/architecture/roles/verifiers"
+  >
+    They are asking and using the user data.
+  </Card>
+</CardGroup>
+
+## Core Interactions
+
+The diagram below illustrates the key interactions among the network participants within the protocol.
+
+Key Interactions Include:
+
+<ol>
+  <li>Issuers distribute or update PDAs for Owners.</li>
+  <li>Verifiers request PDA details from Owners.</li>
+  <li>Owners relay Proofs, which are snapshots of PDA data, to Verifiers.</li>
+  <li>Verifiers compensate Issuers relative to the data leveraged.</li>
+</ol>
