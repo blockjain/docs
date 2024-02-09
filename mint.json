@@ -75,6 +75,7 @@
     {
       "group": "Architecture & Concepts",
       "pages": [
+        "architecture/overview",
         {
           "group": "Roles",
           "pages": [
