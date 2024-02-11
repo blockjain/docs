@@ -6,7 +6,7 @@
 </p>
 
 <p align="center">
-    Gateway Protocol is the world's first user-owned data-sharing protocol</a>.
+    Gateway Protocol is the world's first user-owned data-sharing protocol.
 </p>
 
 <p align="center">

@@ -2,10 +2,10 @@
   "$schema": "https://mintlify.com/schema.json",
   "name": "Gateway",
   "logo": {
-    "dark": "/assets/dark_logo.svg",
-    "light": "/assets/light_logo.svg"
+    "dark": "/assets/logo/dark_logo.svg",
+    "light": "/assets/logo/light_logo.svg"
   },
-  "favicon": "/assets/favicon.png",
+  "favicon": "/assets/logo/favicon.png",
   "colors": {
     "primary": "#771AC9",
     "light": "#E6D5FA",
