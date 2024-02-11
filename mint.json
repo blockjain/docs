@@ -86,7 +86,11 @@
         },
         {
           "group": "Gateway ID",
-          "pages": ["architecture/gateway-id/introduction"]
+          "pages": [
+            "architecture/gateway-id/introduction",
+            "architecture/gateway-id/users",
+            "architecture/gateway-id/organization"
+          ]
         }
       ]
     },
