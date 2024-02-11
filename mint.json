@@ -2,10 +2,10 @@
   "$schema": "https://mintlify.com/schema.json",
   "name": "Gateway",
   "logo": {
-    "dark": "/logo/dark.svg",
-    "light": "/logo/light.svg"
+    "dark": "/assets/dark_logo.svg",
+    "light": "/assets/light_logo.svg"
   },
-  "favicon": "/logo/favicon.png",
+  "favicon": "/assets/favicon.png",
   "colors": {
     "primary": "#771AC9",
     "light": "#E6D5FA",
@@ -84,7 +84,10 @@
             "architecture/roles/verifiers"
           ]
         },
-        "architecture/gatewayID"
+        {
+          "group": "Gateway ID",
+          "pages": ["architecture/gateway-id/introduction"]
+        }
       ]
     },
     {
