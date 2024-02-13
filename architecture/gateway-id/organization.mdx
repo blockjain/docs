@@ -1,0 +1,76 @@
+---
+title: "Organizations"
+---
+
+To delineate between individual users and collectives, our protocol offers native support for organizations.
+
+While organizations still comply with the fundamental GatewayID elements—such as ID, Username, Signing Key, and Encryption Key—the primary distinction lies in the collaborative access it grants.
+
+Multiple users within an organization have the authority to act on behalf of the collective GatewayID, providing a versatile framework for team-based operations and decision-making.
+
+Organizations consist of several users, each with the authority to sign and decrypt on the organization's behalf. Within an organization, there are two distinct roles:
+
+1. Admins
+2. Members
+
+<Note>
+
+The pivotal distinction lies in their authority:
+
+Admins can add or remove members, while members can't. However, all users, irrespective of their role, have the privilege to sign and initiate transactions for the organization. A crucial note: Admins don't have the power to remove their fellow admins!
+
+</Note>
+
+Upon establishing an organization, its creator is instantly designated as an admin, empowered to induct other admins and members. It's noteworthy that whenever an organization undertakes a transaction, the specific user who triggers it on the organization's behalf is recorded on Arweave.
+
+<Note>
+
+1. At present, organizations are not equipped to receive PDAs. However, this functionality is on our roadmap and will be integrated into the protocol layer shortly.
+
+2. Stemming from the above limitation, organizations also cannot produce Data Proofs at this time.
+
+</Note>
+
+## Creating an Organization
+
+Currently, organizations must be created through the API. The mutation for the creation process is as follows:
+
+### Verification Process
+
+Boost trust within the protocol by obtaining a verified mark for your organization. Please ensure you've established your organization within our system prior to seeking verification. Our verification process entails a meeting with the Gateway team to ensure authenticity.
+
+To initiate the verification process, kindly reach out to us at: 📩 support@mygatway.xyz
+
+Use the subject: Organization Verification Request
+
+In the email body, please provide:
+
+Your Gateway Username.
+Intended use of Gateway for your organization.
+Official Organization Website.
+Organization's Twitter Handle (if available).
+Your official role within the organization.
+After you have been verified, it will be reflected on the protocol.
+
+After verification, the organization is reflected with a purple checkmark
+After verification, the organization is reflected with a purple checkmark
+
+### Get Started Now
+
+Join the ranks of numerous organizations already thriving within the protocol! For a limited time, organizations can enjoy a generous offer of 100,000 free issuances. Leading entities across various industries are leveraging the power of PDAs to empower their users and seamlessly share data with partners. Don't miss out on this opportunity to redefine how your organization interacts with data!
+
+<Tip>
+
+If you are non-developer and would like an organization space, please reach out to us at support@mygateway.xyz.
+
+Subject should be “Organization Space Creation” and include the following details in the email:
+
+•Description of Organization
+•Who You Are
+•Twitter (if applicable)
+•Organization Website
+•What You Hope To Use Gateway Protocol For
+
+We will follow up promptly after!
+
+</Tip>
