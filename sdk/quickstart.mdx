@@ -1,0 +1,141 @@
+---
+title: Quickstart
+description: "Let's get you started with Gateway Protocol in a few minutes."
+---
+
+In this JavaScript quickstart we will learn how to:
+
+- Install the Gateway SDK
+- Creating a Gateway Client
+- Interacting with the Protocol for various operations
+
+<Steps>
+  <Step title="Install @gateway-dao/sdk">
+
+First begin by installing the `@gateway-dao/sdk` package.
+
+<CodeGroup>
+
+```bash npm
+npm install @gateway-dao/sdk
+```
+
+```bash yarn
+yarn add @gateway-dao/sdk
+```
+
+```bash bun
+bun add @gateway-dao/sdk
+```
+
+</CodeGroup>
+
+</Step>
+
+<Step title="Setup the Gateway Client" >
+
+You will need an API Key and Bearer token to authenticate with the Gateway Protocol.
+You can obtain these from the [Gateway Dashboard](https://sandbox.mygateway.xyz/dashboard/).
+
+To setup the gateway client we will authenticate with a bearer-token and a Api key as follows:
+
+```ts Node.js
+import { Gateway } from "@gateway-dao/sdk";
+
+const gateway = new Gateway({
+  apiKey: "your-api-key", // Replace with your API Key
+  token: "your-token", // Replace with your Bearer Token
+  url: "",
+});
+```
+
+<Warning>
+  Make sure you add token without "Bearer" word as we add Bearer automatically
+  when you make request. Else it will give you Unauthorized error even if your
+  token is correct.
+</Warning>
+
+<Warning>
+  Do not share your authentication token with people you don’t trust. This gives
+  the user control over your account and they will be able to manage PDAs (and
+  more) with it. Use environment variables to keep it safe.
+</Warning>
+
+</Step>
+
+<Step title="Interacting with the Gateway Protocol" >
+
+Now that we have setup the Gateway Client, we can interact with the Gateway Protocol for various operations.
+
+## Create a PDA
+
+```ts Node.js
+import { Gateway, UserIdentifierType } from "@gateway-dao/sdk";
+
+const gateway = new Gateway({ apiKey: "your-api-key", token: "your-token" });
+
+async function main() {
+  try {
+    let obj = {
+      dataModelId: "uuid-here",
+      description: "test",
+      title: "test",
+      claim: {
+        gatewayUse: "test",
+      },
+      owner: {
+        type: UserIdentifierType.GATEWAY_ID,
+        value: "test",
+      },
+    };
+    const { createPDA } = await gateway.pda.createPDA(obj);
+  } catch (error) {
+    console.log(error); // Can log it for degugging
+  }
+}
+
+main();
+```
+
+## Create a Data Request Template
+
+```ts Node.js
+import { Gateway } from "@gateway-dao/sdk";
+
+const gateway = new Gateway({ apiKey: "your-api-key", token: "your-token" });
+
+async function main() {
+  try {
+    const { createDataRequestTemplate } =
+      await gateway.dataRequestTemplate.createDataRequestTemplate({
+        title: "Create Data Request Template Example",
+        description: "Lorem ipsum dolor sit amet.",
+        dataModels: [
+          {
+            id: "uuid-here",
+            required: true,
+            claimValidations: {
+              type: "object",
+              properties: {
+                gatewayUse: {
+                  type: "string",
+                },
+              },
+              required: ["gatewayUse"],
+            },
+          },
+        ],
+      });
+  } catch (error) {
+    console.log(error); // Can log it for degugging
+  }
+}
+
+main();
+```
+
+</Step>
+
+Congratulations! You have successfully created your first PDA and Data Request Template using the Gateway Protocol SDK.
+
+</Steps>

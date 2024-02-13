@@ -100,13 +100,7 @@
     },
     {
       "group": "SDK",
-      "pages": [
-        "sdk/introduction",
-        "sdk/quickstart",
-        "sdk/authentication",
-        "sdk/guides",
-        "sdk/examples"
-      ]
+      "pages": ["sdk/introduction", "sdk/quickstart", "sdk/examples"]
     },
     {
       "group": "API Reference",
