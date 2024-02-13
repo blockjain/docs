@@ -72,26 +72,35 @@
       "group": "Gateway Protocol",
       "pages": ["introduction", "quickstart"]
     },
+
     {
-      "group": "Architecture & Concepts",
+      "group": "Gateway Network",
       "pages": [
-        "architecture/overview",
         {
           "group": "Roles",
           "pages": [
-            "architecture/roles/issuers",
-            "architecture/roles/owners",
-            "architecture/roles/verifiers"
+            "gateway-network/contributors",
+            "gateway-network/owners",
+            "gateway-network/requestors"
           ]
         },
         {
-          "group": "Gateway ID",
+          "group": "Core Concepts",
           "pages": [
-            "architecture/gateway-id/introduction",
-            "architecture/gateway-id/users",
-            "architecture/gateway-id/organization"
+            "core-concepts/gateway-id",
+            "core-concepts/private-data-assets",
+            "core-concepts/data-requests",
+            "core-concepts/data-proofs"
           ]
         }
+      ]
+    },
+    {
+      "group": "Architecture ",
+      "pages": [
+        "architecture/overview",
+        "architecture/nodes",
+        "architecture/transactions"
       ]
     },
     {
