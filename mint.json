@@ -121,6 +121,16 @@
       ]
     },
     {
+      "group": "Resources",
+      "pages": [
+        {
+          "icon": "key",
+          "group": "PDAs",
+          "pages": ["api-reference/pda/create-pda"]
+        }
+      ]
+    },
+    {
       "group": "Widget",
       "pages": [
         "widget/introduction",
@@ -136,7 +146,7 @@
     "linkedin": "https://www.linkedin.com/company/mygateway"
   },
   "api": {
-    "baseUrl": "https://testnet.protocol.mygateway.xyz/v2/graphql",
+    "baseUrl": "https://testnet.protocol.mygateway.xyz/graphql",
     "auth": {
       "method": "bearer"
     }

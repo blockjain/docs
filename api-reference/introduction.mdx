@@ -1,33 +1,14 @@
 ---
-title: 'Introduction'
-description: 'Example section for showcasing API endpoints'
+sidebarTitle: Introduction
+title: Gateway Protocol API
+description:
 ---
 
-<Note>
-  If you're not looking to build API reference documentation, you can delete
-  this section by removing the api-reference folder.
-</Note>
+The Gateway Protocol API gives you the access to all the things you can do with the PDA. You can fetch the data models which are already there, create orgs, issue PDAs, create data request models and so on.
 
-## Welcome
+The endpoint for the Gateway Protocol API is
 
-There are two ways to build API documentation: [OpenAPI](https://mintlify.com/docs/api-playground/openapi/setup) and [MDX components](https://mintlify.com/docs/api-playground/mdx/configuration). For the starter kit, we are using the following OpenAPI specification.
+`https://testnet.protocol.mygateway.xyz/graphql`.
 
-<Card
-  title="Plant Store Endpoints"
-  icon="leaf"
-  href="https://github.com/mintlify/starter/blob/main/api-reference/openapi.json"
->
-  View the OpenAPI specification file
-</Card>
-
-## Authentication
-
-All API endpoints are authenticated using Bearer tokens and picked up from the specification file.
-
-```json
-"security": [
-  {
-    "bearerAuth": []
-  }
-]
-```
+The API is a GraphQL API and you can use any GraphQL client to interact with it.
+We recommend using [Apollo Client](https://www.apollographql.com/docs/react/) for interacting with the API.
