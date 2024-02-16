@@ -1,0 +1,93 @@
+---
+title: Updating a PDA
+sidebarTitle: Update a PDA
+---
+
+You can update a PDA by using the `updatePDA` mutation. Only the issuer of a PDA can update it. You would need the PDA's `id` and then the just pass the fields you want to update.
+
+```graphql
+# Query
+mutation updatePDA {
+  updatePDA(
+    input: {
+      id: "f34cdbae-7e0b-4527-bb97-08fd0e74effe"
+      title: "Update Test 2"
+      claim: {
+        handleName: "@gateway_xyz" # string
+        favoritePosts: ["more awesome"] # array
+      }
+    }
+  ) {
+    id
+    arweaveUrl
+    dataAsset {
+      title
+      claim
+    }
+  }
+}
+```
+
+You can find an ID of a PDA via 2 ways:
+
+<ul>
+  <li>
+    Calling the <code>getPDAs</code> query
+  </li>
+  <li>Finding it in the Data Assets tab in the Gateway Dashboard</li>
+</ul>
+
+<RequestExample>
+
+```ts Node.js
+const axios = require("axios");
+let data = JSON.stringify({
+  query: `YOUR_GRAPHQL_QUERY_HERE`,
+  variables: {},
+});
+
+let config = {
+  method: "post",
+  maxBodyLength: Infinity,
+  url: "https://testnet.protocol.mygateway.xyz/graphql",
+  headers: {
+    "X-Api-Key": "<YOUR_API_KEY>",
+    Authorization: "Bearer <YOUR_AUTHENTICATION_TOKEN>",
+    "Content-Type": "application/json",
+  },
+  data: data,
+};
+
+axios
+  .request(config)
+  .then((response) => {
+    console.log(JSON.stringify(response.data));
+  })
+  .catch((error) => {
+    console.log(error);
+  });
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json
+{
+  "data": {
+    "updatePDA": {
+      "id": "f34cdbae-7e0b-4527-bb97-08fd0e74effe",
+      "arweaveUrl": "https://arweave.net/7BS2Ssq-bbNv3vxpr3zBqzl5AJpf_qnhfhi2-w76rVQ",
+      "dataAsset": {
+        "title": "Update Test 2",
+        "claim": {
+          "handleName": "@gateway_xyz",
+          "favoritePosts": ["more awesome"]
+        }
+      }
+    }
+  }
+}
+```
+
+</ResponseExample>

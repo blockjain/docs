@@ -125,8 +125,15 @@
       "pages": [
         {
           "icon": "key",
-          "group": "PDAs",
-          "pages": ["api-reference/pda/create-pda"]
+          "group": "Private Data Assets",
+          "pages": [
+            "api-reference/pda/create-pda",
+            "api-reference/pda/fetch-pda",
+            "api-reference/pda/fetching-all-your-pdas",
+            "api-reference/pda/issued-pdas",
+            "api-reference/pda/update-pda",
+            "api-reference/pda/change-pda-status"
+          ]
         }
       ]
     },

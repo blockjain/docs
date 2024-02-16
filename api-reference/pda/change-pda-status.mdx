@@ -1,0 +1,55 @@
+---
+title: Change PDA Status
+sidebarTitle: Change PDA Status
+---
+
+You can revoke, suspend or activate a PDA using the `changePDAStatus` mutation. The `changePDAStatus` mutation requires the `id` of the PDA and the `status` to be changed to.
+
+```graphql
+mutation changePDAStatus {
+  changePDAStatus(
+    input: { id: "f34cdbae-7e0b-4527-bb97-08fd0e74effe", status: Suspended }
+  ) {
+    id
+    arweaveUrl
+    dataAsset {
+      title
+      claim
+    }
+    status
+  }
+}
+```
+
+<RequestExample>
+
+```ts Node.js
+const axios = require("axios");
+let data = JSON.stringify({
+  query: `YOUR_GRAPHQL_QUERY_HERE`,
+  variables: {},
+});
+
+let config = {
+  method: "post",
+  maxBodyLength: Infinity,
+  url: "https://testnet.protocol.mygateway.xyz/graphql",
+  headers: {
+    "X-Api-Key": "<YOUR_API_KEY>",
+    Authorization: "Bearer <YOUR_AUTHENTICATION_TOKEN>",
+    "Content-Type": "application/json",
+  },
+  data: data,
+};
+
+axios
+  .request(config)
+  .then((response) => {
+    console.log(JSON.stringify(response.data));
+  })
+  .catch((error) => {
+    console.log(error);
+  });
+```
+
+</RequestExample>
