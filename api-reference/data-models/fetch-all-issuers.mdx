@@ -1,0 +1,19 @@
+```graphql
+query {
+  issuersByDataModel(id: "9f27397e-27f2-4c30-b1b7-829371de4df5") {
+    issuer {
+      ... on User {
+        __typename
+        id
+        gatewayId
+      }
+      ... on Organization {
+        __typename
+        id
+        gatewayId
+      }
+    }
+    count
+  }
+}
+```

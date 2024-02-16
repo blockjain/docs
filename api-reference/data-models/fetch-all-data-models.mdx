@@ -1,0 +1,44 @@
+```graphql
+query {
+  dataModels {
+    id
+    title
+    description
+    arweaveUrl
+    createdBy {
+      id
+      gatewayId
+      profilePicture
+      createdAt
+      displayName
+    }
+    organization {
+      id
+      gatewayId
+      name
+      image
+    }
+    tags
+    consumptionPrice
+    pdasIssuedCount
+    uniqueIssuersCount
+    revenueGenerated
+    schema
+    createdAt
+    permissioning
+    allowedUsers {
+      id
+      gatewayId
+      profilePicture
+      createdAt
+      displayName
+    }
+    allowedOrganizations {
+      id
+      gatewayId
+      name
+      image
+    }
+  }
+}
+```

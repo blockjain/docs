@@ -1,0 +1,44 @@
+```graphql
+query {
+  dataModel(id: "9f27397e-27f2-4c30-b1b7-829371de4df5") {
+    id
+    title
+    description
+    arweaveUrl
+    createdBy {
+      id
+      gatewayId
+      profilePicture
+      createdAt
+      displayName
+    }
+    organization {
+      id
+      gatewayId
+      name
+      image
+    }
+    tags
+    consumptionPrice
+    pdasIssuedCount
+    uniqueIssuersCount
+    revenueGenerated
+    schema
+    createdAt
+    permissioning
+    allowedUsers {
+      id
+      gatewayId
+      profilePicture
+      createdAt
+      displayName
+    }
+    allowedOrganizations {
+      id
+      gatewayId
+      name
+      image
+    }
+  }
+}
+```

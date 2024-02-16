@@ -134,6 +134,15 @@
             "api-reference/pda/update-pda",
             "api-reference/pda/change-pda-status"
           ]
+        },
+        {
+          "icon": "database",
+          "group": "Data Models",
+          "pages": [
+            "api-reference/data-models/fetch-data-model",
+            "api-reference/data-models/fetch-all-data-models",
+            "api-reference/data-models/fetch-all-issuers"
+          ]
         }
       ]
     },
