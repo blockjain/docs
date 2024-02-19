@@ -93,49 +93,9 @@ async function main() {
       },
     };
     const { createPDA } = await gateway.pda.createPDA(obj);
+    console.log(createPDA);
   } catch (error) {
-    console.log(error); // Can log it for degugging
-  }
-}
-
-main();
-```
-
-## Create a Data Request Template
-
-```ts Node.js
-import { Gateway } from "@gateway-dao/sdk";
-
-const gateway = new Gateway({
-  apiKey: "your-api-key",
-  token: "your-token",
-  url: "https://testnet.protocol.mygateway.xyz/graphql",
-});
-
-async function main() {
-  try {
-    const { createDataRequestTemplate } =
-      await gateway.dataRequestTemplate.createDataRequestTemplate({
-        title: "Create Data Request Template Example",
-        description: "Lorem ipsum dolor sit amet.",
-        dataModels: [
-          {
-            id: "uuid-here",
-            required: true,
-            claimValidations: {
-              type: "object",
-              properties: {
-                gatewayUse: {
-                  type: "string",
-                },
-              },
-              required: ["gatewayUse"],
-            },
-          },
-        ],
-      });
-  } catch (error) {
-    console.log(error); // Can log it for degugging
+    console.log(error); // Can log it for debugging
   }
 }
 
