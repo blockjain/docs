@@ -2,3 +2,107 @@
 title: "Quickstart"
 description: "Welcome to Gateway Protocol! Get started with Gateway in minutes"
 ---
+
+Quickest way to start with Gateway Protocol is to use our SDK.
+
+### Prerequisites
+
+- Node.js v18 or later
+- A package manager like npm, yarn, or pnpm
+- Basic knowledge of JavaScript
+
+Let's start a new project and install the SDK.
+
+### Make a new project
+
+Create a new directory for your project and navigate into it.
+
+```bash
+mkdir my-gateway-project
+cd my-gateway-project
+npm init -y
+```
+
+### Install the SDK
+
+Install the SDK using your favorite package manager.
+
+<CodeGroup>
+
+```bash npm
+npm install @gateway-dao/sdk
+```
+
+```bash yarn
+yarn add @gateway-dao/sdk
+```
+
+```bash pnpm
+pnpm install @gateway-dao/sdk
+```
+
+</CodeGroup>
+
+<Note>
+  Add `"type": "module"` to your `package.json` file. This is required to use
+  ES6 modules in Node.js.
+</Note>
+
+### Get your API key
+
+You will need an API key to use the SDK. You can get it from the [Gateway Protocol dashboard](https://mygateway.xyz/login).
+
+Once you are logged in to the dashboard, navigate to the `Developer Access` section and you can find your API key there.
+
+### Create a new file
+
+Create a new file called `index.js` and add the following code to it.
+
+```javascript
+import { Gateway, UserIdentifierType } from "@gateway-dao/sdk";
+
+const gateway = new Gateway({
+  apiKey: "your-api-key", // Replace with your actual API key from the dashboard
+  token: "your-token", // Replace with your Access token from the dashboard
+  url: "https://testnet.protocol.mygateway.xyz/graphql", // Pointing to testnet
+});
+
+async function main() {
+  try {
+    let obj = {
+      dataModelId: "9f27397e-27f2-4c30-b1b7-829371de4df5", // Replace with the data model id you want to use
+      description: "Description of the PDA",
+      title: "Favorite Person on Crypto Twitter",
+      claim: {
+        handleName: "@gateway_xyz",
+        favoritePosts: ["awesome"],
+      },
+      owner: {
+        type: UserIdentifierType.GATEWAY_ID, // can be issued to EVM and Solana addresses as well
+        value: "saviour1001",
+      },
+    };
+    const { createPDA } = await gateway.pda.createPDA(obj);
+
+    console.log(createPDA);
+  } catch (error) {
+    console.log(error); // Can log it for debugging
+  }
+}
+
+main();
+```
+
+Replace `your-api-key` and `your-token` with your actual API key and token.
+
+### Run the code
+
+Run the code using your favorite JavaScript runtime.
+
+```bash
+node index.js
+```
+
+You should see the output of the `createPDA` mutation in the console.
+
+That's it! You have successfully created a new PDA using the Gateway Protocol SDK.
