@@ -157,7 +157,7 @@
     "linkedin": "https://www.linkedin.com/company/mygateway"
   },
   "api": {
-    "baseUrl": "https://testnet.protocol.mygateway.xyz/graphql",
+    "baseUrl": "https://sandbox.protocol.mygateway.xyz/graphql",
     "auth": {
       "method": "bearer"
     }

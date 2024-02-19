@@ -3,6 +3,8 @@ title: "Quickstart"
 description: "Welcome to Gateway Protocol! Get started with Gateway in minutes"
 ---
 
+import { gatewayEndpoint } from "/snippets/constants.mdx";
+
 Quickest way to start with Gateway Protocol is to use our SDK.
 
 ### Prerequisites
@@ -64,7 +66,7 @@ import { Gateway, UserIdentifierType } from "@gateway-dao/sdk";
 const gateway = new Gateway({
   apiKey: "your-api-key", // Replace with your actual API key from the dashboard
   token: "your-token", // Replace with your Access token from the dashboard
-  url: "https://testnet.protocol.mygateway.xyz/graphql", // Pointing to testnet
+  url: "https://sandbox.protocol.mygateway.xyz/graphql", // Pointing to testnet
 });
 
 async function main() {

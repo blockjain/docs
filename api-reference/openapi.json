@@ -10,7 +10,7 @@
   },
   "servers": [
     {
-      "url": "https://testnet.protocol.mygateway.xyz/graphql"
+      "url": "https://sandbox.protocol.mygateway.xyz/graphql"
     }
   ],
   "security": [
