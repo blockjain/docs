@@ -113,12 +113,7 @@
     },
     {
       "group": "API Reference",
-      "pages": [
-        "api-reference/introduction",
-        "api-reference/quickstart",
-        "api-reference/authentication",
-        "api-reference/response-codes"
-      ]
+      "pages": ["api-reference/introduction", "api-reference/authentication"]
     },
     {
       "group": "Resources",
