@@ -88,7 +88,7 @@
           "group": "Core Concepts",
           "pages": [
             "core-concepts/gateway-id",
-            "core-concepts/private-data-assets",
+            "core-concepts/personal-data-assets",
             "core-concepts/data-requests",
             "core-concepts/data-proofs"
           ]
@@ -120,7 +120,7 @@
       "pages": [
         {
           "icon": "key",
-          "group": "Private Data Assets",
+          "group": "Personal Data Assets",
           "pages": [
             "api-reference/pda/create-pda",
             "api-reference/pda/fetch-pda",
