@@ -81,7 +81,7 @@ async function main() {
       },
       owner: {
         type: UserIdentifierType.GATEWAY_ID, // can be issued to EVM and Solana addresses as well
-        value: "saviour1001",
+        value: "saviour1001", // whom you want to issue the PDA to
       },
     };
     const { createPDA } = await gateway.pda.createPDA(obj);
