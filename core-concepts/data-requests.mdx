@@ -3,7 +3,7 @@ title: "Data Requests"
 description: "Consuming User Data"
 ---
 
-![](https://files.readme.io/3cc08ce-image.png)
+<img height="200" src="/assets/core-concepts/dataRequests.png" />
 
 Data Requestors can obtain information from users by sending a direct Data Request to them. These requests specify the kind of information sought and provide the context, clarifying for the owner what specific data needs to be shared.
 
@@ -20,11 +20,15 @@ These advancements aim to balance user privacy with the practical needs of data 
 
 Let's bring Data Requests to life with a real-world example.
 
+<img height="200" src="/assets/core-concepts/dataRequestsExample.png" />
+
 Imagine **Spotify** has contributed your listening history as a PDA on the network.
 
 Now, **Ticketmaster** sees an opportunity: they want to offer you tailored concert recommendations, exclusive discounts, and even early ticket access. So, when you visit their site, **Ticketmaster** sends a Data Request for your Spotify PDAs to curate an experience as individual as your playlists.
 
 **A Data Request surfaced to you on the interface could look like:**
+
+<img height="200" src="/assets/core-concepts/dataRequestsFlow.png" />
 
 **Ticketmaster** will clearly outline the specific data they wish to access and the type of request this is. This will also surface the reasons behind this request and what the data will be used for.
 
@@ -40,7 +44,7 @@ Data requests are exclusively exchanged between the Owner and the Requestor. The
 
 ## The Requestor sends a Data Request
 
-![](https://files.readme.io/70b0a58-image.png)
+<img height="200" src="/assets/core-concepts/dataRequestsLifeCycle1.png" />
 
 Once a Requestor delineates a Request type, the specific Request, and the ID the request is intended for, the validators verify the request structure. They post the request ID on the ledger and the request contents are forwarded to the target.
 
@@ -63,7 +67,7 @@ A mutation sample for the request
 
 ## Acceptance: Owner Accepts the Request
 
-![](https://files.readme.io/1eac742-image.png)
+<img height="200" src="/assets/core-concepts/dataRequestsLifeCycle2.png" />
 
 The owner will encounter the request through the interface they're currently using, whether it's a widget, a wallet interface, or a dashboard.
 
@@ -81,13 +85,13 @@ No Data Proof would be generated, and the verifier would see this as a “Reject
 
 ## Expired: **Owner Does Not Take Action**
 
-If the owner does not explicitly choose to accept or reject, the Data Request will be marked as “Expired” after \***\*\*\*\*\*\*\***3 days\***\*\*\*\*\*\*\*** of no action. This Request is now closed.
+If the owner does not explicitly choose to accept or reject, the Data Request will be marked as “Expired” after **3 days** of no action. This Request is now closed.
 
 ---
 
 # Request structure
 
-![](https://files.readme.io/46eda63-image.png)
+<img height="200" src="/assets/core-concepts/dataRequestsStructure.png" />
 
 ### 1. Data Request Template ID
 
@@ -113,8 +117,13 @@ This transparency is crucial, enabling the owner to fully grasp the implications
 
 Every Data Request carries a specific status that dictates the actions an owner can take, as previously outlined. For a quick refresher, consult the table below:
 
-![](https://files.readme.io/4e3a691-image.png)
+<img height="200" src="/assets/core-concepts/dataRequestsStatus.png" />
 
 # Managing Requests
 
 Users and Organizations can see and control their requests from the Gateway Dashboard.
+
+<img
+  height="200"
+  src="/assets/core-concepts/datarequests-request-pending.png"
+/>
