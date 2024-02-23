@@ -101,7 +101,7 @@
       "group": "Architecture ",
       "pages": [
         "architecture/overview",
-        "architecture/nodes",
+        "architecture/validators",
         "architecture/transactions"
       ]
     },
