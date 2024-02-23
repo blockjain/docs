@@ -1,3 +1,73 @@
 ---
 title: "Gateway ID"
 ---
+
+## What is the Gateway ID?
+
+<img height="200" src="/assets/gateway-id/gateway-id-intro.png" />
+
+**Gateway ID is your self-sovereign identity within the Gateway Protocol**, offering a streamlined and secure solution for individual users and organizations to control and share their data.
+
+Every account on Gateway's network consists of:
+
+### 1. DID
+
+Gateway uses the [Decentralized Identifiers](https://w3c.github.io/did-core/) standard.
+
+An example of a DID on Gateway is **did:gtw:a73a82f4-1657-4d6d-9bb5-f943e06bcdeb**
+
+### 2. Signing Key
+
+Users generate their own signing key and share the public key to the network. This key allows organizations and users to cryptographically sign messages and transactions, registering proof of intent of specific actions on the protocol layer.
+
+Users sign a message with their private key when they want to execute some action. This signature can be verified by anyone with access to the corresponding public key and is accessible to any network agent that seeks to verify the signature. This signature is present on data contributed, consents given, and requests made as well.
+
+Every user and organization on the platform is assigned a private ECDSA (Elliptic Curve Digital Signature Algorithm) signing key. _The types of signing keys available will continue to evolve as demanded._
+
+### 3. Encryption Key
+
+Additionally, users generate their own encryption key pair and share their public key to the network to support data confidentiality. The public key is surfaced to allow counter-parties to encrypt data intended for you. It is with the RSA-4096 format and stored with OAEP headers.
+
+## Account Registration
+
+Accounts are registered on the Gateway Ledger to allow key information like public encryption key and public signing key to surface. An example of a user registration can be seen [here](https://sandbox.mygateway.xyz/explorer/transactions/65cbd4f937862646e840d56e). Every account registration will surface the:
+
+1. DID
+2. Public Signing Key
+3. Public Encryption Key
+
+Accounts can rotate signing keys and encryption keys.
+
+<Note>
+  Using multiple Decentralized Identifiers (DIDs) is recommended to enhance
+  privacy by reducing the risk of linking users' online activities, thereby
+  improving anonymity and security
+</Note>
+
+## Privacy
+
+{/* ![title](/assets/gateway-id/gateway-id-privacy.png#left) */}
+
+<div style={{ display: "flex", alignItems: "center" }}>
+  <img
+    style={{
+      width: 550,
+      height: 280,
+      marginRight: 30, 
+    }}
+    src="/assets/gateway-id/gateway-id-privacy.png"
+    alt="Description of the image"
+  />
+<p>
+
+Gateway ID was designed with a singular mission: to empower users to take control of their data while maintaining a standard of security and privacy often unparalleled in the digital realm.
+
+We've adopted a minimalist approach in public data disclosure, revealing only the essential information necessary to establish verifiable intent and ensure unimpeachable data integrity.
+
+</p>
+
+</div>
+
+**To better understand our steadfast commitment to your privacy, we invite you to explore our dedicated [Privacy Section](/core-concepts/privacy-and-security-standards).**
+
+>

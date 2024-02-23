@@ -89,8 +89,10 @@
           "pages": [
             "core-concepts/gateway-id",
             "core-concepts/personal-data-assets",
+            "core-concepts/data-models",
             "core-concepts/data-requests",
-            "core-concepts/data-proofs"
+            "core-concepts/data-proofs",
+            "core-concepts/privacy-and-security-standards"
           ]
         }
       ]

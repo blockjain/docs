@@ -1,0 +1,64 @@
+---
+title: Data Models
+description: The Blueprint for User Data
+---
+
+<img height="200" src="/assets/core-concepts/dataModels.png" />
+
+# What is a Data Model?
+
+Data models serve as foundational templates for Personal Data Assets (PDAs). Each PDA created using a data model adheres to a standardized structure of claims, making these frameworks exceptionally reusable for various related scenarios.
+
+This not only streamlines the data contribution process but also provides Data Contributors with the flexibility to tailor the types of data they want to make available in the network.
+
+The easiest way to analogize Data Models are the blueprints of the data on the network. Data Models allow Data Requestors to appropriately ask for information from certain DIDs without exposing personal data on the network publicly.
+
+# How it Works
+
+<img height="200" src="/assets/core-concepts/dataModelsExamples.png" />
+
+Data Models are initialized in JSON structure. These templates are generally viewable by the everyone in the network. An example of a Data Model can be seen [here](https://sandbox.mygateway.xyz/explorer/data-models/b6a9e7a4-f706-4aa5-8896-464bd05bc8d0).
+
+Data Models define what data is available on the network. Contributors input data into the network by following the data model of choice. Therefore, all PDAs are tied to a unique data model.
+
+## Data Model Structure
+
+You can browse Data Models on the explorer [here](https://sandbox.mygateway.xyz/explorer/data-models). To initialize a new Data Model, you can follow the steps on the documentation here.
+
+Data models are structured in JSON format. JSON Schema is fully supported and there are additional contextual fields added to help make the data more readable and useable. Each Data Model is signed with the creator's signing key to establish provenance and verifiability.
+
+```
+INSERT THE DATA MODEL STRUCTURE HERE
+```
+
+# Data Model structure
+
+![](https://files.readme.io/b438eb0-image.png)
+
+### The general structure of data models is as follows:
+
+1. **Name, Categories, and Description**
+
+   This helps educate issuers on what the data model is generally intended for. Categories make searching and filtering easier as well.
+
+2. **Data Model Stats**  
+   An overview of Data Model usage that will display:
+
+- Number of unique issuers
+- How many PDAs were issued using this data Model
+- Fees generated for issuers and Data Model creator
+
+3. **Created by**  
+   The username of the entity that created the data model
+4. **Creation Date**  
+   The date the data model was created
+5. **Last Updated**  
+   Indicates when the data model was edited last
+6. **Verification Cost**  
+   This amount represents an issuer's revenue each time a verifier accesses a PDA.
+7. **Data Model ID**  
+   Each data model has a unique identifier (UUID)
+8. **Arweave File**  
+   Data model information. The information is stored unencrypted.
+9. **Claim Structure  
+   **These are the field names that create the claim. Every PDA issued using this data model will have this claim structure.
