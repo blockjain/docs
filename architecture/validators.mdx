@@ -2,4 +2,35 @@
 title: Validators
 ---
 
-Today Gateway Network Nodes are permissioned. We plan to make it permissionless in the future. If you would be interested to run a node, please fill out the typeform below.
+Validators are servers that validate user interactions, manage and enforce policies, store user data and broadcast data to other validators for consumption.
+
+A network is formed by having multiple validators running and communicating to each other. Validators also pin transactions onchain for public validation and finality.
+
+Users can interact with validators to consume and issue data with ease through their GraphQL API. PDA data that is stored on the validator can be accessed (as long as the user has the correct permissions). Onchain data is also indexed and can be freely accessed through the API.
+
+## Event Lifecycle
+
+When users interact with the validator through the GraphQL API, it will validate the content of the request, as well as the permissions of the user over the data.
+
+The lifecycle of an event (for example, issue a PDA) looks like this:
+
+1. The user authenticates to API by signing a message.
+2. The user chooses a schema that matches the claim body of the PDA.
+3. The user does an authenticated call to API passing the action and body of the request (_issuePDA_ with claim body and data model ID).
+4. The validator checks if the user has permission over the data model.
+5. The validator checks if the claim body matches the data model schema.
+6. The validator encrypts the PDA data with the owner's key.
+7. The validator stores the data encrypted at rest.
+8. The validator broadcasts the transaction on-chain.
+
+After steps 7 and 8, the data is made available over gossip to other validators if the user consents to its sharing.
+
+## Validation
+
+Validation happens using the user's public signing keys. If Alice sends a PDA to Bob, then Alice needs to sign the contents of the PDA to attest that this came from Alice, not from someone else. Thus it is also crucial to allow the user to custody the private key storage alongside robust recovery strategies.
+
+The validator ensures that the data is consumed only by Bob (or any other entity that Bob has shared the PDA with), and registers Alice's signature as part of its body.
+
+In the future, cryptographic validation through signatures will be supplemented with computation and data validation inside the validator using Trusted Execution Environments. This enhancement will increase security, preserve more privacy, and prevent data tampering.
+
+Today Gateway Network validators are permissioned. We plan to make it permissionless in the future. If you would be interested to run a node, please fill out the typeform below.
