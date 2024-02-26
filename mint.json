@@ -52,19 +52,9 @@
       "url": "/"
     },
     {
-      "name": "Blog",
-      "icon": "newspaper",
-      "url": "https://mygateway.xyz/blog"
-    },
-    {
       "name": "Explorer",
       "icon": "compass",
       "url": "https://sandbox.mygateway.xyz/explorer"
-    },
-    {
-      "name": "Community",
-      "icon": "slack",
-      "url": "https://mygateway.xyz/community"
     }
   ],
   "navigation": [
