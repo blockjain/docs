@@ -43,6 +43,10 @@
     {
       "name": "Widget",
       "url": "widget"
+    },
+    {
+      "name": "Usecases",
+      "url": "usecases"
     }
   ],
   "anchors": [
@@ -144,6 +148,17 @@
         "widget/introduction",
         "widget/quickstart",
         "widget/configuration"
+      ]
+    },
+    {
+      "group": "Usecases",
+      "pages": [
+        "usecases/introduction",
+        "usecases/financial",
+        "usecases/governance",
+        "usecases/artificial-intelligence",
+        "usecases/gaming",
+        "usecases/loyalty-programs"
       ]
     }
   ],
