@@ -1,4 +1,160 @@
 ---
-title: "Configuration and Types"
+title: "Configuration"
 description: "You can configure the widget according to your needs."
 ---
+
+## Generating a Session and Issuing a PDA
+
+There are two simple steps to issuing a PDA using the Widget. The first step is to **Generate a Session**, which will receive the specific **parameters** required for the user to issue their PDA. This request will return a **URL** and a **sessionId**, and this is the second step, where through the sessionId, the user can be safely redirected to the widget screen and finish issuing their PDA.
+
+### Request Parameters
+
+```tsx
+type IssuanceSessionBody = {
+  organizationId: string;
+  dataSourceId: string;
+  claim: any;
+  callbackUrl: string;
+  referenceId?: string;
+  title?: string;
+  description?: string;
+};
+```
+
+- **organizationId**: The ID of the organization issuing the PDA.
+- **dataSourceId**: The ID of the data source/schema to use for the PDA.
+- **callbackUrl**: The URL to redirect to after the PDA issuance is complete.
+- **claim**: The data to be included in the issued PDA.
+- **title** (optional): The title for the PDA being issued.
+- **description** (optional): The description for the PDA being issued.
+- **referenceId** (optional): An optional reference ID for internal tracking.
+
+### Request Code
+
+The example below uses JavaScript, but your team can use their preferred language to call the Widget API.
+
+```jsx
+const sessionProps = JSON.stringify({
+  organizationId: "YOUR-ORGANIZATION-ID",
+  dataSourceId: "YOUR-DATA-SOURCE-ID",
+  callbackUrl: "YOUR-SUCCESS-URL",
+  claim: {
+    /*OBJECT WITH PDA DATA*/
+    /*Example*/
+    title: "Title example",
+    /*Example - End*/
+  },
+  title: "PDA-TITLE", // optional
+  description: "PDA-DESCRIPTION", // optional
+  referenceId: "REFERENCE-ID", // optional
+});
+
+async function generateSession() {
+  const response = await fetch(
+    "https://widget.mygateway.xyz/api/issue/generate-session",
+    {
+      method: "POST",
+      body: sessionProps,
+    }
+  );
+
+  const {
+    data: { session },
+  } = await response.json();
+  window.location.href = session.url;
+}
+
+const generateButton = document.getElementById("generateSession");
+generateButton.addEventListener("click", generateSession);
+```
+
+Add the ID `generateSession` to your "Claim" button.
+
+Note: You can use a custom button or Gateway buttons, as below.
+
+```html
+<link rel="stylesheet" href="https://cdn.mygateway.xyz/widget/buttons.css" />
+<button id="generateSession" class="gtw-btn">Claim your PDA</button>
+<button id="generateSession" class="gtw-btn gtw-btn-black">
+  Claim your PDA
+</button>
+<button id="generateSession" class="gtw-btn gtw-btn-white">
+  Claim your PDA
+</button>
+```
+
+[CodePen Example](https://codepen.io/andrefelizardo/pen/eYXJjqj)
+
+### Request Response
+
+```tsx
+type IssuanceSessionResponse = {
+  session: {
+    url: string;
+    sessionId: string;
+  };
+};
+```
+
+- **url**: The generated URL of the widget.
+- **sessionId**: The ID of the generated session.
+
+## Checking a Session
+
+To find out if the PDA was issued, send a request passing the `sessionId` created in the previous step.
+
+### Request Parameters
+
+```tsx
+type IssuanceSessionDetailsBody = {
+  sessionId: string;
+  organizationId: string;
+};
+```
+
+- **organizationId**: The ID of the organization issuing the PDA.
+- **sessionId**: The ID of the generated session.
+
+### Request Code
+
+```jsx
+const session = JSON.stringify({
+  organizationId: "YOUR-ORGANIZATION-ID",
+  sessionId: "YOUR-SESSION-ID",
+});
+
+async function getSession() {
+  const response = await fetch(
+    "https://widget.mygateway.xyz/api/issue/get-session-details",
+    {
+      method: "POST",
+      body: session,
+    }
+  );
+}
+```
+
+### Request Response
+
+```tsx
+type IssuanceSessionDetailsResponse = {
+  session: {
+    claim: any;
+    dataSourceId: string;
+    sessionId: string;
+    pdaId: string;
+    status: "Issued" | "Pending";
+  };
+};
+```
+
+- **sessionId**: The ID of the generated session.
+- **dataSourceId**: The ID of the data source/schema used for the PDA.
+- **claim**: The data included in the issued PDA.
+- **pdaId**: The ID of the issued PDA (if it has already been generated).
+- **status**: The status of the session ('Issued' or 'Pending').
+
+## Implementation Notes
+
+- A session can be used only once.
+- Each call to the `generate-session` API creates a different session, even if the PDA data is the same.
