@@ -71,14 +71,6 @@
       "group": "Gateway Network",
       "pages": [
         {
-          "group": "Roles",
-          "pages": [
-            "gateway-network/contributors",
-            "gateway-network/owners",
-            "gateway-network/requestors"
-          ]
-        },
-        {
           "group": "Core Concepts",
           "pages": [
             "core-concepts/gateway-id",
@@ -87,6 +79,14 @@
             "core-concepts/data-requests",
             "core-concepts/data-proofs",
             "core-concepts/privacy-and-security-standards"
+          ]
+        },
+        {
+          "group": "Roles",
+          "pages": [
+            "gateway-network/contributors",
+            "gateway-network/owners",
+            "gateway-network/requestors"
           ]
         }
       ]
