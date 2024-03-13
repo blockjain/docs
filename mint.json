@@ -154,9 +154,9 @@
       "group": "Usecases",
       "pages": [
         "usecases/introduction",
+        "usecases/artificial-intelligence",
         "usecases/financial",
         "usecases/governance",
-        "usecases/artificial-intelligence",
         "usecases/gaming",
         "usecases/loyalty-programs"
       ]
