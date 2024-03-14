@@ -1,3 +1,10 @@
+---
+title: Fetch all issuers
+sidebarTitle: Fetch all issuers
+---
+
+You can fetch all issuers by data model id.
+
 ```graphql
 query {
   issuersByDataModel(id: "9f27397e-27f2-4c30-b1b7-829371de4df5") {
@@ -17,3 +24,51 @@ query {
   }
 }
 ```
+
+<RequestExample>
+
+```ts Node.js
+const axios = require("axios");
+let data = JSON.stringify({
+  query: `query {
+    issuersByDataModel(id: "fdea0d43-555a-46da-baab-193d325ac4ae") {
+        issuer {
+            ... on User {
+                __typename
+                id
+                gatewayId
+            }
+            ... on Organization {
+                __typename
+                id
+                gatewayId
+            }
+        }
+        count
+    }
+}`,
+  variables: {},
+});
+
+let config = {
+  method: "post",
+  maxBodyLength: Infinity,
+  url: "https://sandbox.protocol.mygateway.xyz/graphql",
+  headers: {
+    "Content-Type": "application/json",
+    "x-api-key": "m9Y5ntNcTlwQ2LbRpYr6K_VhxJXuZJ6Q",
+  },
+  data: data,
+};
+
+axios
+  .request(config)
+  .then((response) => {
+    console.log(JSON.stringify(response.data));
+  })
+  .catch((error) => {
+    console.log(error);
+  });
+```
+
+</RequestExample>
