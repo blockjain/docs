@@ -1,0 +1,83 @@
+---
+title: Create Organization
+sidebarTitle: Create Organization
+---
+
+You can create an organization using the `createOrganization` mutation. You can specify the `name` and `description` of the organization. The `username` is used to create a unique identifier for the organization.
+
+```graphql
+mutation createOrganization(
+  $name: String!
+  $username: String!
+  $description: String!
+) {
+  createOrganization(
+    input: { username: $username, name: $name, description: $description }
+  ) {
+    id
+    gatewayId
+    accesses {
+      id
+      role
+      user {
+        gatewayId
+      }
+    }
+  }
+}
+```
+
+<RequestExample>
+
+```ts Node.js
+const axios = require("axios");
+let data = JSON.stringify({
+  query: `mutation createOrganization($name: String!, $username: String!, $description: String!) {
+  createOrganization(
+    input: {
+        username: $username
+        name: $name
+        description: $description
+    }
+  ) {
+    id
+    gatewayId
+    accesses {
+        id
+        role
+        user {
+            gatewayId
+        }
+    }
+  }
+}`,
+  variables: {
+    username: "romanempire",
+    name: "Roman Empire",
+    description: "How often do you think about the Roman Empire?",
+  },
+});
+
+let config = {
+  method: "post",
+  maxBodyLength: Infinity,
+  url: "https://testnet.protocol.mygateway.xyz/graphql",
+  headers: {
+    "Content-Type": "application/json",
+    "x-api-key": "m9Y5ntNcTlwQ2LbRpYr6K_VhxJXuZJ6Q",
+    Authorization: "Bearer {{ _.token }}",
+  },
+  data: data,
+};
+
+axios
+  .request(config)
+  .then((response) => {
+    console.log(JSON.stringify(response.data));
+  })
+  .catch((error) => {
+    console.log(error);
+  });
+```
+
+</RequestExample>

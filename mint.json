@@ -134,6 +134,15 @@
             "api-reference/data-models/fetch-all-data-models",
             "api-reference/data-models/fetch-all-issuers"
           ]
+        },
+        {
+          "icon": "group-arrows-rotate",
+          "group": "Organizations",
+          "pages": [
+            "api-reference/organizations/create-org",
+            "api-reference/organizations/fetch-all-org",
+            "api-reference/organizations/update-org"
+          ]
         }
       ]
     },
