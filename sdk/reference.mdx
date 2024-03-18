@@ -1,0 +1,164 @@
+---
+title: "Reference"
+description: "Requesting and Verifying Data from Users with Gateway Protocol in Next.js"
+---
+
+## Requesting and Verifying Data from Users with Gateway Protocol in Next.js
+
+This tutorial will guide you through the process of requesting and verifying data from users using the Gateway Protocol SDK in a Next.js application.
+
+You can find the complete source code for this tutorial in this [GitHub repository](https://github.com/Gateway-DAO/verification-flow-poc)
+
+### Prerequisites
+
+Before we begin, make sure you have:
+
+1. A Next.js project set up with TypeScript.
+2. The `@gateway-dao/sdk` [package](https://www.npmjs.com/package/@gateway-dao/sdk) installed in your project.
+3. API credentials (API key, bearer token, and API URL) from the [Gateway Protocol](https://mygateway.xyz/dashboard).
+
+### Flow Overview
+
+The process of requesting and verifying data from users using the Gateway Protocol involves the following steps:
+
+1. **Create a Data Request**: You'll create a data request specifying the type of data you want to request from the user.
+2. **Generate a Proof Message**: The Gateway Protocol will generate a proof message that the user needs to sign using their Ethereum wallet.
+3. **User Signs the Message**: The user will use their Ethereum wallet (e.g., MetaMask) to sign the proof message, granting permission to share their data.
+4. **Create a Proof**: After the user signs the message, you'll create a proof that contains the requested data and any associated metadata.
+
+## Implementation
+
+### Step 1: Create a Data Request
+
+Create an API route (`pages/api/create-request.ts`) to handle the creation of a data request.
+
+```typescript
+import { Gateway, UserIdentifierType } from "@gateway-dao/sdk";
+
+export default async function handler(req, res) {
+  try {
+    const gateway = new Gateway({
+      /* API credentials */
+    });
+    const { address } = req.body;
+
+    const data = await gateway.request.createDataRequest({
+      dataRequestTemplateId: process.env.DATA_REQUEST_TEMPLATE_ID,
+      owner: { type: UserIdentifierType.EVM, value: address },
+      dataUse: "To ensure humanhood and offer personalized experiences",
+    });
+
+    return res.status(200).json({
+      id: data?.createDataRequest?.id,
+      arweaveUrl: data?.createDataRequest?.arweaveUrl,
+    });
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
+}
+```
+
+This API route creates a data request and returns the `id` and `arweaveUrl` of the created request.
+
+### Step 2: Generate a Proof Message
+
+Create another API route (`pages/api/get-nonce.ts`) to generate a proof message.
+
+```typescript
+import { Gateway } from "@gateway-dao/sdk";
+
+export default async function handler(req, res) {
+  try {
+    const gateway = new Gateway({
+      /* API credentials */
+    });
+    const { id } = req.body;
+
+    const data = await gateway.proof.createProofMessage(id);
+
+    return res.status(200).json({ message: data?.createProofMessage });
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
+}
+```
+
+This API route generates a proof message that the user needs to sign using their Ethereum wallet.
+
+### Step 3: Create a Proof
+
+Create a third API route (`pages/api/create-proof.ts`) to create a proof after the user signs the message.
+
+```typescript
+import { Gateway } from "@gateway-dao/sdk";
+
+export default async function handler(req, res) {
+  try {
+    const gateway = new Gateway({
+      /* API credentials */
+    });
+    const { id, signature } = req.body;
+
+    const data = await gateway.proof.createProof({ requestId: id, signature });
+    const proofId = data?.createProof.id;
+
+    const getProofData = await gateway.proof.getProof(proofId);
+
+    return res.status(200).json({ proof: getProofData.proof });
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
+}
+```
+
+This API route creates a proof and returns the proof object, which contains the requested data and any associated metadata.
+
+### Step 4: User Interface
+
+Create a React component (`components/Verify.tsx`) to handle the user interaction and call the API routes.
+
+```tsx
+import { useAccount, useConnect, useDisconnect, useSignMessage } from "wagmi";
+import { MetaMaskConnector } from "wagmi/connectors/metaMask";
+
+export default function Verify() {
+  const { address, isConnected } = useAccount();
+  const { connect } = useConnect({ connector: new MetaMaskConnector() });
+  const { disconnect } = useDisconnect();
+  const { signMessageAsync } = useSignMessage();
+
+  const createRequest = async () => {
+    // Make a POST request to /api/create-request with the user's address
+    const { id } = await fetch("/api/create-request", { /* ... */ });
+
+    // Generate a proof message
+    const { message } = await fetch("/api/get-nonce", { /* ... */ });
+
+    // Prompt the user to sign the message
+    const signature = await signMessageAsync({ message });
+
+    // Create a proof with the user's signature
+    const { proof } = await fetch("/api/create-proof", { /* ... */ });
+
+    // Display or use the proof as needed
+    console.log(proof);
+  };
+
+  return (
+    // ... Render UI components and call createRequest when needed
+  );
+}
+```
+
+This React component handles the user interaction, such as connecting to MetaMask, creating a data request, generating a proof message, signing the message using the user's Ethereum wallet, and creating a proof.
+
+## Usage
+
+To use this implementation in your Next.js application, follow these steps:
+
+1. Set the required environment variables (`API_KEY`, `BEARER`, `API_URL`, and `DATA_REQUEST_TEMPLATE_ID`) with your Gateway Protocol credentials and data request template ID.
+2. Import and use the `Verify` component in your application, providing the necessary UI elements for user interaction (e.g., buttons to connect wallet, create request, etc.).
+3. When the user initiates the process, the `createRequest` function will be called, which will make the necessary API requests to create a data request, generate a proof message, prompt the user to sign the message, and create a proof.
+4. Once the proof is created, you can display or use the proof data as needed in your application.
+
+By following this tutorial, you'll be able to integrate the Gateway Protocol SDK into your Next.js application and request and verify data from users in a secure and user-friendly manner.

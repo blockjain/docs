@@ -105,7 +105,12 @@
     },
     {
       "group": "SDK",
-      "pages": ["sdk/introduction", "sdk/quickstart", "sdk/examples"]
+      "pages": [
+        "sdk/introduction",
+        "sdk/quickstart",
+        "sdk/reference",
+        "sdk/examples"
+      ]
     },
     {
       "group": "API Reference",
