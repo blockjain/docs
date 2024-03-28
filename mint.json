@@ -66,7 +66,6 @@
       "group": "Gateway Protocol",
       "pages": ["introduction", "quickstart"]
     },
-
     {
       "group": "Gateway Network",
       "pages": [
@@ -87,6 +86,29 @@
             "gateway-network/contributors",
             "gateway-network/owners",
             "gateway-network/requestors"
+          ]
+        }
+      ]
+    },
+    {
+      "group": "New Protocol Design",
+      "pages": [
+        "protocol-architecture/introduction",
+        {
+          "group": "Core Concepts",
+          "pages": [
+            "protocol-architecture/core-concepts/client",
+            "protocol-architecture/core-concepts/validation-layer",
+            "protocol-architecture/core-concepts/data-layer"
+          ]
+        },
+        {
+          "group": "Process Flow",
+          "pages": [
+            "protocol-architecture/process-flows/create-identity",
+            "protocol-architecture/process-flows/contribute-data",
+            "protocol-architecture/process-flows/request-data",
+            "protocol-architecture/process-flows/delete-data"
           ]
         }
       ]
