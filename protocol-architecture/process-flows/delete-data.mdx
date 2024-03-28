@@ -1,0 +1,23 @@
+The process for securely and verifiably deleting data from Encrypted Data Vaults (EDVs) involves the use of Delete Markers:
+
+1. **Generation of Delete Transaction**: The data owner or issuer ($DO$) constructs a Delete Transaction ($DT$) to request the deletion of specific data ($D$) from an EDV.
+
+2. **Validation by Validator Pool**: The Delete Transaction is submitted to an Anchor Node ($AN$), which forwards it to the Validator Pool ($VP$) for authorization checks and dependency assessments.
+
+3. **Consensus and Approval**: Upon successful validation, $VP$ reaches consensus on the legitimacy and feasibility of the deletion request, and a consensus record ($CR$) is appended to the ledger.
+
+4. **Communication to EDVs for Deletion**: $AN$ communicates the approved deletion request to all relevant EDVs, which execute the deletion process to irrecoverably erase $D$ from storage.
+
+5. **Generation and Submission of `DELETE_MARKER`**: Following the deletion of $D$, a `DELETE_MARKER` ($DM$) is generated, including transaction details and an updated Merkle root, and recorded in the ledger.
+
+6. **Compensation and Settlements**: Any pending compensations or settlements are resolved, ensuring all parties involved are duly compensated before finalizing the deletion process.
+
+## GDPR Compliance
+
+The protocol maintains GDPR compliance through:
+
+- Clear and auditable records of data and file actions
+- Proof-of-storage mechanisms to maintain data integrity and availability
+- Erasure coding for data redundancy and reliability
+- Respecting the right to be forgotten by allowing data deletion by the data issuer or owner
+- Blockchain-based record-keeping for transparency and auditability

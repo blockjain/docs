@@ -1,0 +1,20 @@
+## Proxy Re-Encryption
+
+Proxy Re-Encryption (PRE) allows secure data sharing without trusting the storage provider. The data owner encrypts the data with their private key and derives a re-encryption key for the receiver. The storage provider can re-encrypt the data for the receiver without decrypting it.
+
+## Access Control Permissions
+
+1. $Verifier$ requests data access from $Owner$.
+2. $Owner$ encrypts data $D$ with symmetric key $k$ and encrypts $k$ with their private key $sk_O$.
+3. $Owner$ generates re-encryption keys $rk_{O \rightarrow V}$ for each $EDV$ and uploads encrypted data and keys.
+4. $Verifier$ requests re-encrypted key $E'(k)$ from an $EDV$ and decrypts it to obtain $k$.
+5. $Verifier$ requests encrypted data $E(D)$ from the $EDV$ and decrypts it using $k$.
+
+## Revoke Access to Data
+
+1. $Owner$ initiates revocation and signs the request.
+2. Signed request is submitted to validators for verification and consensus.
+3. Validators instruct $EDVs$ to delete or disable re-encryption keys.
+4. The ledger is updated to reflect the revocation.
+
+This process ensures secure data sharing and controlled access revocation while maintaining data privacy and integrity.
