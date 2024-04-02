@@ -1,0 +1,42 @@
+---
+title: Request Data
+description: Learn how to enable secure and controlled data sharing between users using the "Request Data" functionality in Gateway.
+---
+
+The "Request Data" functionality in Gateway empowers developers to enable secure and controlled data sharing between users. By integrating this feature into their projects, developers can facilitate data requests and access control, ensuring that data is shared only with authorized parties.
+
+To integrate the "Request Data" flow into your project, follow these key steps:
+
+1. **Requester Sends Data Request**: When a requester wants to access specific data, they initiate a data request through the Gateway system. The request includes information about the data being requested and the requester's identity.
+
+2. **Owner Approves or Denies Request**: The data owner receives the data request and has the option to approve or deny it based on their preferences and the established access control conditions.
+
+3. **Owner Generates Proxy Re-Encryption Key**: If the data owner approves the request, they generate a proxy re-encryption key specifically for the requester. This key allows the data to be re-encrypted without revealing the original encryption key.
+
+4. **Data is Re-Encrypted**: Using the proxy re-encryption key, the requested data is re-encrypted, making it accessible only to the authorized requester.
+
+5. **Re-Encrypted AES Key is Stored on EDV**: The re-encrypted AES key, which is used to encrypt the data, is securely stored in the Encrypted Data Vault (EDV) associated with the data.
+
+6. **Permission is Granted**: The requester is granted permission to access the re-encrypted data based on the access control conditions defined by the data owner.
+
+7. **Handle the Response**: After successfully processing the data request, Gateway returns a response indicating the status of the request. The response structure will look similar to the following:
+
+```json
+{
+  "status": "approved",
+  "dataId": "123456",
+  "owner": "did:example:123456789abcdef",
+  "requester": "did:example:abcdef123456789",
+  "timestamp": "2023-06-10T12:34:56Z"
+}
+```
+
+The response includes the following fields:
+
+- `status`: The status of the data request (e.g., "approved", "denied").
+- `dataId`: The unique identifier of the requested data.
+- `owner`: The Decentralized Identifier (DID) of the data owner.
+- `requester`: The Decentralized Identifier (DID) of the data requester.
+- `timestamp`: The timestamp indicating when the data request was processed.
+
+By following these steps and leveraging the Gateway API, developers can integrate the "Request Data" functionality into their projects, enabling secure and controlled data sharing between users while maintaining data privacy and access control.

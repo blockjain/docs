@@ -110,6 +110,15 @@
             "protocol-architecture/process-flows/request-data",
             "protocol-architecture/process-flows/delete-data"
           ]
+        },
+        {
+          "group": "Developer Flow",
+          "pages": [
+            "developer-flow/overview",
+            "developer-flow/upload-data",
+            "developer-flow/retrieve-data",
+            "developer-flow/request-data"
+          ]
         }
       ]
     },

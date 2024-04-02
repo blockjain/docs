@@ -1,0 +1,46 @@
+---
+title: Upload Data
+description: Learn how to upload data securely and efficiently using Gateway.
+---
+
+The "Upload Data" functionality in Gateway aims to provide developers with a secure and efficient way to store and manage user data. By integrating this feature into their projects, developers can ensure that user data is encrypted, access-controlled, and stored in a decentralized manner, promoting data privacy and security.
+
+To integrate the "Upload Data" flow into your project, follow these key steps:
+
+1. **Define the Data Model**: Create a JSON Schema that defines the structure and format of the data you want to upload. This schema will be used to validate and enforce the data model during the upload process.
+
+2. **Encrypt the Data (Optional)**: If your data model requires encryption, encrypt the data using the specified encryption mechanism. Gateway supports various encryption algorithms and key management systems to ensure the confidentiality of user data.
+
+3. **Set Access Control Conditions**: Define the access control conditions that determine who can access the uploaded data and under what circumstances. Gateway uses the `AccessCondition[]` format to specify these conditions, allowing for granular control over data access.
+
+4. **Upload the Data**: Use the Gateway API to upload the data to the user's vault. The API will handle the association of the data with the user's Decentralized Identifier (DID) and perform the necessary mappings to the Gateway system.
+
+5. **Handle the Response**: After a successful data upload, Gateway will return a response containing important information about the uploaded data. The response structure will look similar to the following:
+
+```json
+{
+  "uri": "data:example/json;base64,eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "timestamp": "2023-06-10T12:34:56Z",
+  "owner": "did:example:123456789abcdef",
+  "signature": "0x1234567890abcdef...",
+  "transactionHash": "0x9876543210fedcba...",
+  "cost": 0.001,
+  "blockNumber": 1234567,
+  "fileHash": "0x1234567890abcdef...",
+  "schemaUri": "https://example.com/schemas/sample-schema.json"
+}
+```
+
+The response includes the following fields:
+
+- `uri`: The Uniform Resource Identifier that uniquely identifies the uploaded data.
+- `timestamp`: The timestamp indicating when the data was uploaded.
+- `owner`: The Decentralized Identifier (DID) of the data owner.
+- `signature`: The cryptographic signature that verifies the integrity of the uploaded data.
+- `transactionHash`: The hash of the transaction that recorded the data upload on the blockchain.
+- `cost`: The cost associated with uploading and storing the data, if applicable.
+- `blockNumber`: The block number on the blockchain where the data upload transaction was recorded.
+- `fileHash`: The hash of the uploaded file, serving as a unique identifier for the data.
+- `schemaUri`: If the uploaded data follows a structured schema, the URI of the schema is provided.
+
+By following these steps and leveraging the Gateway API, developers can easily integrate the "Upload Data" functionality into their projects, providing users with a secure and decentralized way to store and manage their data.

@@ -1,0 +1,36 @@
+---
+title: Retrieve Data
+description: Learn how to retrieve data from an Encrypted Data Vault (EDV) using the Gateway API/SDKs.
+---
+
+The "Retrieve Data" functionality in Gateway enables developers to provide users with a seamless way to access and retrieve their stored data. By integrating this feature into their projects, developers can ensure that users can securely and efficiently retrieve their data while maintaining control over access permissions.
+
+To integrate the "Retrieve Data" flow into your project, follow these key steps:
+
+1. **Retrieve Data with Client-Side Decryption Key**: When a user requests to retrieve their data, the Gateway system verifies if the requester has access to the data based on the defined access control conditions. If the requester is authorized, Gateway initiates the retrieval process.
+
+2. **Ping Anchor Node to Get Data from EDV**: Gateway pings the appropriate Anchor Node to retrieve the requested data from the associated Encrypted Data Vault (EDV). The Anchor Node communicates with the EDV to fetch the encrypted data.
+
+3. **Decrypt the Data**: Once the encrypted data is retrieved from the EDV, it needs to be decrypted. Gateway uses the client-side private decryption key, which is securely stored and accessible only to the authorized user, to decrypt the data.
+
+4. **Handle the Response**: After successfully retrieving and decrypting the data, Gateway returns a response containing the requested data. The response structure will look similar to the following:
+
+```json
+{
+  "data": {
+    "id": "123456",
+    "name": "John Doe",
+    "email": "john.doe@example.com"
+  },
+  "owner": "did:example:123456789abcdef",
+  "timestamp": "2023-06-10T12:34:56Z"
+}
+```
+
+The response includes the following fields:
+
+- `data`: The actual data that was retrieved, which can be in any format (e.g., JSON, XML, plain text).
+- `owner`: The Decentralized Identifier (DID) of the data owner.
+- `timestamp`: The timestamp indicating when the data was retrieved.
+
+By following these steps and utilizing the Gateway API, developers can integrate the "Retrieve Data" functionality into their projects, allowing users to securely access and retrieve their stored data while maintaining control over access permissions.
