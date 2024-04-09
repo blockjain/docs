@@ -119,6 +119,10 @@
             "developer-flow/retrieve-data",
             "developer-flow/request-data"
           ]
+        },
+        {
+          "group": "Integration Guide",
+          "pages": ["integration-guide/overview"]
         }
       ]
     },
