@@ -1,0 +1,173 @@
+---
+title: PDA Interaction
+description: "Learn how to create a user, issue a PDA, and decrypt PDA data using the Gateway API."
+---
+
+Step 1: Create a User
+
+1. Generate a RSA-4096 keypair using the provided sandbox:
+
+   - Make sure to use the command on line 56 to generate a random keypair.
+   - After running the script, store both the `privateKey` and `publicPem` values.
+
+2. Use the `createUserNonce` mutation to create a user nonce:
+
+   - Pass the `signingKey` (your wallet) and the `encryptionKey` (the `publicPem` generated in the previous step).
+
+3. Sign the nonce and create the user using the `createUser` mutation.
+
+Example code:
+
+```javascript
+const CREATE_USER_NONCE = `
+  mutation($signingKey: String!, $encryptionKey: String!) {
+    createUserNonce(input: {
+      signingKey: $signingKey,
+      encryptionKey: $encryptionKey
+    })
+  }
+`;
+
+const CREATE_USER = `
+  mutation($signature: String!) {
+    createUser(input: {
+      signature: $signature
+    }) {
+      did
+    }
+  }
+`;
+
+async function createUser(signingKey, encryptionKey) {
+  try {
+    // Create user nonce
+    const nonceResult = await axios.post(
+      "https://sandbox.protocol.mygateway.xyz/graphql",
+      {
+        query: CREATE_USER_NONCE,
+        variables: {
+          signingKey: signingKey,
+          encryptionKey: encryptionKey,
+        },
+      }
+    );
+
+    const nonce = nonceResult.data.data.createUserNonce;
+
+    // Sign the nonce
+    const signature = await signer.signMessage(nonce);
+
+    // Create user
+    const userResult = await axios.post(
+      "https://sandbox.protocol.mygateway.xyz/graphql",
+      {
+        query: CREATE_USER,
+        variables: {
+          signature: signature,
+        },
+      }
+    );
+
+    const did = userResult.data.data.createUser.did;
+    console.log("User created with DID:", did);
+    return did;
+  } catch (error) {
+    console.error("Error creating user:", error);
+    throw error;
+  }
+}
+```
+
+Step 2: Issue a PDA
+
+1. Select a data model to create a PDA.
+
+2. Use the `createPDA` mutation to create a PDA:
+   - Fill the `data` input according to the selected data model.
+   - Encode the input using CBOR.
+
+Example code:
+
+```javascript
+const CREATE_PDA = `
+  mutation($data: String!) {
+    createPDA(input: {
+      data: $data
+    }) {
+      cipher {
+        aesBlob
+        tag
+        iv
+        ownerKeyBlob
+      }
+    }
+  }
+`;
+
+async function createPDA(did, dataModel, claim) {
+  try {
+    const pdaData = {
+      title: "Gateway Core Team Member",
+      description:
+        "Given to people that have had contributed to the beginning of Gateway",
+      owner: {
+        type: "USER_DID",
+        value: did,
+      },
+      dataModelId: dataModel,
+      image:
+        "<https://arweave.net/p_uEW7Ledg0-e4Fh2dOexqHJbau0MjO2u0EVCfbA0UI>",
+      claim: claim,
+    };
+
+    const encodedData = cbor.encode(pdaData);
+
+    const pdaResult = await axios.post(
+      "https://sandbox.protocol.mygateway.xyz/graphql",
+      {
+        query: CREATE_PDA,
+        variables: {
+          data: encodedData.toString("base64"),
+        },
+      }
+    );
+
+    const cipherData = pdaResult.data.data.createPDA.cipher;
+    console.log("PDA created with cipher data:", cipherData);
+    return cipherData;
+  } catch (error) {
+    console.error("Error creating PDA:", error);
+    throw error;
+  }
+}
+```
+
+Step 3: Decrypt PDA
+
+1. Get the cipher data: `aesBlob`, `tag`, `iv`, and `ownerKeyBlob` (if you are the owner of the PDA) or `issuerKeyBlob` (if you are the issuer).
+
+2. Use the provided sandbox to decrypt the data:
+   - Replace lines 62-71 with the collected cipher data and the encoded private key.
+   - Run the script to decrypt the data.
+
+Example code:
+
+```javascript
+function decryptPDA(cipherData, privateKey) {
+  const aesBlob = cipherData.aesBlob;
+  const tag = cipherData.tag;
+  const iv = cipherData.iv;
+  const ownerKeyBlob = cipherData.ownerKeyBlob;
+
+  // Decrypt the data using the sandbox script
+  // ...
+
+  return decryptedData;
+}
+```
+
+Note: Make sure to handle errors and provide appropriate error messages and user feedback throughout the process.
+
+These code snippets demonstrate how to create a user, issue a PDA, and decrypt the PDA data using the provided instructions and code samples.
+
+The `createUser` function creates a user by generating a nonce, signing it, and creating the user with the signed nonce. The `createPDA` function creates a PDA by encoding the data using CBOR and sending it to the Gateway API. Finally, the `decryptPDA` function decrypts the PDA data using the provided sandbox script.

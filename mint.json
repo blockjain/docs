@@ -122,7 +122,11 @@
         },
         {
           "group": "Integration Guide",
-          "pages": ["integration-guide/overview"]
+          "pages": [
+            "integration-guide/overview",
+            "integration-guide/user-authentication",
+            "integration-guide/pda-interaction"
+          ]
         }
       ]
     },
