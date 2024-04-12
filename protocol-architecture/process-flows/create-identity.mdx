@@ -1,0 +1,13 @@
+The process of creating an identity in the Gateway Protocol involves generating cryptographic artifacts, registering a Decentralized Identity (DID), and publishing public keys to the network.
+
+## 1. Generation of Cryptographic Artifacts
+
+- Each participant, $U_i$, generates a signing key pair (ECDSA secp256k1 or Ed25519) and an encryption key pair (RSA-4096/OAEP) off-band.
+
+## 2. DID Generation and Registration
+
+- $U_i$ constructs their DID by hashing the public signing key using BLAKE2B_384.
+- $U_i$ publishes the DID, public verification key, and public encryption key to the network, acting as a decentralized Certificate Authority.
+- $U_i$ can revoke access or rotate keys by signing a transaction with the private signing key to update the DID with new cryptographic artifacts.
+
+This process ensures secure authentication, encrypted interactions, and verifiability for all entities within the protocol, establishing a foundation for privacy-preserving data sharing.

@@ -1,0 +1,121 @@
+---
+title:
+description:
+---
+
+To integrate the user authentication process using the ethers library and the provided Gateway API code, follow these steps:
+
+1. Install the required dependencies:
+
+   ```bash
+   npm install ethers axios
+   ```
+
+2. Import the necessary libraries:
+
+   ```javascript
+   const ethers = require("ethers");
+   const axios = require("axios");
+   ```
+
+3. Implement the user authentication process:
+
+   ```javascript
+   async function authenticateUser(wallet) {
+     try {
+       // Make a request to the Gateway API to create a user nonce
+       const data = JSON.stringify({
+         query: `mutation($wallet: String!) {
+           createUserNonce(input: {
+             signingKey: $wallet,
+             encryptionKey: "base64 encoded public PEM key",
+             did: "did:gatewayid:joao",
+             deviceToken: "joao_device"
+           })
+         }`,
+         variables: { wallet: wallet },
+       });
+
+       const config = {
+         method: "post",
+         maxBodyLength: Infinity,
+         url: "https://sandbox.protocol.mygateway.xyz/graphql",
+         headers: {
+           "x-api-key": "local",
+           "Content-Type": "application/json",
+           Authorization: "Bearer {{ _.token }}",
+         },
+         data: data,
+       };
+
+       // Send the request to the Gateway API
+       const response = await axios.request(config);
+
+       // Extract the nonce from the response
+       const nonce = response.data.data.createUserNonce;
+
+       // Request the user to sign the nonce using their wallet
+       const provider = new ethers.providers.Web3Provider(window.ethereum);
+       await provider.send("eth_requestAccounts", []);
+       const signer = provider.getSigner();
+       const signature = await signer.signMessage(nonce);
+
+       // Send the signature back to the Gateway API for verification
+       const verificationData = JSON.stringify({
+         query: `mutation($signature: String!) {
+           verifyUserSignature(input: {
+             signature: $signature
+           })
+         }`,
+         variables: { signature: signature },
+       });
+
+       const verificationConfig = {
+         method: "post",
+         maxBodyLength: Infinity,
+         url: "https://sandbox.protocol.mygateway.xyz/graphql",
+         headers: {
+           "x-api-key": "local",
+           "Content-Type": "application/json",
+           Authorization: "Bearer {{ _.token }}",
+         },
+         data: verificationData,
+       };
+
+       const verificationResponse = await axios.request(verificationConfig);
+
+       // Check the verification response
+       if (verificationResponse.data.data.verifyUserSignature) {
+         console.log("User authentication successful");
+         // Proceed with further actions or redirect the user
+       } else {
+         console.log("User authentication failed");
+         // Handle authentication failure
+       }
+     } catch (error) {
+       console.log("Error during user authentication:", error);
+       // Handle errors
+     }
+   }
+   ```
+
+   This function takes the user's wallet address as input and performs the following steps:
+
+   - Sends a request to the Gateway API to create a user nonce.
+   - Extracts the nonce from the response.
+   - Requests the user to sign the nonce using their wallet (assuming MetaMask is being used).
+   - Sends the signature back to the Gateway API for verification.
+   - Checks the verification response and handles the authentication result accordingly.
+
+4. Call the `authenticateUser` function with the user's wallet address:
+
+   ```javascript
+   const userWalletAddress = "0x1234567890123456789012345678901234567890";
+   authenticateUser(userWalletAddress);
+   ```
+
+   Replace `'0x1234567890123456789012345678901234567890'` with the actual user's wallet address.
+
+Note: Make sure to handle errors and provide appropriate user feedback throughout the authentication process.
+
+This code demonstrates how to integrate the user authentication process using the ethers library and the provided Gateway API code. It assumes that the user has MetaMask installed and connected to their wallet. The code sends requests to the Gateway API to create a user nonce, requests the user to sign the nonce, and then verifies the signature to authenticate the user.

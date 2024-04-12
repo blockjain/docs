@@ -1,0 +1,15 @@
+The process of contributing data in the Gateway Protocol involves several steps:
+
+1. **File Preparation**: The data is encrypted using the Data Owner's public key and then partitioned into shards and subjected to erasure coding for fault tolerance.
+
+2. **Allocation Creation**: The Data Contributor interacts with a smart contract to create a Data Assurance Commitment, specifying storage parameters. Appropriate EDVs are selected, and a storage contract is finalized.
+
+3. **Data Upload**: The Data Contributor initiates a WRITE transaction, and the Anchor Node orchestrates the transfer of shards to the assigned EDVs, which issue receipts upon successful reception.
+
+4. **Proof of Storage**: EDVs are periodically challenged to provide Proof of Storage. Upon verification, a `WRITE_MARKER` is recorded, allowing EDVs to claim rewards from the Challenge Pool.
+
+5. **Payment and Token Flow**: After a verified challenge response, payment transactions are executed, distributing funds among EDVs, validators, and other participants based on their roles and SLA adherence.
+
+6. **File Retrieval and Management**: Data Verifiers can request access by creating a REQUEST transaction, which requires a re-encryption key. The Data Contributor or Owner can perform updates and signal deletion commands through smart contracts.
+
+This streamlined process ensures data security, privacy, and integrity while leveraging encryption, distributed ledger technology, and smart contracts for efficient data lifecycle management in a decentralized environment.

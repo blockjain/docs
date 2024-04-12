@@ -1,0 +1,51 @@
+---
+title: "Gateway Integration Guide"
+---
+
+1. User Authentication:
+
+   - Determine the user's authentication method (wallet or non-wallet).
+   - For wallet users (EVM, SVM, or other), integrate the respective wallet SDK or libraries to enable user authentication and signing capabilities within your application.
+   - For non-wallet users (email, phone number, etc.), implement a secure authentication mechanism such as OAuth or JWT to authenticate users.
+
+2. Check for Existing DID:
+
+   - Before creating a new DID, check if the user already has a DID on the Gateway network using the provided API.
+   - Make an API call to the Gateway network, passing the necessary user information (e.g., wallet address or email) to check for an existing DID.
+   - If the user already has a DID, provide them with the option to use the existing DID or create a new one.
+
+3. Create a New DID (if required):
+
+   - If the user doesn't have an existing DID or chooses to create a new one, proceed with the DID creation process.
+   - Obtain the message to be signed from the Gateway API by making an API call and passing the required user information.
+   - Display the message to the user and prompt them to sign it using their wallet (for wallet users) or a secure signing mechanism (for non-wallet users).
+   - Once the user signs the message, capture the signature and send it back to the Gateway API to create the new DID.
+
+4. Upload Structured Data:
+
+   - Encourage users to upload structured data to enhance the composability and indexing capabilities of the Gateway network.
+   - Define a schema for the structured data that aligns with your application's requirements and the Gateway network's guidelines.
+   - Provide a user-friendly interface for users to input structured data, such as forms or templates, ensuring that the data adheres to the defined schema.
+   - Validate the user's input to ensure data integrity and compliance with the schema.
+   - Make an API call to the Gateway network to upload the structured data, passing the necessary authentication headers (e.g., DID token) and the structured data payload.
+
+5. Upload Unstructured Data (if required):
+
+   - If your application supports unstructured data, provide an interface for users to upload such data.
+   - Implement file upload functionality, allowing users to select and upload unstructured data files.
+   - Make an API call to the Gateway network to upload the unstructured data, passing the necessary authentication headers (e.g., DID token) and the file data.
+
+6. Error Handling and User Feedback:
+
+   - Implement proper error handling mechanisms to gracefully handle any errors or exceptions that may occur during the integration process.
+   - Display user-friendly error messages and provide guidance on how to resolve common issues.
+   - Keep users informed about the progress of their actions (e.g., DID creation, data upload) through appropriate feedback mechanisms such as progress indicators or success messages.
+
+7. Testing and Deployment:
+   - Thoroughly test your Gateway integration to ensure its functionality, reliability, and security.
+   - Conduct unit tests, integration tests, and end-to-end tests to verify the correct behavior of your application when interacting with the Gateway network.
+   - Deploy your application to a staging environment for further testing and validation before releasing it to production.
+
+By following these steps and leveraging the provided APIs and documentation from the Gateway network, developers can successfully integrate Gateway into their applications, enabling users to create decentralized identities, upload structured and unstructured data, and participate in the Gateway ecosystem.
+
+Remember to handle user data securely, adhere to best practices for authentication and authorization, and provide a smooth and intuitive user experience throughout the integration process.

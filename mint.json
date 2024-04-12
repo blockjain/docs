@@ -33,16 +33,8 @@
   },
   "tabs": [
     {
-      "name": "SDK",
-      "url": "sdk"
-    },
-    {
-      "name": "Platform API",
-      "url": "api-reference"
-    },
-    {
-      "name": "Widget",
-      "url": "widget"
+      "name": "Developer Guide",
+      "url": "developer-guide"
     },
     {
       "name": "Usecases",
@@ -51,14 +43,24 @@
   ],
   "anchors": [
     {
-      "name": "Documentation",
+      "name": "Docs Home",
       "icon": "book-open-cover",
       "url": "/"
+    },
+    {
+      "name": "Gateway Homepage",
+      "icon": "house",
+      "url": "https://mygateway.xyz"
     },
     {
       "name": "Explorer",
       "icon": "compass",
       "url": "https://sandbox.mygateway.xyz/explorer"
+    },
+    {
+      "name": "Discord",
+      "icon": "discord",
+      "url": "https://discord.gg/zjHJZRZzts"
     }
   ],
   "navigation": [
@@ -66,9 +68,48 @@
       "group": "Gateway Protocol",
       "pages": ["introduction", "quickstart"]
     },
-
     {
-      "group": "Gateway Network",
+      "group": "Gateway Protocol Architecture",
+      "pages": [
+        "protocol-architecture/introduction",
+        {
+          "group": "Core Concepts",
+          "pages": [
+            "protocol-architecture/core-concepts/client",
+            "protocol-architecture/core-concepts/validation-layer",
+            "protocol-architecture/core-concepts/data-layer"
+          ]
+        },
+        {
+          "group": "Process Flow",
+          "pages": [
+            "protocol-architecture/process-flows/create-identity",
+            "protocol-architecture/process-flows/contribute-data",
+            "protocol-architecture/process-flows/request-data",
+            "protocol-architecture/process-flows/delete-data"
+          ]
+        },
+        {
+          "group": "Developer Flow",
+          "pages": [
+            "developer-flow/overview",
+            "developer-flow/upload-data",
+            "developer-flow/retrieve-data",
+            "developer-flow/request-data"
+          ]
+        }
+      ]
+    },
+    {
+      "group": "Architecture ",
+      "pages": [
+        "architecture/overview",
+        "architecture/validators",
+        "architecture/transactions"
+      ]
+    },
+    {
+      "group": "Key terms",
       "pages": [
         {
           "group": "Core Concepts",
@@ -92,29 +133,28 @@
       ]
     },
     {
-      "group": "Architecture ",
-      "pages": [
-        "architecture/overview",
-        "architecture/validators",
-        "architecture/transactions"
-      ]
-    },
-    {
       "group": "Help",
       "pages": ["support"]
     },
     {
+      "group": "Developer Guide",
+      "pages": ["developer-guide/overview"]
+    },
+    {
       "group": "SDK",
       "pages": [
-        "sdk/introduction",
-        "sdk/quickstart",
-        "sdk/reference",
-        "sdk/examples"
+        "developer-guide/sdk/introduction",
+        "developer-guide/sdk/quickstart",
+        "developer-guide/sdk/reference",
+        "developer-guide/sdk/examples"
       ]
     },
     {
       "group": "API Reference",
-      "pages": ["api-reference/introduction", "api-reference/authentication"]
+      "pages": [
+        "developer-guide/api-reference/introduction",
+        "developer-guide/api-reference/authentication"
+      ]
     },
     {
       "group": "Resources",
@@ -123,30 +163,30 @@
           "icon": "key",
           "group": "Personal Data Assets",
           "pages": [
-            "api-reference/pda/create-pda",
-            "api-reference/pda/fetch-pda",
-            "api-reference/pda/fetching-all-your-pdas",
-            "api-reference/pda/issued-pdas",
-            "api-reference/pda/update-pda",
-            "api-reference/pda/change-pda-status"
+            "developer-guide/api-reference/pda/create-pda",
+            "developer-guide/api-reference/pda/fetch-pda",
+            "developer-guide/api-reference/pda/fetching-all-your-pdas",
+            "developer-guide/api-reference/pda/issued-pdas",
+            "developer-guide/api-reference/pda/update-pda",
+            "developer-guide/api-reference/pda/change-pda-status"
           ]
         },
         {
           "icon": "database",
           "group": "Data Models",
           "pages": [
-            "api-reference/data-models/fetch-data-model",
-            "api-reference/data-models/fetch-all-data-models",
-            "api-reference/data-models/fetch-all-issuers"
+            "developer-guide/api-reference/data-models/fetch-data-model",
+            "developer-guide/api-reference/data-models/fetch-all-data-models",
+            "developer-guide/api-reference/data-models/fetch-all-issuers"
           ]
         },
         {
           "icon": "group-arrows-rotate",
           "group": "Organizations",
           "pages": [
-            "api-reference/organizations/create-org",
-            "api-reference/organizations/fetch-all-org",
-            "api-reference/organizations/update-org"
+            "developer-guide/api-reference/organizations/create-org",
+            "developer-guide/api-reference/organizations/fetch-all-org",
+            "developer-guide/api-reference/organizations/update-org"
           ]
         }
       ]
@@ -154,9 +194,9 @@
     {
       "group": "Widget",
       "pages": [
-        "widget/introduction",
-        "widget/quickstart",
-        "widget/configuration"
+        "developer-guide/widget/introduction",
+        "developer-guide/widget/quickstart",
+        "developer-guide/widget/configuration"
       ]
     },
     {
