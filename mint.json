@@ -137,10 +137,6 @@
       "pages": ["support"]
     },
     {
-      "group": "Developer Guide",
-      "pages": []
-    },
-    {
       "group": "SDK",
       "pages": [
         "developer-guide/sdk/introduction",
