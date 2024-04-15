@@ -100,21 +100,13 @@
         }
       ]
     },
-    {
-      "group": "Architecture ",
-      "pages": [
-        "architecture/overview",
-        "architecture/validators",
-        "architecture/transactions"
-      ]
-    },
+
     {
       "group": "Key terms",
       "pages": [
         {
           "group": "Core Concepts",
           "pages": [
-            "core-concepts/gateway-id",
             "core-concepts/personal-data-assets",
             "core-concepts/data-models",
             "core-concepts/data-requests",
@@ -173,7 +165,8 @@
           "pages": [
             "developer-guide/api-reference/data-models/fetch-data-model",
             "developer-guide/api-reference/data-models/fetch-all-data-models",
-            "developer-guide/api-reference/data-models/fetch-all-issuers"
+            "developer-guide/api-reference/data-models/fetch-all-issuers",
+            "developer-guide/api-reference/data-models/create-data-model"
           ]
         },
         {
