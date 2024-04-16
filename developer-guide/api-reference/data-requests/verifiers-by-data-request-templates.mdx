@@ -1,0 +1,71 @@
+---
+title: Verifiers by Data Request Template
+sidebarTitle: Verifiers by Data Request Template
+---
+
+This query returns the verifiers associated with a specific data request template.
+
+```graphql
+query {
+  verifiersByDataRequestTemplate(id: "YOUR_DATA_REQUEST_TEMPLATE_ID") {
+    verifier {
+      ... on User {
+        id
+        gatewayId
+      }
+      ... on Organization {
+        id
+        gatewayId
+      }
+    }
+    count
+  }
+}
+```
+
+<RequestExample>
+
+```ts Node.js
+const axios = require("axios");
+
+let data = JSON.stringify({
+  query: `query {
+    verifiersByDataRequestTemplate(id: "YOUR_DATA_REQUEST_TEMPLATE_ID") {
+      verifier {
+        ... on User {
+          id
+          gatewayId
+        }
+        ... on Organization {
+          id
+          gatewayId
+        }
+      }
+      count
+    }
+  }`,
+  variables: {},
+});
+
+let config = {
+  method: "post",
+  maxBodyLength: Infinity,
+  url: "https://protocol.mygateway.xyz/graphql",
+  headers: {
+    "Content-Type": "application/json",
+    "x-api-key": "YOUR_API_KEY",
+  },
+  data: data,
+};
+
+axios
+  .request(config)
+  .then((response) => {
+    console.log(JSON.stringify(response.data));
+  })
+  .catch((error) => {
+    console.log(error);
+  });
+```
+
+</RequestExample>

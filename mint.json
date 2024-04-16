@@ -171,6 +171,17 @@
           ]
         },
         {
+          "icon": "comments-question-check",
+          "group": "Data Requests",
+          "pages": [
+            "developer-guide/api-reference/data-requests/create-data-request",
+            "developer-guide/api-reference/data-requests/data-request-status",
+            "developer-guide/api-reference/data-requests/reject-data-request",
+            "developer-guide/api-reference/data-requests/create-data-request-template",
+            "developer-guide/api-reference/data-requests/verifiers-by-data-request-templates"
+          ]
+        },
+        {
           "icon": "group-arrows-rotate",
           "group": "Organizations",
           "pages": [

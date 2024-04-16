@@ -1,0 +1,47 @@
+---
+title: Fetch data request status
+sidebarTitle: Fetch data request status
+---
+
+You can fetch the status of a data request using the `dataRequestStatus` query. You will need the Data Request ID.
+
+```graphql
+query {
+  dataRequestStatus(requestId: "YOUR_DATA_REQUEST_ID")
+}
+```
+
+<RequestExample>
+
+```ts Node.js
+const axios = require("axios");
+
+let data = JSON.stringify({
+  query: `query {
+    dataRequestStatus(requestId: "YOUR_DATA_REQUEST_ID")
+  }`,
+  variables: {},
+});
+
+let config = {
+  method: "post",
+  maxBodyLength: Infinity,
+  url: "https://sandbox.protocol.mygateway.xyz/graphql",
+  headers: {
+    "Content-Type": "application/json",
+    "x-api-key": "YOUR_API_KEY",
+  },
+  data: data,
+};
+
+axios
+  .request(config)
+  .then((response) => {
+    console.log(JSON.stringify(response.data));
+  })
+  .catch((error) => {
+    console.log(error);
+  });
+```
+
+</RequestExample>
