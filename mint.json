@@ -72,6 +72,7 @@
       "group": "Gateway Protocol Architecture",
       "pages": [
         "protocol-architecture/introduction",
+        "protocol-architecture/easy-explainer",
         {
           "group": "Core Concepts",
           "pages": [
