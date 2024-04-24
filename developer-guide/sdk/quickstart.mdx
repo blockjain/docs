@@ -49,9 +49,16 @@ import { Gateway } from "@gateway-dao/sdk";
 const gateway = new Gateway({
   apiKey: "your-api-key", // Replace with your API Key
   token: "your-token", // Replace with your Bearer Token
-  url: "",
+  url: "https://sandbox.protocol.mygateway.xyz/graphql",
+  // this is for the sandbox environment
 });
 ```
+
+The endpoint URL for creation of Gateway instance is
+
+`https://protocol.mygateway.xyz/graphql` for the Mainnet.
+
+`https://sandbox.protocol.mygateway.xyz/graphql` for the Sandbox Environment.
 
 <Warning>
   Make sure you add token without "Bearer" word as we add Bearer automatically
