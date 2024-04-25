@@ -6,11 +6,30 @@ description:
 
 The Gateway Protocol API gives you the access to all the things you can do with the PDA. You can fetch the data models which are already there, create orgs, issue PDAs, create data request models and so on.
 
-The endpoint for the Gateway Protocol API is
+| Environment      | Testnet                                | Sandbox                                        |
+| ---------------- | -------------------------------------- | ---------------------------------------------- |
+| API Endpoint URL | https://protocol.mygateway.xyz/graphql | https://sandbox.protocol.mygateway.xyz/graphql |
+| Dashboard URL    | https://mygateway.xyz/dashboard/       | https://sandbox.mygateway.xyz/dashboard/       |
+| Explorer URL     | https://mygateway.xyz/explorer         | https://sandbox.mygateway.xyz/explorer         |
 
-`https://protocol.mygateway.xyz/graphql` for the Mainnet.
+<Note>
+  If you are planning to use the **Testnet Environment**, you will have to
+  **Create an Organization** on the [Gateway
+  Dashboard](https://mygateway.xyz/dashboard/) and then you would be able to get
+  Developer Access to the Testnet Environment.
 
-`https://sandbox.protocol.mygateway.xyz/graphql` for the Sandbox Environment.
+For creating an orgnaization click on your profile icon on the bottom left corner and then click on "Create Organization". Fill the details and click on "Create Organization".
+
+After creating the organization, click on the organization name and then click on "Developer Access" and you will be able to find your API Key and Bearer Token.
+
+</Note>
+
+<Note>
+  If you are planning to use the **Sandbox Environment**, you just need to
+  create your account on the [Gateway
+  Dashboard](https://sandbox.mygateway.xyz/dashboard/) and then you would be
+  able to get Developer Access to the Sandbox Environment.
+</Note>
 
 The API is a GraphQL API and you can use any GraphQL client to interact with it.
 We recommend using [Apollo Client](https://www.apollographql.com/docs/react/) for interacting with the API.

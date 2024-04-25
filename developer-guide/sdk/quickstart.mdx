@@ -39,7 +39,32 @@ pnpm install @gateway-dao/sdk
 <Step title="Setup the Gateway Client" >
 
 You will need an API Key and Bearer token to authenticate with the Gateway Protocol.
-You can obtain these from the [Gateway Dashboard](https://sandbox.mygateway.xyz/dashboard/).
+You can obtain these from the [Gateway Dashboard](https://mygateway.xyz/dashboard/).
+
+| Environment      | Testnet                                | Sandbox                                        |
+| ---------------- | -------------------------------------- | ---------------------------------------------- |
+| API Endpoint URL | https://protocol.mygateway.xyz/graphql | https://sandbox.protocol.mygateway.xyz/graphql |
+| Dashboard URL    | https://mygateway.xyz/dashboard/       | https://sandbox.mygateway.xyz/dashboard/       |
+| Explorer URL     | https://mygateway.xyz/explorer         | https://sandbox.mygateway.xyz/explorer         |
+
+<Note>
+  If you are planning to use the **Testnet Environment**, you will have to
+  **Create an Organization** on the [Gateway
+  Dashboard](https://mygateway.xyz/dashboard/) and then you would be able to get
+  Developer Access to the Testnet Environment.
+
+For creating an orgnaization click on your profile icon on the bottom left corner and then click on "Create Organization". Fill the details and click on "Create Organization".
+
+After creating the organization, click on the organization name and then click on "Developer Access" and you will be able to find your API Key and Bearer Token.
+
+</Note>
+
+<Note>
+  If you are planning to use the **Sandbox Environment**, you just need to
+  create your account on the [Gateway
+  Dashboard](https://sandbox.mygateway.xyz/dashboard/) and then you would be
+  able to get Developer Access to the Sandbox Environment.
+</Note>
 
 To setup the gateway client we will authenticate with a bearer-token and a Api key as follows:
 
@@ -49,16 +74,10 @@ import { Gateway } from "@gateway-dao/sdk";
 const gateway = new Gateway({
   apiKey: "your-api-key", // Replace with your API Key
   token: "your-token", // Replace with your Bearer Token
-  url: "https://sandbox.protocol.mygateway.xyz/graphql",
-  // this is for the sandbox environment
+  url: "https://protocol.mygateway.xyz/graphql",
+  // this is for the testnet environment
 });
 ```
-
-The endpoint URL for creation of Gateway instance is
-
-`https://protocol.mygateway.xyz/graphql` for the Mainnet.
-
-`https://sandbox.protocol.mygateway.xyz/graphql` for the Sandbox Environment.
 
 <Warning>
   Make sure you add token without "Bearer" word as we add Bearer automatically
@@ -86,7 +105,7 @@ import { Gateway, UserIdentifierType } from "@gateway-dao/sdk";
 const gateway = new Gateway({
   apiKey: "your-api-key",
   token: "your-token",
-  url: "https://sandbox.protocol.mygateway.xyz/graphql",
+  url: "https://protocol.mygateway.xyz/graphql",
 });
 
 async function main() {
