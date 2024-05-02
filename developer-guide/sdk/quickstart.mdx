@@ -101,7 +101,7 @@ const gatewayInstance = new Gateway({
 
 Now that we have setup the Gateway Client, we can interact with the Gateway Protocol for various operations.
 
-## Createa a Data Model
+# Create a Data Model
 
 ```ts Node.js
 import { Gateway } from "@gateway-dao/sdk";
@@ -158,6 +158,11 @@ Once you have created a Data Model, you can use its Data Model ID to start issui
 
 ## Create a PDA
 
+You can issue a Personal Data Asset (PDA) using the Data Model ID you created earlier.
+You can also choose an already existing Data Model ID to issue a PDA. Find the Data Model you require from the [Gateway Explorer](https://mygateway.xyz/explorer/data-models).
+
+Here is an example of how you can issue a PDA:
+
 ```ts Node.js
 import { Gateway, UserIdentifierType } from "@gateway-dao/sdk";
 
@@ -193,6 +198,6 @@ main();
 
 </Step>
 
-Congratulations! You have successfully created your first PDA and Data Request Template using the Gateway Protocol SDK.
+Congratulations! You have successfully created your first Data Model and issued a Personal Data Asset using that Data Model.
 
 </Steps>
