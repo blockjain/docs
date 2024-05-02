@@ -9,6 +9,8 @@ In this JavaScript quickstart we will learn how to:
 - Creating a Gateway Client
 - Interacting with the Protocol for various operations
 
+Here is the Github repository for this example code: [Gateway Protocol SDK Quickstart](https://github.com/Gateway-DAO/sdk-scripts-example/tree/main/src/v2/scripts)
+
 <Steps>
   <Step title="Install @gateway-dao/sdk">
 
@@ -73,7 +75,7 @@ To setup the gateway client we will authenticate with a bearer-token and a Api k
 ```ts Node.js
 import { Gateway } from "@gateway-dao/sdk";
 
-const gateway = new Gateway({
+const gatewayInstance = new Gateway({
   apiKey: "your-api-key", // Replace with your API Key
   token: "your-token", // Replace with your Bearer Token
   url: "https://protocol.mygateway.xyz/graphql",
@@ -98,6 +100,61 @@ const gateway = new Gateway({
 <Step title="Interacting with the Gateway Protocol" >
 
 Now that we have setup the Gateway Client, we can interact with the Gateway Protocol for various operations.
+
+## Createa a Data Model
+
+```ts Node.js
+import { Gateway } from "@gateway-dao/sdk";
+
+const gatewayInstance = new Gateway({
+  apiKey
+  token
+  url
+});
+
+
+async function main() {
+  try {
+    const { createDataModel } = await gatewayInstance.dataModel.createDataModel({
+      title: "Your Data Model Title",
+      description: "A brief description of your data model.",
+      permissions: "ALL",
+      tags: ["Tag1", "Tag2"],
+      schema: {
+        type: "object",
+        default: {},
+        title: "Your Data Model Title",
+        required: ["field1", "field2", "field3"],
+        properties: {
+          field1: {
+            type: "string",
+            title: "Field 1",
+          },
+          field2: {
+            type: "number",
+            title: "Field 2",
+            default: 0,
+          },
+          field3: {
+            type: "boolean",
+            title: "Field 3",
+            default: false,
+          },
+        },
+      },
+    });
+    console.log("Data model created:", createDataModel);
+    console.log("Your Data model ID:", createDataModel.id);
+    return createDataModel;
+  } catch (error) {
+    console.log(error); // Can log it for debugging
+  }
+}
+
+main();
+```
+
+Once you have created a Data Model, you can use its Data Model ID to start issuing Personal Data Assets (PDAs) to users.
 
 ## Create a PDA
 
