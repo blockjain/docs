@@ -81,6 +81,7 @@
             "protocol-architecture/core-concepts/data-layer"
           ]
         },
+        "protocol-architecture/FAQ",
         {
           "group": "Process Flow",
           "pages": [

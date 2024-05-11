@@ -1,0 +1,26 @@
+---
+title: FAQs about Gateway Protocol
+description: Frequently asked questions about the Gateway Protocol
+---
+
+1. Is Gateway building its own blockchain and storage network?
+
+   - Yes, Gateway is building its own Layer 1 (L1) blockchain and storage network bootstrapping nodes to store encrypted data in novel Encrypted Data Vaults (EDVs).
+
+2. How is the user's private key stored? Is it necessary to integrate the wallet SDK, just like integrating MetaMask in the app?
+
+   - The protocol requires the user to hold their signing key and encryption keys. As of right now (devnet), Gateway is facilitating the process. However, in a later stage, this will be required, though it's easy to manage that with the integration of the SDK.
+   - It's not necessary to integrate with Gateway's SDK. If your app already has a wallet connection, you can integrate with just the API to start issuing Personal Data Assets (PDAs).
+
+3. How is user data stored in fragments? Is it stored on IPFS?
+
+   - Gateway is building its own storage network, bootstrapping nodes to store encrypted data in novel Encrypted Data Vaults (EDVs). This is why Gateway is its own L1 (Layer 1) blockchain.
+   - The data is sharded with erasure coding (for parity/retrieval with minimal overhead) and stored across multiple nodes in the EDV network.
+
+4. At what stage is user data encrypted?
+
+   - The data is encrypted as soon as the data asset is issued. It's part of the creation process.
+
+5. How does the encryption process work in Gateway?
+
+   - The way data is encrypted on Gateway is through enveloped encryption: a random, unique symmetric key (one-time encryption mask) is generated to encrypt the data itself, and said one-time mask is then encrypted with the asymmetric key the data owner is holding (right now through Gateway's services, later on the wallet).
