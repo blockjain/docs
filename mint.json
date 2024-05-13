@@ -39,6 +39,10 @@
     {
       "name": "Usecases",
       "url": "usecases"
+    },
+    {
+      "name": "FAQ",
+      "url": "FAQ"
     }
   ],
   "anchors": [
@@ -81,7 +85,6 @@
             "protocol-architecture/core-concepts/data-layer"
           ]
         },
-        "protocol-architecture/FAQ",
         {
           "group": "Process Flow",
           "pages": [
@@ -89,15 +92,6 @@
             "protocol-architecture/process-flows/contribute-data",
             "protocol-architecture/process-flows/request-data",
             "protocol-architecture/process-flows/delete-data"
-          ]
-        },
-        {
-          "group": "Developer Flow",
-          "pages": [
-            "developer-flow/overview",
-            "developer-flow/upload-data",
-            "developer-flow/retrieve-data",
-            "developer-flow/request-data"
           ]
         }
       ]
@@ -129,6 +123,15 @@
     {
       "group": "Help",
       "pages": ["support"]
+    },
+    {
+      "group": "Developer Flow",
+      "pages": [
+        "developer-guide/developer-flow/overview",
+        "developer-guide/developer-flow/upload-data",
+        "developer-guide/developer-flow/retrieve-data",
+        "developer-guide/developer-flow/request-data"
+      ]
     },
     {
       "group": "SDK",
@@ -211,6 +214,10 @@
         "usecases/gaming",
         "usecases/loyalty-programs"
       ]
+    },
+    {
+      "group": "Frequently Asked Questions",
+      "pages": ["FAQ/FAQ"]
     }
   ],
 
