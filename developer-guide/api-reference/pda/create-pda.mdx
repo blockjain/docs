@@ -14,7 +14,7 @@ You need to fill up the parameters according to the data model you are using.
 | owner          | The person you are issuing the PDA to.                                                           | Object          | GATEWAY_ID, EMAIL, EVM, SOLANA, POKT, USER_ID |
 | dataModelId    | The ID of the data model you are using.                                                          | String          |                                               |
 | expirationDate | The format is ISO 8601. If null, the PDA will not expire.                                        | String          |                                               |
-| organization   | The organization who is issuing the PDA.                                                         | Object          | GATEWAY_ID, ORG_ID                            |
+| organization   | The organization who is issuing the PDA. Can be null.                                            | Object          | GATEWAY_ID, ORG_ID                            |
 | claim          | The fields which are there in the data model structure. You need to fill up the required fields. | Object          |                                               |
 
 ```graphql
