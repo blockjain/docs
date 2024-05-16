@@ -3,22 +3,37 @@ title: Creating a PDA
 sidebarTitle: Create a PDA
 ---
 
-You have to write a mutation to create a PDA. The mutation should be written in the following format:
+You have to write a mutation to create a PDA. The mutation should be written in the following format.
+
+You need to fill up the parameters according to the data model you are using.
+
+| Parameter      | Description                                                                                      | Possible Values | Possible Types                                |
+| -------------- | ------------------------------------------------------------------------------------------------ | --------------- | --------------------------------------------- |
+| title          | The title of the PDA.                                                                            | String          |                                               |
+| description    | A brief description of the PDA.                                                                  | String          |                                               |
+| owner          | The person you are issuing the PDA to.                                                           | Object          | GATEWAY_ID, EMAIL, EVM, SOLANA, POKT, USER_ID |
+| dataModelId    | The ID of the data model you are using.                                                          | String          |                                               |
+| expirationDate | The format is ISO 8601. If null, the PDA will not expire.                                        | String          |                                               |
+| organization   | The organization who is issuing the PDA.                                                         | Object          | GATEWAY_ID, ORG_ID                            |
+| claim          | The fields which are there in the data model structure. You need to fill up the required fields. | Object          |                                               |
 
 ```graphql
 # Query
 mutation createPDA {
   createPDA(
     input: {
-      title: "Favorite Person on Crypto Twitter"
-      description: "This is to someone who's content you admire/love on Crypto Twitter."
-      owner: { type: GATEWAY_ID, value: "saviour1001" } # Whomst the PDA is issued to
-      dataModelId: "9f27397e-27f2-4c30-b1b7-829371de4df5" # The data model ID for the PDA
+      title: "My Personal Data Asset"
+      description: "This is an example PDA showcasing filler data."
+      owner: { type: GATEWAY_ID, value: "user-gateway-id" }
+      dataModelId: "example-data-model-id"
       expirationDate: null
-      organization: null
+      organization: { type: GATEWAY_ID, value: "org-gateway-id" }
       claim: {
-        handleName: "@gateway_xyz" # string
-        favoritePosts: ["awesome"] # array
+        name: "John Doe"
+        age: 30
+        email: "johndoe@example.com"
+        interests: ["reading", "traveling", "photography"]
+        isStudent: false
       }
     }
   ) {
