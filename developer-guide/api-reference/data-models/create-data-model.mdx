@@ -5,13 +5,22 @@ sidebarTitle: Create a new data model
 
 You can create a new data model specific to your requirements using the following mutation.
 
+In the "permissions" field, you can specify the access permissions for the data model. The possible values are:
+
+| Permissions   | Description                                                                                                                            |
+| ------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| ALL           | All users can access the data model and issue PDAs on it.                                                                              |
+| ORGANIZATIONS | Only users from the specified organization which is passed in the "organization" field can access the data model and issue PDAs on it. |
+| SPECIFIC_IDS  | Only users with the specified user IDs can access the data model and issue PDAs on it.                                                 |
+
 ```graphql
 mutation {
   createDataModel(
     input: {
       title: "Your Data Model Title"
       description: "A brief description of your data model."
-      permissions: ALL
+      organization: { type: GATEWAY_ID, value: "YOUR_ORGANIZATION_GATEWAY_ID" }
+      permissions: ORGANIZATIONS
       tags: ["Tag1", "Tag2"]
       schema: {
         type: "object"
@@ -48,49 +57,39 @@ const axios = require("axios");
 
 let data = JSON.stringify({
   query: `mutation {
-    createDataModel(
-      input: {
+  createDataModel(
+    input: {
+      title: "Your Data Model Title"
+      description: "A brief description of your data model."
+      organization: { type: GATEWAY_ID, value: "YOUR_ORGANIZATION_GATEWAY_ID" }
+      permissions: ORGANIZATIONS
+      tags: ["Tag1", "Tag2"]
+      schema: {
+        type: "object"
+        default: {}
         title: "Your Data Model Title"
-        description: "A brief description of your data model."
-        permissions: ALL
-        tags: ["Tag1", "Tag2"]
-        schema: {
-          type: "object"
-          default: {}
-          title: "Your Data Model Title"
-          required: ["field1", "field2", "field3"]
-          properties: {
-            field1: {
-              type: "string"
-              title: "Field 1"
-            },
-            field2: {
-              type: "number"
-              title: "Field 2"
-              default: 0
-            },
-            field3: {
-              type: "boolean"
-              title: "Field 3"
-              default: false
-            }
-          }
+        required: ["field1", "field2", "field3"]
+        properties: {
+          field1: { type: "string", title: "Field 1" }
+          field2: { type: "number", title: "Field 2", default: 0 }
+          field3: { type: "boolean", title: "Field 3", default: false }
         }
       }
-    ) {
-      id
-      title
-      schema
-      allowedUsers {
-        id
-        gatewayId
-      }
-      allowedOrganizations {
-        id
-        gatewayId
-      }
     }
-  }`,
+  ) {
+    id
+    title
+    schema
+    allowedUsers {
+      id
+      gatewayId
+    }
+    allowedOrganizations {
+      id
+      gatewayId
+    }
+  }
+}`,
   variables: {},
 });
 
