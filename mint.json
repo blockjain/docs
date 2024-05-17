@@ -190,6 +190,7 @@
           "group": "Organizations",
           "pages": [
             "developer-guide/api-reference/organizations/create-org",
+            "developer-guide/api-reference/organizations/add-member",
             "developer-guide/api-reference/organizations/fetch-all-org",
             "developer-guide/api-reference/organizations/update-org"
           ]

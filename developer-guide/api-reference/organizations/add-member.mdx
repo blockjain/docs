@@ -1,0 +1,82 @@
+---
+title: Add Member to Organization
+sidebarTitle: Add Member to Organization
+---
+
+You can add a member to an organization using the `addMember` mutation. You can specify the `organization` and `user` of the organization and user respectively. The `role` is used to specify the role of the user in the organization.
+
+The organization can be identified by one of the following:
+
+- `GATEWAY_ID`
+- `ORG_ID`
+
+The user can be identified by one of the following:
+
+- `GATEWAY_ID`
+- `EMAIL`
+- `EVM`
+- `SOLANA`
+- `POKT`
+- `USER_ID`
+
+Role can be one of the following, by default its `Member`:
+
+- `Member`
+- `Admin`
+- `Owner`
+
+```graphql
+mutation addMemberToOrganization {
+  addMemberToOrganization(
+    input: {
+      organization: { type: GATEWAY_ID, value: "YOUR_ORG_GATEWAY_ID" }
+      user: { type: GATEWAY_ID, value: "USER_GATEWAY_ID" }
+      role: "Member"
+    }
+  ) {
+    id
+  }
+}
+```
+
+<RequestExample>
+
+```ts Node.js
+const axios = require("axios");
+let data = JSON.stringify({
+  query: `mutation addMemberToOrganization {
+        addMemberToOrganization(
+            input: {
+                organization: { type: GATEWAY_ID, value: "YOUR_ORG_GATEWAY_ID" }
+                user: { type: GATEWAY_ID, value: "USER_GATEWAY_ID" }
+            }
+        ) {
+            id
+        }
+    }`,
+  variables: {},
+});
+
+let config = {
+  method: "post",
+  maxBodyLength: Infinity,
+  url: "https://sandbox.protocol.mygateway.xyz/graphql",
+  headers: {
+    "X-Api-Key": "<YOUR_API_KEY>",
+    Authorization: "Bearer <YOUR_AUTHENTICATION_TOKEN>",
+    "Content-Type": "application/json",
+  },
+  data: data,
+};
+
+axios
+  .request(config)
+  .then((response) => {
+    console.log(JSON.stringify(response.data));
+  })
+  .catch((error) => {
+    console.log(error);
+  });
+```
+
+</RequestExample>
