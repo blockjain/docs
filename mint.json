@@ -200,7 +200,8 @@
           "group": "Transactions",
           "pages": [
             "developer-guide/api-reference/transactions/fetch-transactions",
-            "developer-guide/api-reference/transactions/my-transactions"
+            "developer-guide/api-reference/transactions/my-transactions",
+            "developer-guide/api-reference/transactions/transactions"
           ]
         }
       ]
