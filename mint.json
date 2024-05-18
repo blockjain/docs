@@ -29,7 +29,7 @@
   ],
   "topbarCtaButton": {
     "name": "Dashboard",
-    "url": "https://sandbox.mygateway.xyz/dashboard/user/home"
+    "url": "https://mygateway.xyz/dashboard/user/home"
   },
   "tabs": [
     {
@@ -194,6 +194,14 @@
             "developer-guide/api-reference/organizations/fetch-all-org",
             "developer-guide/api-reference/organizations/update-org"
           ]
+        },
+        {
+          "icon": "inbox-in",
+          "group": "Transactions",
+          "pages": [
+            "developer-guide/api-reference/transactions/fetch-transactions",
+            "developer-guide/api-reference/transactions/my-transactions"
+          ]
         }
       ]
     },
@@ -228,7 +236,7 @@
     "linkedin": "https://www.linkedin.com/company/mygateway"
   },
   "api": {
-    "baseUrl": "https://sandbox.protocol.mygateway.xyz/graphql",
+    "baseUrl": "https://protocol.mygateway.xyz/graphql",
     "auth": {
       "method": "bearer"
     }

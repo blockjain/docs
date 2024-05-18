@@ -42,7 +42,7 @@ async function createUser(signingKey, encryptionKey) {
   try {
     // Create user nonce
     const nonceResult = await axios.post(
-      "https://sandbox.protocol.mygateway.xyz/graphql",
+      "https://protocol.mygateway.xyz/graphql",
       {
         query: CREATE_USER_NONCE,
         variables: {
@@ -59,7 +59,7 @@ async function createUser(signingKey, encryptionKey) {
 
     // Create user
     const userResult = await axios.post(
-      "https://sandbox.protocol.mygateway.xyz/graphql",
+      "https://protocol.mygateway.xyz/graphql",
       {
         query: CREATE_USER,
         variables: {
@@ -123,7 +123,7 @@ async function createPDA(did, dataModel, claim) {
     const encodedData = cbor.encode(pdaData);
 
     const pdaResult = await axios.post(
-      "https://sandbox.protocol.mygateway.xyz/graphql",
+      "https://protocol.mygateway.xyz/graphql",
       {
         query: CREATE_PDA,
         variables: {
