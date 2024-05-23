@@ -152,9 +152,10 @@
     {
       "group": "Resources",
       "pages": [
+        "developer-guide/api-reference/overview",
         {
-          "icon": "key",
-          "group": "Personal Data Assets",
+          "icon": "upload",
+          "group": "Uploading Data",
           "pages": [
             "developer-guide/api-reference/pda/create-pda",
             "developer-guide/api-reference/pda/fetch-pda",
