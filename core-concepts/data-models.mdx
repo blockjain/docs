@@ -36,7 +36,40 @@ You can browse Data Models on the explorer [here](https://sandbox.mygateway.xyz/
 Data models are structured in JSON format. JSON Schema is fully supported and there are additional contextual fields added to help make the data more readable and useable. Each Data Model is signed with the creator's signing key to establish provenance and verifiability.
 
 ```
-INSERT THE DATA MODEL STRUCTURE HERE
+{
+  "type": "object",
+  "title": "Gateway ID",
+  "default": {},
+  "required": [],
+  "properties": {
+    "name": {
+      "type": "string",
+      "title": "Name"
+    },
+    "email": {
+      "type": "string",
+      "title": "E-mail"
+    },
+    "avatar": {
+      "type": "string",
+      "title": "Avatar",
+      "contentMediaType": "image/png"
+    },
+    "username": {
+      "type": "string",
+      "title": "Username"
+    },
+    "evmWallet": {
+      "type": "string",
+      "title": "EVM Wallet"
+    },
+    "solanaWallet": {
+      "type": "string",
+      "title": "Solana Wallet"
+    }
+  },
+  "additionalProperties": false
+}
 ```
 
 # Data Model structure

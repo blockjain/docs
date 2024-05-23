@@ -25,7 +25,7 @@ PDAs often contain high value sensitive data. This can range from your healthcar
 
 ## Contribution
 
-**The lifecycle of the PDA starts when the Data Contributor utilizes a data model to contribute data about (another) DID ** This data is usually something that the Contributor may hold about you. For example, this can be your loyalty information at North Face or transcript from the college you attended.
+**The lifecycle of the PDA starts when the Data Contributor utilizes a data model to contribute data about (another) DID** This data is usually something that the Contributor may hold about you. For example, this can be your loyalty information at North Face or transcript from the college you attended.
 
 Once the Data Contributor sends the Data Model ID along with the user data (encrypted in transit), the validators verify against the schema before surfacing the "contribution" on the Gateway Ledger. A sample transaction of a contribution can be viewed [here](https://sandbox.mygateway.xyz/explorer/transactions/65d5ce5b5f55a7755cecb1ed).
 
@@ -34,7 +34,39 @@ The responsibility for ensuring the accuracy of this data rests squarely on the 
 **A sample mutation for issuance**
 
 ```
-INSERT STRUCTURE OF PDA
+mutation createPDA {
+  createPDA(
+    input: {
+      title: "My Personal Data Asset"
+      description: "This is an example PDA showcasing filler data."
+      owner: { type: GATEWAY_ID, value: "user-gateway-id" }
+      dataModelId: "example-data-model-id"
+      expirationDate: null
+      organization: { type: GATEWAY_ID, value: "org-gateway-id" }
+      claim: {
+        name: "John Doe"
+        age: 30
+        email: "johndoe@example.com"
+        interests: ["reading", "traveling", "photography"]
+        isStudent: false
+      }
+    }
+  ) {
+    id
+    arweaveUrl
+    dataAsset {
+      owner {
+        id
+        gatewayId
+      }
+      issuer {
+        id
+        gatewayId
+      }
+    }
+    transactionId
+  }
+}
 ```
 
 ## Updating Claim Info
