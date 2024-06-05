@@ -67,7 +67,11 @@ Once you are logged in to the dashboard, navigate to the `Developer Access` sect
 Create a new file called `index.js` and add the following code to it.
 
 ```javascript
-import { Gateway, UserIdentifierType, OrganizationIdentifierType} from "@gateway-dao/sdk";
+import {
+  Gateway,
+  UserIdentifierType,
+  OrganizationIdentifierType,
+} from "@gateway-dao/sdk";
 
 const gateway = new Gateway({
   apiKey: "your-api-key", // Replace with your actual API key from the dashboard
@@ -77,20 +81,22 @@ const gateway = new Gateway({
 
 async function main() {
   try {
-    dataModelId: "7f1e400e-b761-4e35-913d-09e500f36e79",
-    description: "TESTING MODEL",
-    title: "TESTING MODEL",
-    claim: {
-      model_id: "123",
-    },
-    owner: {
-      type: UserIdentifierType.GATEWAY_ID,
-      value: "YOUR_GATEWAY_ID",
-    },
-    organization: {
-      type: OrganizationIdentifierType.GATEWAY_ID,
-      value: "YOUR_ORG_ID",
-    },
+    let obj = {
+      dataModelId: "7f1e400e-b761-4e35-913d-09e500f36e79",
+      description: "TESTING MODEL",
+      title: "TESTING MODEL",
+      claim: {
+        model_id: "123",
+      },
+      owner: {
+        type: UserIdentifierType.GATEWAY_ID,
+        value: "YOUR_GATEWAY_ID",
+      },
+      organization: {
+        type: OrganizationIdentifierType.GATEWAY_ID,
+        value: "YOUR_ORG_ID",
+      },
+    };
     const { createPDA } = await gateway.pda.createPDA(obj);
     console.log(createPDA);
   } catch (error) {
