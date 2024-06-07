@@ -187,6 +187,11 @@
           ]
         },
         {
+          "icon": "shield-check",
+          "group": "Authenitcation",
+          "pages": ["developer-guide/api-reference/authentication/createNonce"]
+        },
+        {
           "icon": "group-arrows-rotate",
           "group": "Organizations",
           "pages": [
