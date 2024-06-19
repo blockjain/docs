@@ -1,0 +1,300 @@
+---
+title: Code Snippets for everything
+---
+
+Use the following code snippets once you have set up your Organization and have got your API Key and Bearer Token from the Gateway Protocol dashboard.
+
+We are using [Gateway's SDK](https://www.npmjs.com/package/@gateway-dao/sdk) for all the following examples.
+
+You can find all the code snippets in this [GitHub repository](https://github.com/Gateway-DAO/sdk-scripts-example/tree/main/src/v2)
+
+## Initiating the SDK
+
+```javascript
+export const gatewayInstance = new Gateway({
+  url: "https://protocol.mygateway.xyz/graphql",
+  apiKey: process.env.API_KEY || "YOUR_API_KEY", // keep these protected in env files
+  token: process.env.TOKEN || "YOUR_TOKEN", // keep these protected in env files
+});
+```
+
+## Creating a Personal Data Asset
+
+```javascript
+export async function createPDA() {
+  let obj = {
+    dataModelId: "7f1e400e-b761-4e35-913d-09e500f36e79", // change to your data model id
+    description: "TESTING MODEL",
+    title: "TESTING MODEL",
+    claim: {
+      model_id: "123",
+    },
+    owner: {
+      type: UserIdentifierType.GATEWAY_ID,
+      value: "YOUR_GATEWAY_ID",
+    },
+    organization: {
+      type: OrganizationIdentifierType.GATEWAY_ID,
+      value: "YOUR_ORG_ID",
+    },
+  };
+  const { createPDA } = await gatewayInstance.pda.createPDA(obj);
+  console.log(createPDA);
+}
+```
+
+## Creating a Data Model
+
+```javascript
+export async function createDataModel() {
+  try {
+    const { createDataModel } = await gatewayInstance.dataModel.createDataModel(
+      {
+        title: "Your Data Model Title",
+        description: "A brief description of your data model.",
+        permissions: "ALL",
+        tags: ["Tag1", "Tag2"],
+        schema: {
+          type: "object",
+          default: {},
+          title: "Your Data Model Title",
+          required: ["field1", "field2", "field3"],
+          properties: {
+            field1: {
+              type: "string",
+              title: "Field 1",
+            },
+            field2: {
+              type: "number",
+              title: "Field 2",
+              default: 0,
+            },
+            field3: {
+              type: "boolean",
+              title: "Field 3",
+              default: false,
+            },
+          },
+        },
+      }
+    );
+
+    console.log("Data model created:", createDataModel);
+
+    console.log("Your Data model ID:", createDataModel.id);
+    return createDataModel;
+  } catch (error) {
+    console.error("Error creating data model:", error);
+    throw error;
+  }
+}
+```
+
+## All things PDA (Personal Data Asset)
+
+```javascript
+export async function updatePDA() {
+  // add the fields you want to update
+
+  const { updatePDA } = await gatewayInstance.pda.updatePDA({
+    id: "existing-id-of-your-pda",
+    title: "Changed PDA title",
+  });
+  console.log(updatePDA);
+}
+
+export async function changePDASatus() {
+  const { changePDAStatus } = await gatewayInstance.pda.changePDAStatus({
+    id: "existing-id-of-your-pda",
+    status: PDAStatus.Valid,
+  });
+  console.log(changePDAStatus);
+}
+
+export async function getPDA() {
+  const { PDA } = await gatewayInstance.pda.getPDA("exisiting-id-of-your-pda");
+  console.log(PDA);
+}
+
+export async function getAllPDAs() {
+  const pdas = await gatewayInstance.pda.getPDAs({
+    filter: {
+      issuer: { type: "GATEWAY_ID", value: "saviour1002" },
+      owner: { type: "GATEWAY_ID", value: "user" },
+      // organization: { type: "GATEWAY_ID", value: "" }, // pass the organization id if you want to filter by organization
+    },
+  });
+
+  console.log(pdas);
+}
+```
+
+## Data Request Template
+
+```javascript
+import { gatewayInstance } from "../GatewayInstance";
+
+export async function createDataRequestTemplate() {
+  const { createDataRequestTemplate } =
+    await gatewayInstance.dataRequestTemplate.createDataRequestTemplate({
+      title: "Create Data Request Template Example",
+      description: "Lorem ipsum dolor sit amet.",
+      dataModels: [
+        {
+          id: "9f27397e-27f2-4c30-b1b7-829371de4df5",
+          required: true,
+          claimValidations: {
+            type: "object",
+            properties: {
+              handleName: {
+                type: "string",
+              },
+              favoritePosts: {
+                type: "array",
+              },
+            },
+            required: ["handleName", "favoritePosts"],
+          },
+        },
+      ],
+    });
+  console.log(createDataRequestTemplate);
+}
+
+export async function getDataRequestTemplate() {
+  const { dataRequestTemplate } =
+    await gatewayInstance.dataRequestTemplate.getDataRequestTemplate(
+      "9f27397e-27f2-4c30-b1b7-829371de4df5"
+    );
+  console.log(dataRequestTemplate);
+}
+```
+
+## Data Request
+
+```javascript
+import { gatewayInstance } from "../GatewayInstance";
+
+export async function createDataRequest() {
+  const { createDataRequest } = await gatewayInstance.request.createDataRequest(
+    {
+      dataRequestTemplateId: "d9d99666-4f6a-4a77-9f99-141f1405b1af",
+      dataUse:
+        "Web3 is an idea for a new iteration of the World Wide Web which incorporates concepts such as decentralization, blockchain technologies, and token-based economics.",
+      owner: { type: "GATEWAY_ID", value: "saviour1002" },
+    }
+  );
+  console.log(createDataRequest);
+}
+
+export async function getDataRequest() {
+  const { dataRequest } = await gatewayInstance.request.getDataRequest(
+    "a90e9dbd-0c8e-4dcb-9778-5c1799a2fcc1"
+  );
+  console.log(dataRequest);
+}
+
+export async function getDataRequests() {
+  const { dataRequests } = await gatewayInstance.request.getDataRequests();
+  console.log(dataRequests);
+}
+
+export async function dataRequestStatus() {
+  const { dataRequestStatus } =
+    await gatewayInstance.request.getDataRequestStatus(
+      "<--request id of the request template -->"
+    );
+
+  console.log(dataRequestStatus);
+}
+```
+
+## Transactions
+
+```javascript
+import { gatewayInstance } from "../GatewayInstance";
+
+export async function getTransaction() {
+  const { transaction } = await gatewayInstance.transaction.getTransaction(
+    "<-- transaction id -->"
+  );
+
+  console.log(transaction);
+}
+
+export async function getTransactions() {
+  const { transactions } = await gatewayInstance.transaction.getTransactions();
+  console.log(transactions);
+}
+
+export async function getTransactionCount() {
+  const { transactionsCount } =
+    await gatewayInstance.transaction.getTransactionCount();
+
+  console.log(transactionsCount);
+}
+```
+
+## Organization Management
+
+```javascript
+import { OrganizationIdentifierType } from "@gateway-dao/sdk";
+import { gatewayInstance } from "../GatewayInstance";
+
+export async function createOrganization() {
+  const { createOrganization } =
+    await gatewayInstance.organization.createOrganization({
+      name: "Create sample organization",
+      description: "Sample organization description",
+      username: "sampleorganization01",
+    });
+  console.log(createOrganization);
+}
+
+export async function addMemberToOrganization() {
+  const { addMemberToOrganization } =
+    await gatewayInstance.organization.addMemberToOrganization({
+      organization: { type: "GATEWAY_ID", value: "org-gateway-id" },
+      user: { type: "GATEWAY_ID", value: "user-gateway-id" },
+      role: "Member",
+    });
+  console.log(addMemberToOrganization);
+}
+
+export async function changeMemberRole() {
+  const { changeMemberRole } =
+    await gatewayInstance.organization.changeMemberRole({
+      organization: { type: "GATEWAY_ID", value: "org-gateway-id" },
+      user: { type: "GATEWAY_ID", value: "user-gateway-id" },
+      role: "Admin",
+    });
+  console.log(changeMemberRole);
+}
+
+export async function removeMemberFromOrganization() {
+  const { removeMemberFromOrganization } =
+    await gatewayInstance.organization.removeMemberFromOrganization({
+      organization: { type: "GATEWAY_ID", value: "org-gateway-id" },
+      user: { type: "GATEWAY_ID", value: "user-gateway-id" },
+    });
+  console.log(removeMemberFromOrganization);
+}
+
+export async function updateOrganization() {
+  // update fields you want
+  const { updateOrganization } =
+    await gatewayInstance.organization.updateOrganization({
+      id: "your-org-id",
+      description: "updated description",
+    });
+  console.log(updateOrganization);
+}
+
+export async function getOrganization() {
+  const { organization } = await gatewayInstance.organization.getOrganization(
+    OrganizationIdentifierType.GATEWAY_ID,
+    "your-org-id"
+  );
+  console.log(organization);
+}
+```
