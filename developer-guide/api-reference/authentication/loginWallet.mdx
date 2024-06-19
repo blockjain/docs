@@ -1,19 +1,18 @@
 ---
-title: Create Wallet Nonce
+title: Login Wallet
 description: Nonce required to be signed by the user wallet.
 ---
 
-Whilst authenticating with Gateway Protocol, the wallet needs to sign a nonce. This nonce can be generate by using the `createWalletNonce` mutation.
-
-| Parameter | Description                                            | Possible Values   |
-| --------- | ------------------------------------------------------ | ----------------- |
-| wallet    | The wallet address of the user.                        | String            |
-| chain     | The chain you are interacting with. Default Value: EVM | EVM, SOLANA, POKT |
-
 ```graphql
 mutation ($wallet: String!) {
-  createWalletNonce(input: { wallet: $wallet, chain: SOL }) {
-    message
+  loginWallet(
+    input: {
+      signature: "YOUR_SIGNATURE"
+      wallet: $wallet
+      publicKey: "YOUR_PUBLIC_KEY"
+    }
+  ) {
+    token
   }
 }
 ```
