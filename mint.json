@@ -140,7 +140,8 @@
         "developer-guide/sdk/quickstart",
         "developer-guide/sdk/code-snippets",
         "developer-guide/sdk/reference",
-        "developer-guide/sdk/examples"
+        "developer-guide/sdk/examples",
+        "developer-guide/sdk/troubleshooting"
       ]
     },
     {
