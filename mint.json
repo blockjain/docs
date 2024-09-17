@@ -47,11 +47,6 @@
   ],
   "anchors": [
     {
-      "name": "Docs Home",
-      "icon": "book-open-cover",
-      "url": "/"
-    },
-    {
       "name": "Gateway Homepage",
       "icon": "house",
       "url": "https://mygateway.xyz"
@@ -96,9 +91,8 @@
         }
       ]
     },
-
     {
-      "group": "Key terms",
+      "group": "Key Terms",
       "pages": [
         {
           "group": "Fundamentals",
@@ -159,69 +153,56 @@
           "icon": "upload",
           "group": "Uploading Data",
           "pages": [
-            "developer-guide/api-reference/pda/create-pda",
-            "developer-guide/api-reference/pda/fetch-pda",
-            "developer-guide/api-reference/pda/fetching-all-your-pdas",
-            "developer-guide/api-reference/pda/issued-pdas",
-            "developer-guide/api-reference/pda/update-pda",
-            "developer-guide/api-reference/pda/change-pda-status"
+            "developer-guide/api-reference-v3/data-assets/create-a-new-data-asset",
+            "developer-guide/api-reference-v3/data-assets/assign-acl-items-to-data-asset"
+          ]
+        },
+        {
+          "icon": "download",
+          "group": "Reading Data",
+          "pages": [
+            "developer-guide/api-reference-v3/data-assets/get-my-data-assets",
+            "developer-guide/api-reference-v3/data-assets/get-data-asset-by-id",
+            "developer-guide/api-reference-v3/data-assets/download-data-asset-by-id"
+          ]
+        },
+        {
+          "icon": "pen-nib",
+          "group": "Updating Data",
+          "pages": [
+            "developer-guide/api-reference-v3/data-assets/update-data-asset-by-id",
+            "developer-guide/api-reference-v3/data-assets/update-acl-items-to-data-asset",
+            "developer-guide/api-reference-v3/data-assets/update-data-asset-metadata-by-id"
+          ]
+        },
+        {
+          "icon": "eraser",
+          "group": "Deleting Data",
+          "pages": [
+            "developer-guide/api-reference-v3/data-assets/delete-data-asset-by-id",
+            "developer-guide/api-reference-v3/data-assets/delete-assigned-role-by-acl"
           ]
         },
         {
           "icon": "database",
           "group": "Data Models",
           "pages": [
-            "developer-guide/api-reference/data-models/fetch-data-model",
-            "developer-guide/api-reference/data-models/fetch-all-data-models",
-            "developer-guide/api-reference/data-models/fetch-all-issuers",
-            "developer-guide/api-reference/data-models/create-data-model"
-          ]
-        },
-        {
-          "icon": "comments-question-check",
-          "group": "Data Requests",
-          "pages": [
-            "developer-guide/api-reference/data-requests/create-data-request",
-            "developer-guide/api-reference/data-requests/data-request-status",
-            "developer-guide/api-reference/data-requests/reject-data-request",
-            "developer-guide/api-reference/data-requests/create-data-request-template",
-            "developer-guide/api-reference/data-requests/verifiers-by-data-request-templates"
+            "developer-guide/api-reference-v3/data-models/get-data-models",
+            "developer-guide/api-reference-v3/data-models/create-data-model",
+            "developer-guide/api-reference-v3/data-models/get-data-models-by-user",
+            "developer-guide/api-reference-v3/data-models/get-data-model-by-id",
+            "developer-guide/api-reference-v3/data-models/update-data-model"
           ]
         },
         {
           "icon": "shield-check",
           "group": "Authenitcation",
-          "pages": ["developer-guide/api-reference/authentication/createNonce"]
-        },
-        {
-          "icon": "group-arrows-rotate",
-          "group": "Organizations",
           "pages": [
-            "developer-guide/api-reference/organizations/create-org",
-            "developer-guide/api-reference/organizations/add-member",
-            "developer-guide/api-reference/organizations/remove-member",
-            "developer-guide/api-reference/organizations/change-member-role",
-            "developer-guide/api-reference/organizations/fetch-all-org",
-            "developer-guide/api-reference/organizations/update-org"
-          ]
-        },
-        {
-          "icon": "inbox-in",
-          "group": "Transactions",
-          "pages": [
-            "developer-guide/api-reference/transactions/fetch-transactions",
-            "developer-guide/api-reference/transactions/my-transactions",
-            "developer-guide/api-reference/transactions/transactions"
+            "developer-guide/api-reference-v3/auth/authenticate-account",
+            "developer-guide/api-reference-v3/auth/generate-sign-message",
+            "developer-guide/api-reference-v3/auth/refresh-token"
           ]
         }
-      ]
-    },
-    {
-      "group": "Widget",
-      "pages": [
-        "developer-guide/widget/introduction",
-        "developer-guide/widget/quickstart",
-        "developer-guide/widget/configuration"
       ]
     },
     {
@@ -240,16 +221,19 @@
       "pages": ["FAQ/FAQ"]
     }
   ],
-
+  "api": {
+    "baseUrl": "https://petstore.swagger.io/v2",
+    "auth": {
+      "method": "bearer"
+    },
+    "playground": {
+      "mode": "show"
+    }
+  },
+  "openapi": "openapi.json",
   "footerSocials": {
     "twitter": "https://twitter.com/Gateway_xyz",
     "github": "https://github.com/Gateway-DAO",
     "linkedin": "https://www.linkedin.com/company/mygateway"
-  },
-  "api": {
-    "baseUrl": "https://protocol.mygateway.xyz/graphql",
-    "auth": {
-      "method": "bearer"
-    }
   }
 }
