@@ -60,6 +60,11 @@
       "name": "Discord",
       "icon": "discord",
       "url": "https://discord.gg/zjHJZRZzts"
+    },
+    {
+      "name": "GitHub",
+      "icon": "github",
+      "url": "https://github.com/Gateway-DAO"
     }
   ],
   "navigation": [
@@ -222,7 +227,7 @@
     }
   ],
   "api": {
-    "baseUrl": "https://petstore.swagger.io/v2",
+    "baseUrl": "https://dev.api.gateway.tech/",
     "auth": {
       "method": "bearer"
     },
