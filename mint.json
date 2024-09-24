@@ -70,7 +70,7 @@
   "navigation": [
     {
       "group": "Gateway Protocol",
-      "pages": ["introduction", "quickstart"]
+      "pages": ["introduction"]
     },
     {
       "group": "Gateway Protocol Architecture",
@@ -130,17 +130,6 @@
         "developer-guide/developer-flow/upload-data",
         "developer-guide/developer-flow/retrieve-data",
         "developer-guide/developer-flow/request-data"
-      ]
-    },
-    {
-      "group": "SDK",
-      "pages": [
-        "developer-guide/sdk/introduction",
-        "developer-guide/sdk/quickstart",
-        "developer-guide/sdk/code-snippets",
-        "developer-guide/sdk/reference",
-        "developer-guide/sdk/examples",
-        "developer-guide/sdk/troubleshooting"
       ]
     },
     {
