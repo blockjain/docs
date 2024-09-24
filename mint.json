@@ -147,13 +147,26 @@
       "group": "API Reference",
       "pages": [
         "developer-guide/api-reference/introduction",
-        "developer-guide/api-reference/authentication"
-      ]
-    },
-    {
-      "group": "Resources",
-      "pages": [
+        "developer-guide/api-reference/authentication",
         "developer-guide/api-reference/overview",
+        {
+          "icon": "id-badge",
+          "group": "Accounts",
+          "pages": [
+            "developer-guide/api-reference-v3/accounts/create-account",
+            "developer-guide/api-reference-v3/accounts/get-my-account",
+            "developer-guide/api-reference-v3/accounts/update-account"
+          ]
+        },
+        {
+          "icon": "shield-check",
+          "group": "Authentication",
+          "pages": [
+            "developer-guide/api-reference-v3/auth/authenticate-account",
+            "developer-guide/api-reference-v3/auth/generate-sign-message",
+            "developer-guide/api-reference-v3/auth/refresh-token"
+          ]
+        },
         {
           "icon": "upload",
           "group": "Uploading Data",
@@ -168,7 +181,8 @@
           "pages": [
             "developer-guide/api-reference-v3/data-assets/get-my-data-assets",
             "developer-guide/api-reference-v3/data-assets/get-data-asset-by-id",
-            "developer-guide/api-reference-v3/data-assets/download-data-asset-by-id"
+            "developer-guide/api-reference-v3/data-assets/download-data-asset-by-id",
+            "developer-guide/api-reference-v3/data-assets/get-created-data-assets"
           ]
         },
         {
@@ -200,12 +214,12 @@
           ]
         },
         {
-          "icon": "shield-check",
-          "group": "Authenitcation",
+          "icon": "boxes-packing",
+          "group": "Access Control",
           "pages": [
-            "developer-guide/api-reference-v3/auth/authenticate-account",
-            "developer-guide/api-reference-v3/auth/generate-sign-message",
-            "developer-guide/api-reference-v3/auth/refresh-token"
+            "developer-guide/api-reference-v3/data-assets/get-received-data-assets",
+            "developer-guide/api-reference-v3/data-assets/delete-assigned-role-by-acl",
+            "developer-guide/api-reference-v3/data-assets/share-data-asset-by-id"
           ]
         }
       ]
@@ -235,7 +249,7 @@
       "mode": "show"
     }
   },
-  "openapi": "openapi.json",
+  "openapi": "swagger.yaml",
   "footerSocials": {
     "twitter": "https://twitter.com/Gateway_xyz",
     "github": "https://github.com/Gateway-DAO",

@@ -5,35 +5,36 @@ description: Learn how to authenticate with the Gateway Protocol API.
 
 Follow the steps below to get started with the Gateway Protocol API. The steps will guide you on how to get your API Key and Bearer Token to authenticate.
 
-Steps:
+<Tip>This walk through uses the APi endpoints in this documentation site!</Tip>
 
-1. Go to [Gateway Protocol Login](https://mygateway.xyz/login) and sign up using your email/wallet. You will need to create an Organization for the Testnet Environment. No need to create an organization for the Sandbox Environment.
-2. Once you are logged in, you will see [Developer Access](https://mygateway.xyz/dashboard/user/developer-access) tab on the left side.
-3. Your API key and Authentication token will be available there.
+1. Open the [`auth/message` endpoint](/developer-guide/api-reference-v3/auth/generate-sign-message) and click **Send**
+2. Copy the output of the [`message`](/developer-guide/api-reference-v3/auth/generate-sign-message) field from the response body.
+3. Verify the message using a tool like [Etherscan](https://etherscan.io/verifiedSignatures#)
+   1. Click the **Sign Message** button and connect your wallet
+   2. Paste the `message` from step 2 into the **message** field and sign the message
+   3. Save the resulting `Signature Hash` value
+4. Create an account using the [`/accounts` endpoint](/developer-guide/api-reference-v3/accounts/create-account)
+   1. Pass the necessary `signature`, `message`, `wallet_address`, and `username` fields
+   2. The `username` can be anything you want to use to identify yourself on Gateway.
+   3. Save the returned `token` value.
+      <Note>
+        Please note that this token includes punctuation, be sure to copy and
+        paste the **ENTIRE** value.
+      </Note>
+5. Verify the account and token by using the [`accounts/me` endpoint](/developer-guide/api-reference-v3/accounts/get-my-account)
+   1. Enter your API `token` and submit the request.
 
-There are two environments available for the Gateway Protocol API, Testnet and Sandbox Environment. Sandbox Environment is for developers who want to understand the protocol and play around with it. Both environments have similar developer experience.
+<!-- TODO:  Add "save as variable in postman" to step 4.3 -->
 
-| Environment      | Testnet                                | Sandbox                                        |
-| ---------------- | -------------------------------------- | ---------------------------------------------- |
-| API Endpoint URL | https://protocol.mygateway.xyz/graphql | https://sandbox.protocol.mygateway.xyz/graphql |
-| Dashboard URL    | https://mygateway.xyz/dashboard/       | https://sandbox.mygateway.xyz/dashboard/       |
-| Explorer URL     | https://mygateway.xyz/explorer         | https://sandbox.mygateway.xyz/explorer         |
-
-<Note>
-  If you are planning to use the **Testnet Environment**, you will have to
-  **Create an Organization** on the [Gateway
-  Dashboard](https://mygateway.xyz/dashboard/) and then you would be able to get
-  Developer Access to the Testnet Environment.
-
-For creating an orgnaization click on your profile icon on the bottom left corner and then click on "Create Organization". Fill the details and click on "Create Organization".
-
-After creating the organization, click on the organization name and then click on "Developer Access" and you will be able to find your API Key and Bearer Token.
-
-</Note>
-
-<Note>
-  If you are planning to use the **Sandbox Environment**, you just need to
-  create your account on the [Gateway
-  Dashboard](https://sandbox.mygateway.xyz/dashboard/) and then you would be
-  able to get Developer Access to the Sandbox Environment.
-</Note>
+```json Sample Account check response
+{
+  "created_at": "2024-09-24T06:06:41.690632Z",
+  "updated_at": "2024-09-24T06:06:41.690632Z",
+  "username": "demo-gateway",
+  "did": "did:gatewayid:gateway:2k8i9gm6tovaxktne87k67cxolxmexi7vbrurglmdiwhwuho8pukxvz8eiwhd3fh",
+  "wallet_address": "0x00000000219ab540356cbb839cbe05303d7705fa",
+  "profile_picture": null,
+  "username_updated_at": "2024-09-24T06:06:41.68844Z",
+  "storage_size": 0
+}
+```
