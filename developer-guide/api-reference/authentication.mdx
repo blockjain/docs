@@ -5,15 +5,15 @@ description: Learn how to authenticate with the Gateway Protocol API.
 
 Follow the steps below to get started with the Gateway Protocol API. The steps will guide you on how to get your API Key and Bearer Token to authenticate.
 
-<Tip>This walk through uses the APi endpoints in this documentation site!</Tip>
+<Tip>This walk through uses the API endpoints in this documentation site!</Tip>
 
-1. Open the [`auth/message` endpoint](/developer-guide/api-reference-v3/auth/generate-sign-message) and click **Send**
-2. Copy the output of the [`message`](/developer-guide/api-reference-v3/auth/generate-sign-message) field from the response body.
+1. Open the [`auth/message` endpoint](/developer-guide/api-reference/auth/generate-sign-message) and click **Send**
+2. Copy the output of the [`message`](/developer-guide/api-reference/auth/generate-sign-message) field from the response body.
 3. Verify the message using a tool like [Etherscan](https://etherscan.io/verifiedSignatures#)
    1. Click the **Sign Message** button and connect your wallet
    2. Paste the `message` from step 2 into the **message** field and sign the message
    3. Save the resulting `Signature Hash` value
-4. Create an account using the [`/accounts` endpoint](/developer-guide/api-reference-v3/accounts/create-account)
+4. Create an account using the [`/accounts` endpoint](/developer-guide/api-reference/accounts/create-account)
    1. Pass the necessary `signature`, `message`, `wallet_address`, and `username` fields
    2. The `username` can be anything you want to use to identify yourself on Gateway.
    3. Save the returned `token` value.
@@ -21,7 +21,7 @@ Follow the steps below to get started with the Gateway Protocol API. The steps w
         Please note that this token includes punctuation, be sure to copy and
         paste the **ENTIRE** value.
       </Note>
-5. Verify the account and token by using the [`accounts/me` endpoint](/developer-guide/api-reference-v3/accounts/get-my-account)
+5. Verify the account and token by using the [`accounts/me` endpoint](/developer-guide/api-reference/accounts/get-my-account)
    1. Enter your API `token` and submit the request.
 
 ```json Sample Account check response

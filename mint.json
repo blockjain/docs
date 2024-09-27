@@ -37,6 +37,10 @@
       "url": "developer-guide"
     },
     {
+      "name": "API Reference",
+      "url": "developer-guide/api-reference"
+    },
+    {
       "name": "Usecases",
       "url": "usecases"
     },
@@ -142,73 +146,75 @@
           "icon": "id-badge",
           "group": "Accounts",
           "pages": [
-            "developer-guide/api-reference-v3/accounts/create-account",
-            "developer-guide/api-reference-v3/accounts/get-my-account",
-            "developer-guide/api-reference-v3/accounts/update-account"
+            "developer-guide/api-reference/accounts/create-account",
+            "developer-guide/api-reference/accounts/get-my-account",
+            "developer-guide/api-reference/accounts/update-account",
+            "developer-guide/api-reference/accounts/add-wallet",
+            "developer-guide/api-reference/accounts/remove-wallet"
           ]
         },
         {
           "icon": "shield-check",
           "group": "Authentication",
           "pages": [
-            "developer-guide/api-reference-v3/auth/authenticate-account",
-            "developer-guide/api-reference-v3/auth/generate-sign-message",
-            "developer-guide/api-reference-v3/auth/refresh-token"
+            "developer-guide/api-reference/auth/authenticate-account",
+            "developer-guide/api-reference/auth/generate-sign-message",
+            "developer-guide/api-reference/auth/refresh-token"
           ]
         },
         {
           "icon": "upload",
           "group": "Uploading Data",
           "pages": [
-            "developer-guide/api-reference-v3/data-assets/create-a-new-data-asset",
-            "developer-guide/api-reference-v3/data-assets/assign-acl-items-to-data-asset"
+            "developer-guide/api-reference/data-assets/create-a-new-data-asset",
+            "developer-guide/api-reference/data-assets/assign-acl-items-to-data-asset"
           ]
         },
         {
           "icon": "download",
           "group": "Reading Data",
           "pages": [
-            "developer-guide/api-reference-v3/data-assets/get-my-data-assets",
-            "developer-guide/api-reference-v3/data-assets/get-data-asset-by-id",
-            "developer-guide/api-reference-v3/data-assets/download-data-asset-by-id",
-            "developer-guide/api-reference-v3/data-assets/get-created-data-assets"
+            "developer-guide/api-reference/data-assets/get-my-data-assets",
+            "developer-guide/api-reference/data-assets/get-data-asset-by-id",
+            "developer-guide/api-reference/data-assets/download-data-asset-by-id",
+            "developer-guide/api-reference/data-assets/get-created-data-assets"
           ]
         },
         {
           "icon": "pen-nib",
           "group": "Updating Data",
           "pages": [
-            "developer-guide/api-reference-v3/data-assets/update-data-asset-by-id",
-            "developer-guide/api-reference-v3/data-assets/update-acl-items-to-data-asset",
-            "developer-guide/api-reference-v3/data-assets/update-data-asset-metadata-by-id"
+            "developer-guide/api-reference/data-assets/update-data-asset-by-id",
+            "developer-guide/api-reference/data-assets/update-acl-items-to-data-asset",
+            "developer-guide/api-reference/data-assets/update-data-asset-metadata-by-id"
           ]
         },
         {
           "icon": "eraser",
           "group": "Deleting Data",
           "pages": [
-            "developer-guide/api-reference-v3/data-assets/delete-data-asset-by-id",
-            "developer-guide/api-reference-v3/data-assets/delete-assigned-role-by-acl"
+            "developer-guide/api-reference/data-assets/delete-data-asset-by-id",
+            "developer-guide/api-reference/data-assets/delete-assigned-role-by-acl"
           ]
         },
         {
           "icon": "database",
           "group": "Data Models",
           "pages": [
-            "developer-guide/api-reference-v3/data-models/get-data-models",
-            "developer-guide/api-reference-v3/data-models/create-data-model",
-            "developer-guide/api-reference-v3/data-models/get-data-models-by-user",
-            "developer-guide/api-reference-v3/data-models/get-data-model-by-id",
-            "developer-guide/api-reference-v3/data-models/update-data-model"
+            "developer-guide/api-reference/data-models/get-data-models",
+            "developer-guide/api-reference/data-models/create-data-model",
+            "developer-guide/api-reference/data-models/get-data-models-by-user",
+            "developer-guide/api-reference/data-models/get-data-model-by-id",
+            "developer-guide/api-reference/data-models/update-data-model"
           ]
         },
         {
           "icon": "boxes-packing",
           "group": "Access Control",
           "pages": [
-            "developer-guide/api-reference-v3/data-assets/get-received-data-assets",
-            "developer-guide/api-reference-v3/data-assets/delete-assigned-role-by-acl",
-            "developer-guide/api-reference-v3/data-assets/share-data-asset-by-id"
+            "developer-guide/api-reference/data-assets/get-received-data-assets",
+            "developer-guide/api-reference/data-assets/delete-assigned-role-by-acl",
+            "developer-guide/api-reference/data-assets/share-data-asset-by-id"
           ]
         }
       ]
@@ -243,5 +249,11 @@
     "twitter": "https://twitter.com/Gateway_xyz",
     "github": "https://github.com/Gateway-DAO",
     "linkedin": "https://www.linkedin.com/company/mygateway"
-  }
+  },
+  "redirects": [
+    {
+      "source": "developer-guide/api-reference-v3:slug*",
+      "destination": "developer-guide/api-reference:slug*"
+    }
+  ]
 }

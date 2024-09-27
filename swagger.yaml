@@ -7,8 +7,8 @@ info:
   contact: {}
   version: 3.0.0-beta
 servers:
-  - url: https://api.gateway.tech/
-  - url: http://api.gateway.tech/
+  - url: https://dev.api.gateway.tech/
+  - url: http://dev.api.gateway.tech/
 paths:
   /accounts:
     post:
@@ -68,6 +68,51 @@ paths:
       security:
         - BearerAuth: []
       x-codegen-request-body-name: account
+  /accounts/me/wallets:
+    post:
+      tags:
+        - Accounts
+      summary: Add wallet
+      description: Add a new wallet
+      requestBody:
+        description: Wallet data
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/model.WalletCreateRequest"
+        required: true
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/model.MessageResponse"
+      security:
+        - BearerAuth: []
+      x-codegen-request-body-name: wallet
+  /accounts/me/wallets/{address}:
+    delete:
+      tags:
+        - Accounts
+      summary: Remove wallet
+      description: Remove wallet
+      parameters:
+        - name: address
+          in: path
+          description: Wallet Address
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/model.MessageResponse"
+      security:
+        - BearerAuth: []
   /auth:
     post:
       tags:
@@ -774,6 +819,14 @@ components:
         id:
           type: integer
     model.DataModel:
+      required:
+        - created_at
+        - created_by
+        - description
+        - id
+        - schema
+        - title
+        - updated_at
       type: object
       properties:
         created_at:
@@ -823,6 +876,14 @@ components:
         message:
           type: string
     model.MyAccountResponse:
+      required:
+        - created_at
+        - did
+        - storage_size
+        - updated_at
+        - username
+        - username_updated_at
+        - wallet_addresses
       type: object
       properties:
         created_at:
@@ -839,9 +900,16 @@ components:
           type: string
         username_updated_at:
           type: string
-        wallet_address:
-          type: string
+        wallet_addresses:
+          type: array
+          items:
+            $ref: "#/components/schemas/model.WalletAddress"
     model.PublicACL:
+      required:
+        - address
+        - data_asset_id
+        - roles
+        - solana_address
       type: object
       properties:
         address:
@@ -850,6 +918,8 @@ components:
           type: string
         data_asset_id:
           type: integer
+        is_authority:
+          type: boolean
         roles:
           type: array
           items:
@@ -860,6 +930,7 @@ components:
           type: string
     model.PublicDataAsset:
       required:
+        - acl
         - created_by
         - fid
         - id
@@ -901,6 +972,8 @@ components:
         updated_at:
           type: string
     model.ShareDataAssetRequest:
+      required:
+        - addresses
       type: object
       properties:
         addresses:
@@ -924,7 +997,37 @@ components:
           type: string
         name:
           type: string
+    model.WalletAddress:
+      required:
+        - account_id
+        - address
+        - chain
+        - created_at
+        - id
+      type: object
+      properties:
+        account_id:
+          type: integer
+        address:
+          type: string
+        chain:
+          type: string
+        created_at:
+          type: string
+        id:
+          type: integer
+        updated_at:
+          type: string
+    model.WalletCreateRequest:
+      required:
+        - address
+      type: object
+      properties:
+        address:
+          type: string
     responses.MessageResponse:
+      required:
+        - message
       type: object
       properties:
         message:
