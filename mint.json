@@ -236,7 +236,7 @@
     }
   ],
   "api": {
-    "baseUrl": "https://dev.api.gateway.tech/",
+    "baseUrl": "https://api.gateway.tech/",
     "auth": {
       "method": "bearer"
     },
