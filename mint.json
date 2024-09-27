@@ -236,7 +236,7 @@
     }
   ],
   "api": {
-    "baseUrl": "https://dev.api.gateway.tech/",
+    "baseUrl": "https://api.gateway.tech/",
     "auth": {
       "method": "bearer"
     },
@@ -252,8 +252,8 @@
   },
   "redirects": [
     {
-      "source": "developer-guide/api-reference-v3:slug*",
-      "destination": "developer-guide/api-reference:slug*"
+      "source": "/developer-guide/api-reference-v3/:slug*",
+      "destination": "/developer-guide/api-reference/:slug*"
     }
   ]
 }

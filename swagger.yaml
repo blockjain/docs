@@ -7,8 +7,8 @@ info:
   contact: {}
   version: 3.0.0-beta
 servers:
-  - url: https://dev.api.gateway.tech/
-  - url: http://dev.api.gateway.tech/
+  - url: https://api.gateway.tech/
+  - url: http://api.gateway.tech/
 paths:
   /accounts:
     post:
