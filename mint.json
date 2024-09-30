@@ -213,7 +213,6 @@
           "group": "Access Control",
           "pages": [
             "developer-guide/api-reference/data-assets/get-received-data-assets",
-            "developer-guide/api-reference/data-assets/delete-assigned-role-by-acl",
             "developer-guide/api-reference/data-assets/share-data-asset-by-id"
           ]
         }
