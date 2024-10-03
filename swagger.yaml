@@ -82,12 +82,12 @@ paths:
               $ref: "#/components/schemas/model.WalletCreateRequest"
         required: true
       responses:
-        "201":
-          description: Created
+        "200":
+          description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/model.MessageResponse"
+                $ref: "#/components/schemas/model.MyAccountResponse"
       security:
         - BearerAuth: []
       x-codegen-request-body-name: wallet
@@ -110,7 +110,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/model.MessageResponse"
+                $ref: "#/components/schemas/model.MyAccountResponse"
       security:
         - BearerAuth: []
   /auth:
@@ -185,7 +185,8 @@ paths:
                   type: string
                   description:
                     "Access control list (ACL) for the data asset (e.g.,\
-                    \ 'public-read')"
+                    \ [&#34;acl&#34;: [{&#34;address&#34;: &#34;user wallet address\
+                    \ or user DID&#34;, &#34;roles&#34;: [&#34;view&#34;]}]])"
                 expiration_date:
                   type: string
                   description: Expiration date for the data asset (in RFC 3339 format)
@@ -201,7 +202,8 @@ paths:
                   type: string
                   description:
                     "Access control list (ACL) for the data asset (e.g.,\
-                    \ 'public-read')"
+                    \ [&#34;acl&#34;: [{&#34;address&#34;: &#34;user wallet address\
+                    \ or user DID&#34;, &#34;roles&#34;: [&#34;view&#34;]}]])"
                 expiration_date:
                   type: string
                   description: Expiration date for the data asset (in RFC 3339 format)
@@ -475,7 +477,7 @@ paths:
             schema:
               type: array
               items:
-                $ref: "#/components/schemas/model.ACLRequest"
+                $ref: "#/components/schemas/model.DeleteACLRequest"
         required: true
       responses:
         "200":
@@ -670,7 +672,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/model.DataModel"
+              $ref: "#/components/schemas/model.DataModelRequest"
         required: true
       responses:
         "200":
@@ -868,6 +870,15 @@ components:
             type: string
         title:
           type: string
+    model.DeleteACLRequest:
+      required:
+        - addresses
+      type: object
+      properties:
+        addresses:
+          type: array
+          items:
+            type: string
     model.MessageResponse:
       required:
         - message
