@@ -1,9 +1,9 @@
 openapi: 3.0.1
 info:
   title: Gateway API
-  description:
-    This is Gateway API to upload files and create a easy way to integrate
-    with Gateway Protocol.
+  description: >-
+    This is Gateway API to upload files and create a easy way to integrate with
+    Gateway Protocol.
   contact: {}
   version: 3.0.0-beta
 servers:
@@ -167,10 +167,10 @@ paths:
       tags:
         - Data assets
       summary: Create a new data asset
-      description:
-        "Create a new data asset. Supports both structured data submission\
-        \ (application/json) and file uploads (multipart/form-data). Note: All date\
-        \ fields must be in RFC 3339 format (e.g., 2025-09-02T14:31:00Z)."
+      description: >-
+        Create a new data asset. Supports both structured data submission
+        (application/json) and file uploads (multipart/form-data). Note: All
+        date fields must be in RFC 3339 format (e.g., 2025-09-02T14:31:00Z).
       requestBody:
         content:
           application/json:
@@ -183,10 +183,11 @@ paths:
                   format: binary
                 acl:
                   type: string
-                  description:
-                    "Access control list (ACL) for the data asset (e.g.,\
-                    \ [&#34;acl&#34;: [{&#34;address&#34;: &#34;user wallet address\
-                    \ or user DID&#34;, &#34;roles&#34;: [&#34;view&#34;]}]])"
+                  description: >-
+                    Access control list (ACL) for the data asset (e.g.,
+                    [&#34;acl&#34;: [{&#34;address&#34;: &#34;user wallet
+                    address or user DID&#34;, &#34;roles&#34;:
+                    [&#34;view&#34;]}]])
                 expiration_date:
                   type: string
                   description: Expiration date for the data asset (in RFC 3339 format)
@@ -200,10 +201,11 @@ paths:
                   format: binary
                 acl:
                   type: string
-                  description:
-                    "Access control list (ACL) for the data asset (e.g.,\
-                    \ [&#34;acl&#34;: [{&#34;address&#34;: &#34;user wallet address\
-                    \ or user DID&#34;, &#34;roles&#34;: [&#34;view&#34;]}]])"
+                  description: >-
+                    Access control list (ACL) for the data asset (e.g.,
+                    [&#34;acl&#34;: [{&#34;address&#34;: &#34;user wallet
+                    address or user DID&#34;, &#34;roles&#34;:
+                    [&#34;view&#34;]}]])
                 expiration_date:
                   type: string
                   description: Expiration date for the data asset (in RFC 3339 format)
@@ -314,10 +316,10 @@ paths:
       tags:
         - Data assets
       summary: Update data asset by ID
-      description:
-        "Update data asset by ID. For structured data submission, use application/json.\
-        \ For file uploads, use multipart/form-data. Note: All date fields must be\
-        \ in RFC 3339 format (e.g., 2025-09-02T14:31:00Z)."
+      description: >-
+        Update data asset by ID. For structured data submission, use
+        application/json. For file uploads, use multipart/form-data. Note: All
+        date fields must be in RFC 3339 format (e.g., 2025-09-02T14:31:00Z).
       parameters:
         - name: id
           in: path
@@ -337,9 +339,9 @@ paths:
                   format: binary
                 acl:
                   type: string
-                  description:
-                    "Access control list (ACL) for the data asset (e.g.,\
-                    \ 'public-read')"
+                  description: >-
+                    Access control list (ACL) for the data asset (e.g.,
+                    'public-read')
                 expiration_date:
                   type: string
                   description: Expiration date for the data asset (in RFC 3339 format)
@@ -353,9 +355,9 @@ paths:
                   format: binary
                 acl:
                   type: string
-                  description:
-                    "Access control list (ACL) for the data asset (e.g.,\
-                    \ 'public-read')"
+                  description: >-
+                    Access control list (ACL) for the data asset (e.g.,
+                    'public-read')
                 expiration_date:
                   type: string
                   description: Expiration date for the data asset (in RFC 3339 format)

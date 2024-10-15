@@ -23,7 +23,7 @@
   },
   "topbarLinks": [
     {
-      "name": "Support",
+      "name": "Get Support",
       "url": "mailto:support@mygateway.xyz"
     }
   ],
@@ -47,7 +47,7 @@
   ],
   "anchors": [
     {
-      "name": "Gateway Homepage",
+      "name": "Gateway",
       "icon": "house",
       "url": "https://mygateway.xyz"
     },
@@ -81,7 +81,6 @@
           "group": "Core Concepts",
           "pages": [
             "protocol-architecture/core-concepts/client",
-            "protocol-architecture/core-concepts/validation-layer",
             "protocol-architecture/core-concepts/data-layer"
           ]
         },
@@ -215,10 +214,6 @@
         "usecases/gaming",
         "usecases/loyalty-programs"
       ]
-    },
-    {
-      "group": "Frequently Asked Questions",
-      "pages": ["FAQ/FAQ"]
     }
   ],
   "api": {
