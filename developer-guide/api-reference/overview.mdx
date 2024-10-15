@@ -16,3 +16,46 @@ Here are some things you need to know before you start using the API:
 - Once data assets are issued to your users, you can start interacting with the data assets using the API for requesting data, updating data, and more.
 
 If you are looking for inspiration to build your application, you can check out the [use cases](/usecases/) section to see how you can use the Gateway Protocol.
+
+## Data Model Structure
+
+Data Models are structured in JSON format. JSON Schema is fully supported and there are additional contextual fields added to help make the data more readable and useable. Each Data Model is signed with the creator's signing key to establish provenance and verifiability.
+
+```json
+{
+  "type": "object",
+  "title": "Gateway ID",
+  "default": {},
+  "required": [],
+  "properties": {
+    "name": {
+      "type": "string",
+      "title": "Name"
+    },
+    "email": {
+      "type": "string",
+      "title": "E-mail"
+    },
+    "avatar": {
+      "type": "string",
+      "title": "Avatar",
+      "contentMediaType": "image/png"
+    },
+    "username": {
+      "type": "string",
+      "title": "Username"
+    },
+    "evmWallet": {
+      "type": "string",
+      "title": "EVM Wallet"
+    },
+    "solanaWallet": {
+      "type": "string",
+      "title": "Solana Wallet"
+    }
+  },
+  "additionalProperties": false
+}
+```
+
+> Read more about creating Data Models with the API [here](/developer-guide/api-reference/data-models/create-data-model).
