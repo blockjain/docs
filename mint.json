@@ -27,10 +27,6 @@
       "url": "mailto:support@mygateway.xyz"
     }
   ],
-  "topbarCtaButton": {
-    "name": "Dashboard",
-    "url": "https://mygateway.xyz/dashboard/user/home"
-  },
   "tabs": [
     {
       "name": "API Reference",
@@ -49,12 +45,12 @@
     {
       "name": "Gateway",
       "icon": "house",
-      "url": "https://mygateway.xyz"
+      "url": "https://gateway.tech"
     },
     {
       "name": "Explorer",
       "icon": "compass",
-      "url": "https://mygateway.xyz/explorer"
+      "url": "https://gateway.tech/explorer"
     },
     {
       "name": "Discord",
