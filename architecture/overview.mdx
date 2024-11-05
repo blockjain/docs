@@ -4,11 +4,7 @@ title: Overview
 
 The Gateway Protocol is a sufficiently decentralized protocol that consists of on-chain and off-chain elements to validate, transmit and store data and events.
 
-<img
-  height="200"
-  src="/assets/gateway-network/gateway-architecture.png"
-  alt="Gateway Architecture"
-/>
+![Gateway Architecture](/assets/gateway-network/gateway-architecture.png)
 
 ## Clients
 
@@ -16,19 +12,19 @@ Clients include all the applications that interact with the protocol through the
 
 Interactions are made possible using the Validators' GraphQL API or our SDK for TypeScript.
 
-## Offchain
+## Off chain
 
 Gateway's off-chain system is based on Validators: a network of peer-to-peer servers responsible for validating user interactions, storing user data and broadcasting it amongst other peers.
 
-The Validators play a crucial role in issuing, managing and sharing personal data assets. Actions include, but are not limited to:
+The Validators play a crucial role in issuing, managing and sharing data assets. Actions include, but are not limited to:
 
 - Creating a GatewayID
 - Managing Data Assets (issue, revoke, suspend, share)
 - Consume public data (data models)
 
-Validators can also store user data. Data Assets issued to users will be stored encrypted at rest with a keypair controlled by the owner.
+Validators can also store user data. Data Assets issued to users will be stored encrypted at rest with a key-pair controlled by the owner.
 
-## Onchain
+## On chain
 
 To make sure all transactions are globally verifiable and auditable, the protocol uses Arweave to pin all the events and entity registrations. Security is achieved through the use of signatures: user consent to actions is made public on Arweave and referenced by the validators.
 

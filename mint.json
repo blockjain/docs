@@ -72,21 +72,11 @@
       "group": "Gateway Protocol Architecture",
       "pages": [
         "protocol-architecture/introduction",
-        "protocol-architecture/easy-explainer",
         {
           "group": "Core Concepts",
           "pages": [
             "protocol-architecture/core-concepts/client",
             "protocol-architecture/core-concepts/data-layer"
-          ]
-        },
-        {
-          "group": "Process Flow",
-          "pages": [
-            "protocol-architecture/process-flows/create-identity",
-            "protocol-architecture/process-flows/contribute-data",
-            "protocol-architecture/process-flows/request-data",
-            "protocol-architecture/process-flows/delete-data"
           ]
         }
       ]
@@ -97,20 +87,14 @@
         {
           "group": "Fundamentals",
           "pages": [
-            "core-concepts/personal-data-assets",
+            "core-concepts/data-assets",
             "core-concepts/data-models",
-            "core-concepts/data-requests",
-            "core-concepts/data-proofs",
             "core-concepts/privacy-and-security-standards"
           ]
         },
         {
           "group": "Roles",
-          "pages": [
-            "gateway-network/contributors",
-            "gateway-network/owners",
-            "gateway-network/requestors"
-          ]
+          "pages": ["gateway-network/contributors", "gateway-network/owners"]
         }
       ]
     },

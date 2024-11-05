@@ -5,11 +5,7 @@ description: Your Data, Your Control
 
 ## What is a Data Asset?
 
-<img
-  height="200"
-  src="/assets/core-concepts/what-is-a-pda.png"
-  alt="Personal Data Assets Introduction"
-/>
+![Data Assets Introduction](/assets/core-concepts/what-is-a-pda.png)
 
 Personal Data Assets (PDAs) serve as the foundational assets of Gateway, functioning as secure, encrypted containers for you to take ownership of your data. You maintain authoritative control, granting consent for data access to selected parties. Data Contributors neatly encapsulate your information in these PDAs using a user-friendly JSON format.
 
@@ -17,17 +13,13 @@ Data Assets often contain high value sensitive data. This can range from your he
 
 ## What is the Data Asset Lifecycle?
 
-<img
-  height="200"
-  src="/assets/core-concepts/pda-lifecycle.png"
-  alt="Personal Lifecycle"
-/>
+![Personal Lifecycle](/assets/core-concepts/pda-lifecycle.png)
 
 ## Contribution
 
 **The lifecycle of the Data Asset starts when the Data Contributor utilizes a data model to contribute data about (another) DID** This data is usually something that the Contributor may hold about you. For example, this can be your loyalty information at North Face or transcript from the college you attended.
 
-Once the Data Contributor sends the Data Model ID along with the user data (encrypted in transit), the validators verify against the schema before surfacing the "contribution" on the Gateway Ledger. A sample transaction of a contribution can be viewed [here](https://sandbox.mygateway.xyz/explorer/transactions/65d5ce5b5f55a7755cecb1ed).
+Once the Data Contributor sends the Data Model ID along with the user data (encrypted in transit), the validators verify against the schema before surfacing the "contribution" on the Gateway Ledger. A sample transaction of a contribution can be viewed [here](https://sandbox.gateway.tech/explorer/transactions/65d5ce5b5f55a7755cecb1ed).
 
 The responsibility for ensuring the accuracy of this data rests squarely on the Data Contributor. Should the information be found inaccurate, the Contributor's credibility would diminish, leading to decreased trust from Requestors who rely on this data.
 
@@ -79,11 +71,7 @@ This procedure ensures data consistency and firmly places the responsibility for
 
 In our quest to uphold data integrity and verifiability, Gateway's protocol incorporates a dynamic status framework for PDAS. This ensures that all parties involved—from contributors to requestors—are aware of the quality and reliability of the information they handle. Here's how it works:
 
-<img
-  height="200"
-  src="/assets/core-concepts/pda-status.png"
-  alt="Personal Data Asset's Status"
-/>
+![Data Asset's Status](/assets/core-concepts/pda-status.png)
 
 By offering this nuanced status framework, we empower issuers to reflect real-time changes that affect the validity of a Data Asset while also providing verifiers with an insightful tool to gauge the risk and reliability of the data they consume. This framework enhances the user experience and maintains a high level of trust and compliance across all transactions.
 
@@ -93,14 +81,11 @@ By offering this nuanced status framework, we empower issuers to reflect real-ti
 
 **These are the predictable components that are part of every Data Asset.**
 
+![Data Asset structure](/assets/core-concepts/pda-structure.png)
 
-<img
-  height="200"
-  src="/assets/core-concepts/pda-structure.png"
-  alt="Personal Data Asset structure"
-/>
 
-**1. PDA ID**
+
+**1. Data Asset ID**
 
 Each Data Asset has a unique format to identify the Data Asset. This is in UUID format and can be found on the top of the Data Asset page. It is generated at the time of creation of the Data Asset.
 
@@ -110,9 +95,9 @@ _This is found above the name of the Data Asset and is unique per Data Asset_
 
 **2. Name, Description, Categories**
 
-_The following makes up the header of the PDA_
+_The following makes up the header of the Data Asset_
 
-PDA Header
+Data Asset Header
 
 These are used to provide a general context of what the Data Asset is about. It is not uncommon for Data Assets to have names, descriptions, and categories that match the data model, especially if they are issued in mass.
 
