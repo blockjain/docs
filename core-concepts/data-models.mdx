@@ -3,73 +3,83 @@ title: Data Models
 description: The Blueprint for User Data
 ---
 
+```
+
+TODO - sam review if this is accurate
+
+```
+
 ![Data Models](/assets/core-concepts/dataModels.png)
 
 ## What is a Data Model?
 
-Data Models serve as foundational templates for Personal Data Assets ("PDA"s). Each PDA created using a Data Model adheres to a standardized structure of claims, making these frameworks exceptionally reusable for various related scenarios.
+```
 
-This not only streamlines the data contribution process but also provides Data Contributors with the flexibility to tailor the types of data they want to make available in the network.
+TODO -
 
-The easiest way to analogize Data Models are the blueprints of the data on the network. Data Models allow Data Requestors to appropriately access information they have been given access to without exposing the personal data on the network publicly.
+- benefits of using a model
+   - verification
+   - composability in compute
+
+
+```
+
+Data Models serve as a structured, foundational template for [Data Assets](/core-concepts/data-assets) added to the Gateway Network and establish a standardized set of fields, metadata, and other attributes to make Developers' lives easier.
+
+> Data Models are the "blueprints" for data objects stored to the Gateway Network
+
+A predictable data structure speeds up development and increases composability.
 
 ## How it Works
 
-<img
-  height="200"
-  src="/assets/core-concepts/dataModelsExamples.png"
-  alt="Data Models Examples"
-/>
+![Data Model Examples](/assets/core-concepts/dataModelsExamples.png)
 
-Data Models define what data is available on the network. Contributors input data into the network by following the Data Model of choice. Therefore, all PDAs are tied to a unique Data Model.
+Data Models define what data is available on the network. Contributors input data into the network by following the Data Model of choice.
 
-Browse some existing Data Models on the explorer [here](https://mygateway.xyz/explorer/data-models).
+```
+
+TODO - not correct, need to get this point across :point-down:
+
+Therefore, all Data Assets are tied to a unique Data Model.
+
+Therefore, all Data Assets _can be_ tied to a unique Data Model.
+
+```
 
 ## Data Models in the Explorer
 
-Use the [Gateway Explorer](https://mygateway.xyz/explorer) to view existing Data Models and samples. Data Models consist of a few core
+> Browse some existing Data Models on the explorer [here](https://gateway.tech/explorer/data-models).
 
-<img
-  height="200"
-  src="/assets/core-concepts/dataModelStructure.png"
-  alt="Data Model Structure"
-/>
+Use the [Gateway Explorer](https://gateway.tech/explorer) to view existing Data Models and samples. Data Models consist of a few core
 
-1.  **Name, Categories, and Description**
+```
 
-    This helps educate issuers on what the Data Model is generally intended for. Categories make searching and filtering easier as well.
+TODO - DO NOT PUBLISH THIS LINK
 
-2.  **Data Model Stats**
-    An overview of Data Model usage that will display:
+this link can be used to grab a screenshot
 
-         1. Number of unique issuers
-         2. How many PDAs were issued using this data Model
-         3. Fees generated for issuers and Data Model creator
+https://qa.gateway.tech/explorer/data-models/934970910572647
 
-3.  **Created by**
+```
 
-    The username of the entity that created the Data Model
+![Data Model Structure](/assets/core-concepts/dataModelStructure.png)
 
-4.  **Creation Date**
+```
 
-    The date the Data Model was created
+TODO - update or remove list to reflect
 
-5.  **Last Updated**
+use screenshot from qa link to mention ability to see schema, mjorrity will go away
 
-    Indicates when the Data Model was edited last
+plane - removed unused fields, need screen shot to finish
 
-6.  **Verification Cost**
+```
 
-    This amount represents an issuer's revenue each time a verifier accesses a PDA.
+1. Name: This helps educate issuers on what the Data Model is generally intended for.
 
-7.  **Data Model ID**
+2. Creation Date: The date the Data Model was created
 
-    Each Data Model has a unique identifier (UUID)
+3. Last Updated: Indicates when the Data Model was edited last
 
-8.  **Arweave File**
+4. Data Model ID: Each Data Model has a unique identifier (UUID)
 
-    Data model information. The information is stored unencrypted.
-
-9.  **Claim Structure**
-
-    These are the field names that create the claim. Every PDA issued using this Data Model will have this claim structure.
+5. Schema: These are the field names that create the claim. Every Data Asset issued using this Data Model will have this claim structure.

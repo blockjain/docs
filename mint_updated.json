@@ -1,0 +1,220 @@
+{
+  "$schema": "https://mintlify.com/schema.json",
+  "name": "Gateway",
+  "logo": {
+    "dark": "/assets/logo/dark_logo.svg",
+    "light": "/assets/logo/light_logo.svg"
+  },
+  "favicon": "/assets/logo/favicon.png",
+  "colors": {
+    "primary": "#771AC9",
+    "light": "#E6D5FA",
+    "dark": "#212121",
+    "anchors": {
+      "from": "#FFFFFF",
+      "to": "#771AC9"
+    },
+    "background": {
+      "dark": "#212121"
+    }
+  },
+  "modeToggle": {
+    "default": "dark"
+  },
+  "topbarLinks": [
+    {
+      "name": "Get Support",
+      "url": "mailto:support@mygateway.xyz"
+    }
+  ],
+  "tabs": [
+    {
+      "name": "API Reference",
+      "url": "developer-guide/api-reference"
+    },
+    {
+      "name": "Usecases",
+      "url": "usecases"
+    },
+    {
+      "name": "FAQ",
+      "url": "FAQ"
+    }
+  ],
+  "anchors": [
+    {
+      "name": "Gateway",
+      "icon": "house",
+      "url": "https://gateway.tech"
+    },
+    {
+      "name": "Explorer",
+      "icon": "compass",
+      "url": "https://gateway.tech/explorer"
+    },
+    {
+      "name": "Discord",
+      "icon": "discord",
+      "url": "https://discord.gg/zjHJZRZzts"
+    },
+    {
+      "name": "GitHub",
+      "icon": "github",
+      "url": "https://github.com/Gateway-DAO"
+    }
+  ],
+  "navigation": [
+    {
+      "group": "Gateway Protocol",
+      "pages": ["introduction"]
+    },
+    {
+      "group": "Gateway Protocol Architecture",
+      "pages": [
+        "protocol-architecture/introduction",
+        {
+          "group": "Core Concepts",
+          "pages": [
+            "protocol-architecture/core-concepts/client",
+            "protocol-architecture/core-concepts/data-layer"
+          ]
+        }
+      ]
+    },
+    {
+      "group": "Key Terms",
+      "pages": [
+        {
+          "group": "Fundamentals",
+          "pages": [
+            "core-concepts/data-assets",
+            "core-concepts/data-models",
+            "core-concepts/privacy-and-security-standards"
+          ]
+        },
+        {
+          "group": "Roles",
+          "pages": ["gateway-network/contributors", "gateway-network/owners"]
+        }
+      ]
+    },
+    {
+      "group": "Help",
+      "pages": ["support"]
+    },
+    {
+      "group": "API Reference",
+      "pages": [
+        "developer-guide/api-reference/introduction",
+        "developer-guide/api-reference/authentication",
+        "developer-guide/api-reference/overview",
+        {
+          "icon": "id-badge",
+          "group": "Accounts",
+          "pages": [
+            "developer-guide/api-reference/accounts/create-account",
+            "developer-guide/api-reference/accounts/get-my-account",
+            "developer-guide/api-reference/accounts/update-account",
+            "developer-guide/api-reference/accounts/add-wallet",
+            "developer-guide/api-reference/accounts/remove-wallet"
+          ]
+        },
+        {
+          "icon": "shield-check",
+          "group": "Authentication",
+          "pages": [
+            "developer-guide/api-reference/auth/authenticate-account",
+            "developer-guide/api-reference/auth/generate-sign-message",
+            "developer-guide/api-reference/auth/refresh-token"
+          ]
+        },
+        {
+          "icon": "upload",
+          "group": "Uploading Data",
+          "pages": [
+            "developer-guide/api-reference/data-assets/create-a-new-data-asset",
+            "developer-guide/api-reference/data-assets/assign-acl-items-to-data-asset"
+          ]
+        },
+        {
+          "icon": "download",
+          "group": "Reading Data",
+          "pages": [
+            "developer-guide/api-reference/data-assets/get-my-data-assets",
+            "developer-guide/api-reference/data-assets/get-data-asset-by-id",
+            "developer-guide/api-reference/data-assets/download-data-asset-by-id",
+            "developer-guide/api-reference/data-assets/get-created-data-assets"
+          ]
+        },
+        {
+          "icon": "pen-nib",
+          "group": "Updating Data",
+          "pages": [
+            "developer-guide/api-reference/data-assets/update-data-asset-by-id",
+            "developer-guide/api-reference/data-assets/update-acl-items-to-data-asset",
+            "developer-guide/api-reference/data-assets/update-data-asset-metadata-by-id"
+          ]
+        },
+        {
+          "icon": "eraser",
+          "group": "Deleting Data",
+          "pages": [
+            "developer-guide/api-reference/data-assets/delete-data-asset-by-id",
+            "developer-guide/api-reference/data-assets/delete-assigned-role-by-acl"
+          ]
+        },
+        {
+          "icon": "database",
+          "group": "Data Models",
+          "pages": [
+            "developer-guide/api-reference/data-models/get-data-models",
+            "developer-guide/api-reference/data-models/create-data-model",
+            "developer-guide/api-reference/data-models/get-data-models-by-user",
+            "developer-guide/api-reference/data-models/get-data-model-by-id",
+            "developer-guide/api-reference/data-models/update-data-model"
+          ]
+        },
+        {
+          "icon": "boxes-packing",
+          "group": "Access Control",
+          "pages": [
+            "developer-guide/api-reference/data-assets/get-received-data-assets",
+            "developer-guide/api-reference/data-assets/share-data-asset-by-id"
+          ]
+        }
+      ]
+    },
+    {
+      "group": "Usecases",
+      "pages": [
+        "usecases/introduction",
+        "usecases/artificial-intelligence",
+        "usecases/financial",
+        "usecases/governance",
+        "usecases/gaming",
+        "usecases/loyalty-programs"
+      ]
+    }
+  ],
+  "api": {
+    "baseUrl": "https://api.gateway.tech/",
+    "auth": {
+      "method": "bearer"
+    },
+    "playground": {
+      "mode": "show"
+    }
+  },
+  "openapi": "swagger.yaml",
+  "footerSocials": {
+    "twitter": "https://twitter.com/Gateway_xyz",
+    "github": "https://github.com/Gateway-DAO",
+    "linkedin": "https://www.linkedin.com/company/mygateway"
+  },
+  "redirects": [
+    {
+      "source": "/developer-guide/api-reference-v3/:slug*",
+      "destination": "/developer-guide/api-reference/:slug*"
+    }
+  ]
+}

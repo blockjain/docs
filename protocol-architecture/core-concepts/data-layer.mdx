@@ -3,6 +3,11 @@ title: Data Layer
 description: Gateway Protocol Data Layer
 ---
 
+```
+
+TODO - remove PoC and PoS stuff
+
+
 The Data Layer in Gateway Protocol comprises Encrypted Data Vaults (EDVs), consensus mechanisms such as Proof of Capacity (PoC) and Proof of Storage (PoS), an advanced indexing mechanism for seamless data retrieval, and a Challenge Protocol that audits data storage in EDVs.
 
 ```
@@ -15,25 +20,21 @@ EDVs are the primary entities responsible for storing and maintaining encrypted 
 
 EDVs have various storage metrics, including capacity, total staked capacity, free capacity, purchased capacity, and used storage. Upon registration, an EDV broadcasts its total storage capacity to the validators and stakes a sufficient quantity of tokens to commence network services. EDVs pledge available storage at the beginning of each epoch and are bound by the protocol to fulfill their storage agreements.
 
-**Consensus Mechanisms**
-
-In addition to Delegated Proof of Stake (DPoS) for validators, the Gateway Protocol employs Proof of Capacity (PoC) and Proof of Storage (PoS) consensus mechanisms for EDVs.
-
-- **PoC**: EDVs plot their hard drives and calculate solutions to mining problems before mining starts. The EDVs that provide the fastest solutions are awarded the block and corresponding tokens.
-- **PoS**: This cryptographic protocol verifies the integrity of an EDV file by sending an encoded copy of the data to a server and executing a challenge-response protocol.
-
 **Challenge Protocol**
 
-The Challenge Protocol is a smart contract running on the validation layer that audits data storage in EDVs. It rewards or penalizes EDVs for each write action based on their ability to prove that they are storing the data they are paid to store. If an EDV passes the challenge, token rewards are transferred from the challenge pool to the EDV. If an EDV fails the challenge or does not respond within the allowed time, its stake is slashed.
+```
+TODO - create new "PROOF OF STORAGE" section here - to come from Nuno
 
-The Challenge Protocol uses a proof mechanism that involves fragmenting the file, chunking the fragments, hashing the chunks, and building a Merkle Tree with the hash values as leaves. The Merkle Tree has a fixed size of 1024 leaf nodes, and a Merkle Proof can be generated for any given chunk to validate its inclusion in the file.
 
-The Challenge Protocol operates in three phases: Challenge Issuance, Justification Phase, and Judgment Phase. The time allowed for challenges (CT) is calculated based on the file size (FS), a fixed multiplier (M), and a constant time allotment (K):
+```
 
-$$CT = M ∗ FS + K$$
+```
 
-**Proof of Liveness**
+TODO - New Notino doc for compute
 
-EDVs must demonstrate their operational status and participation within the network through heartbeat mechanisms during data write operations. Each EDV sends a heartbeat signal immediately before and after a data write/delete operation. If a heartbeat is not received within the designated interval, it is considered a failure in demonstrating liveness, and the EDV's stake is partially slashed. EDVs can recover slashed funds through consistent operational liveness.
+confirm with Nuno before publish!
 
-The Data Layer of the Gateway Protocol ensures secure storage, efficient data management, and the integrity of encrypted data across the network through a combination of EDVs, consensus mechanisms, the Challenge Protocol, and Proof of Liveness.
+
+https://www.notion.so/mygateway/Gateway-Protocol-Compute-Layer-106e39c32593804f99b5d4a7976a8617
+
+```

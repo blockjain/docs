@@ -7,11 +7,23 @@ description: Your Data, Your Control
 
 ![Data Assets Introduction](/assets/core-concepts/what-is-a-pda.png)
 
-Personal Data Assets (PDAs) serve as the foundational assets of Gateway, functioning as secure, encrypted containers for you to take ownership of your data. You maintain authoritative control, granting consent for data access to selected parties. Data Contributors neatly encapsulate your information in these PDAs using a user-friendly JSON format.
+```
+
+TODO - enhance this page regardign sharing with concept of "data requests" using ACL patterns
+
+```
+
+Data Assets serve as the foundational assets of Gateway, functioning as secure, encrypted containers for you to take ownership of your data. You maintain authoritative control, granting consent for data access to selected parties. Data Contributors neatly encapsulate your information in these Data Assets using a user-friendly JSON format.
 
 Data Assets often contain high value sensitive data. This can range from your healthcare information to your financial history to even your genetic sequencing. Data about you is quite valuable for various stakeholders across the internet including verification of certain traits, creating Personalized AI Models, giving uncollateralized loans and 100s of other use cases. Now you get to control who can use this info about you and when they are allowed to use it.
 
 ## What is the Data Asset Lifecycle?
+
+```
+
+TODO - it is correct, but after this things get sad
+
+```
 
 ![Personal Lifecycle](/assets/core-concepts/pda-lifecycle.png)
 
@@ -23,53 +35,39 @@ Once the Data Contributor sends the Data Model ID along with the user data (encr
 
 The responsibility for ensuring the accuracy of this data rests squarely on the Data Contributor. Should the information be found inaccurate, the Contributor's credibility would diminish, leading to decreased trust from Requestors who rely on this data.
 
-**A sample mutation for issuance**
-
-```
-mutation createPDA {
-  createPDA(
-    input: {
-      title: "My Personal Data Asset"
-      description: "This is an example PDA showcasing filler data."
-      owner: { type: GATEWAY_ID, value: "user-gateway-id" }
-      dataModelId: "example-data-model-id"
-      expirationDate: null
-      organization: { type: GATEWAY_ID, value: "org-gateway-id" }
-      claim: {
-        name: "John Doe"
-        age: 30
-        email: "johndoe@example.com"
-        interests: ["reading", "traveling", "photography"]
-        isStudent: false
-      }
-    }
-  ) {
-    id
-    arweaveUrl
-    dataAsset {
-      owner {
-        id
-        gatewayId
-      }
-      issuer {
-        id
-        gatewayId
-      }
-    }
-    transactionId
-  }
-}
 ```
 
-## Updating Claim Info
+TODO - insert references to current API here. this page should not talk about implementation, stay high level with links to in depth info
 
-To preserve the accuracy and reliability of information within the Personal Data Asset (PDA), it's essential for the Contributor to have the authority to revise any aspect of the claim as circumstances dictate. However, these revisions must be conducted in alignment with the predefined Data Model, precluding the introduction of new fields.
+```
+
+> Looking for implementation details? Read more about the API [here](developer-guide/api-reference/introduction.mdx)
+
+## Updating Data
+
+```
+
+TODO - remove "claim data" wwap for "Data"
+
+```
+
+To preserve the accuracy and reliability of information within the Data Asset, it's essential for the Contributor to have the authority to revise any aspect of the claim as circumstances dictate. However, these revisions must be conducted in alignment with the predefined Data Model, precluding the introduction of new fields.
 
 This procedure ensures data consistency and firmly places the responsibility for maintaining up-to-date and accurate information on the issuer.
 
 ## Updating Status
 
-In our quest to uphold data integrity and verifiability, Gateway's protocol incorporates a dynamic status framework for PDAS. This ensures that all parties involved—from contributors to requestors—are aware of the quality and reliability of the information they handle. Here's how it works:
+```
+
+TODO - might not be correct, nuno to provide update on correctness
+
+logic exisst to manage permissions, https://www.notion.so/mygateway/Data-Assets-Permissions-113e39c3259380f8b119f4769ef51cbc?pvs=4
+
+get info from here for API reference
+
+```
+
+In our quest to uphold data integrity and verifiability, Gateway's protocol incorporates a dynamic status framework for Data Assets. This ensures that all parties involved—from contributors to requestors—are aware of the quality and reliability of the information they handle. Here's how it works:
 
 ![Data Asset's Status](/assets/core-concepts/pda-status.png)
 
@@ -81,9 +79,14 @@ By offering this nuanced status framework, we empower issuers to reflect real-ti
 
 **These are the predictable components that are part of every Data Asset.**
 
+```
+
+TODO - remove image, replace with more recent one from tulio
+
 ![Data Asset structure](/assets/core-concepts/pda-structure.png)
 
 
+```
 
 **1. Data Asset ID**
 
@@ -95,13 +98,28 @@ _This is found above the name of the Data Asset and is unique per Data Asset_
 
 **2. Name, Description, Categories**
 
+```
+
+TODO - have title, or "public title"
+no description
+no cataegory
+have metadata instead - an array of KeyValue pairs
+
+
 _The following makes up the header of the Data Asset_
+```
+
+```
+
+TODO - remove headers
 
 Data Asset Header
 
 These are used to provide a general context of what the Data Asset is about. It is not uncommon for Data Assets to have names, descriptions, and categories that match the data model, especially if they are issued in mass.
 
 By default, if an issuer does not provide a name, description, or category, it defaults to using the data model fields. An image can also be provided if the issuer would like.
+
+```
 
 **3. Issuer**
 

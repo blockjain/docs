@@ -2,20 +2,46 @@
 title: Privacy + Security Standards
 ---
 
+```
+
+TODO - remove references to ARWEAVE
+
+```
+
 ![Privacy Access Control](/assets/core-concepts/privacy-access-control.png)
 
-We understand that data sensitivity is a paramount concern, which is why we are committed to upholding the highest standards of care to ensure that only authorized parties have access to your personal information.
-
-We adhere rigorously to cutting-edge encryption and security protocols, aligning with industry best practices. Moreover, we take additional precautions by only making the information that is absolutely necessary for transaction verifiability publicly available on Arweave. Importantly, we never disclose the owners of Private Data Assets (PDAs) to prevent any potential linking of these assets to individual identities.
-
-Our development efforts are ceaselessly focused on safeguarding your privacy. That said, if you do discover any vulnerabilities, we urge you to inform us, as we are continually striving to enhance the security measures in place for your protection. Below are the basic visibility standards of artifacts on the protocol.
+Data Sensitivity is a paramount concern, which is why Gateway is built from the ground up to ensure that only authorized parties have access to data assets only when that permission has been granted by the data owner.
 
 ![Visibility Standards](/assets/core-concepts/privacy-visibility-standards.png)
 
 ## Encryption Practices
 
-We employ a robust encryption strategy designed with your privacy and security as our utmost priorities. Utilizing symmetric encryption, your sensitive data is encoded in such a way that only the corresponding key can decode it. To elevate the security measures even further, this symmetric key itself is encrypted using your unique personal encryption key. This ultimately vends a unique symmetric key per artifact (PDA and proof) that you own. This dual-layer encryption ensures that only you have the capability to access and decrypt your information. In other words, the data is secured in a vault, and the key to that vault is safely stored in another vault for which only you hold the key. This methodology adheres to advanced security protocols and provides an added layer of assurance that your private information remains confidential and inaccessible to unauthorized parties.
+```
+TODO - will require updates with Compute
+
+why x/y/z primitives are secure/verifiable
+
+```
+
+By utilizing symmetric encryption, sensitive data is encoded such that it can only be decoded only with the corresponding key.
+
+To elevate the security measures even further, this symetric key itself is enrypted using a users unique, personal encryption key. The result of which vends a unique symmetric key for each Data Asset.
+
+This dual layer encryption ensures that only the Data Owner has the capability to access and decrypt the Data Asset.
+
+> Put simply, the result is encrypted Data which can only be accessed with an encrypted key.
+
+This methodology adheres to advanced security protocols and provides an added layer of assurance that your private information remains confidential and inaccessible to unauthorized parties.
 
 ## Storage
 
-We leverage the decentralized storage capabilities of Arweave to securely house your encrypted information. Arweave's unique architecture ensures that no single entity maintains custody of your data, enhancing both its security and its integrity. Beyond serving as a highly secure storage medium, Arweave also provides a verifiability layer, acting as an immutable ledger that validates and records transactions. This ensures that only the most trusted and verified information is accessed, further emphasizing our commitment to data integrity and user privacy. The decentralized nature of Arweave aligns seamlessly with our core principles of robust data security, transparency, and accountability.
+```
+TODO - remove arweave, update from EDV page. can come up with paragraph to replace this
+
+```
+
+Gateway uses Encrypted Data Vaults ("EDVs") to to securely house the encrypted Data Assets stored on the Network.
+
+EDVs are the primary entities responsible for storing and maintaining encrypted data, allowing for efficient data management without overburdening the main network.
+
+EDVs have various storage metrics, including capacity, total staked capacity, free capacity, purchased capacity, and used storage. Upon registration, an EDV broadcasts its total storage capacity to the validators and stakes a sufficient quantity of tokens to commence network services. EDVs pledge available storage at the beginning of each epoch and are bound by the protocol to fulfill their storage agreements.
