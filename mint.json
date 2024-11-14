@@ -29,6 +29,14 @@
   ],
   "tabs": [
     {
+      "name": "Storage",
+      "url": "protocol-architecture/core-concepts/data-layer"
+    },
+    {
+      "name": "Compute",
+      "url": "compute/overview"
+    },
+    {
       "name": "API Reference",
       "url": "developer-guide/api-reference"
     },
@@ -69,33 +77,16 @@
       "pages": ["introduction"]
     },
     {
-      "group": "Gateway Protocol Architecture",
-      "pages": [
-        "protocol-architecture/introduction",
-        {
-          "group": "Core Concepts",
-          "pages": [
-            "protocol-architecture/core-concepts/client",
-            "protocol-architecture/core-concepts/data-layer"
-          ]
-        }
-      ]
+      "group": "Encrypted Compute",
+      "pages": ["compute/overview"]
     },
     {
-      "group": "Key Terms",
+      "group": "Data Storage",
       "pages": [
-        {
-          "group": "Fundamentals",
-          "pages": [
-            "core-concepts/data-assets",
-            "core-concepts/data-models",
-            "core-concepts/privacy-and-security-standards"
-          ]
-        },
-        {
-          "group": "Roles",
-          "pages": ["gateway-network/contributors", "gateway-network/owners"]
-        }
+        "protocol-architecture/core-concepts/data-layer",
+        "core-concepts/data-models",
+        "core-concepts/data-assets",
+        "core-concepts/privacy-and-security-standards"
       ]
     },
     {
@@ -107,7 +98,6 @@
       "pages": [
         "developer-guide/api-reference/introduction",
         "developer-guide/api-reference/authentication",
-        "developer-guide/api-reference/overview",
         {
           "icon": "id-badge",
           "group": "Accounts",

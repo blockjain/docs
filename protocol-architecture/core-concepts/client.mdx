@@ -3,9 +3,11 @@ title: Client (Identity)
 description: Decentralized Identity Management
 ---
 
-Gateway Protocol's architecture revolves around the Decentralized Identity (DID) standard, which defines all entities participating in the protocol and governs their interactions.
+Gateway Protocol's architecture revolves around the Decentralized Identity ("DID") standard, which defines all entities participating in the protocol and governs their interactions.
 
 ![Gateway Protocol Client (Identity)](/assets/protocol-architecture/client.png)
+
+## Key Elements
 
 A DID in Gateway Protocol consists of three key elements:
 
@@ -13,11 +15,7 @@ A DID in Gateway Protocol consists of three key elements:
 
    - The private key must be kept secret as it grants permissions and consent to user data.
 
-2. **Encryption Key** - An RSA-4096/OAEP (with BLAKE2b-384 digest) key pair, represented as $(PK_i, SK_i)$.
-
-```
-TODO - no longer using RSA OAEP, now using a PRE-compatible keypair baesd on elliptic curve cryptography with bilinear pairings
-```
+2. **Encryption Key** - A PRE-compatible keypair based on elliptic curve cryptography with bilinear pairings.
 
 - The user's public key is shared publicly on-chain in the DID document, allowing third parties to encrypt data that can only be viewed by the user.
 - The private key must never be shared publicly, as it enables decryption of user-controlled data.
@@ -25,13 +23,9 @@ TODO - no longer using RSA OAEP, now using a PRE-compatible keypair baesd on ell
 3. **ID** - The ID follows the W3C Decentralized Identity (DID) standard.
    - It is created by hashing (BLAKE2b-384) the public signing key of the user and a $salt$ value that can be changed for each user interaction with a given party.
 
-**Key Management and Security**
+## Key Management and Security
 
 To ensure the highest level of security, the generation of DIDs and handling of public crypto artifacts should happen off-chain and be recorded on-chain. Generating private key pairs off-band prevents storage and transmission leaks of user private keys. Once generated, only the relevant public derivatives (e.g., public signing and encryption keys) are reported to the network.
-
-```
-TODO -have this technically speaking for storage purposes, leave this as is for now, just removing incorrect info
-```
 
 The private signing key is used to authorize all on-chain activity, while the encryption keys are used for secure data transmission and storage. All on-chain actions require a signature with the secret private signing key, and sensitive data may be encrypted for the predetermined user using their public encryption key.
 

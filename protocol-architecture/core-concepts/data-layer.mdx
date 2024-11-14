@@ -3,28 +3,16 @@ title: Data Layer
 description: Gateway Protocol Data Layer
 ---
 
-```
-
-TODO - remove PoC and PoS stuff
-
-
-The Data Layer in Gateway Protocol comprises Encrypted Data Vaults (EDVs), consensus mechanisms such as Proof of Capacity (PoC) and Proof of Storage (PoS), an advanced indexing mechanism for seamless data retrieval, and a Challenge Protocol that audits data storage in EDVs.
-
-```
-
 ![Gateway Protocol Data Layer](/assets/protocol-architecture/data-layer.png)
 
-**Encrypted Data Vaults (EDVs)**
+## Encrypted Data Vaults
 
-EDVs are the primary entities responsible for storing and maintaining encrypted data, allowing for efficient data management without overburdening the main network. They interact closely with the Challenge Protocol to ensure compliance with the network's requirements, and their stakes can be slashed if they fail to meet these requirements.
+Encrypted Data Vaults, or EDVs, are the primary entities responsible for storing and maintaining encrypted data, allowing for efficient data management without overburdening the main network. They interact closely with the Challenge Protocol to ensure compliance with the network's requirements, and their stakes can be slashed if they fail to meet these requirements.
 
 EDVs have various storage metrics, including capacity, total staked capacity, free capacity, purchased capacity, and used storage. Upon registration, an EDV broadcasts its total storage capacity to the validators and stakes a sufficient quantity of tokens to commence network services. EDVs pledge available storage at the beginning of each epoch and are bound by the protocol to fulfill their storage agreements.
 
-**Challenge Protocol**
-
 ```
 TODO - create new "PROOF OF STORAGE" section here - to come from Nuno
-
 
 ```
 
