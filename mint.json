@@ -43,10 +43,6 @@
     {
       "name": "Usecases",
       "url": "usecases"
-    },
-    {
-      "name": "FAQ",
-      "url": "FAQ"
     }
   ],
   "anchors": [
@@ -74,7 +70,28 @@
   "navigation": [
     {
       "group": "Gateway Protocol",
-      "pages": ["introduction"]
+      "pages": [
+        "introduction/eli5",
+        "introduction/roadmap",
+        "introduction/use-cases",
+        "introduction/what-is-gateway"
+      ]
+    },
+    {
+      "group": "Shield Testnet",
+      "pages": [
+        "introduction/shield-testnet/connect-to-metamask",
+        "introduction/shield-testnet/faucet",
+        "introduction/shield-testnet/hardhat"
+      ]
+    },
+    {
+      "group": "Core Concepts",
+      "pages": [
+        "introduction/core=concepts/private-state",
+        "introduction/core=concepts/private-compute",
+        "introduction/core=concepts/data-lake"
+      ]
     },
     {
       "group": "Encrypted Compute",
@@ -173,17 +190,6 @@
           ]
         }
       ]
-    },
-    {
-      "group": "Usecases",
-      "pages": [
-        "usecases/introduction",
-        "usecases/artificial-intelligence",
-        "usecases/financial",
-        "usecases/governance",
-        "usecases/gaming",
-        "usecases/loyalty-programs"
-      ]
     }
   ],
   "api": {
@@ -206,5 +212,8 @@
       "source": "/developer-guide/api-reference-v3/:slug*",
       "destination": "/developer-guide/api-reference/:slug*"
     }
-  ]
+  ],
+  "primaryTab": {
+    "name": "Home"
+  }
 }
