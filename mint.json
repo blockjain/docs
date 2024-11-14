@@ -95,7 +95,16 @@
     },
     {
       "group": "Encrypted Compute",
-      "pages": ["compute/overview"]
+      "pages": ["compute/quickstart"]
+    },
+    {
+      "group": "Marketplace",
+      "pages": [
+        "compute/marketplace/encrypted-data-vault",
+        "compute/marketplace/garbled-circuit",
+        "compute/marketplace/pre",
+        "compute/marketplace/trusted-execution-environment"
+      ]
     },
     {
       "group": "Data Storage",
