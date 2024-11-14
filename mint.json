@@ -37,8 +37,8 @@
       "url": "storage"
     },
     {
-      "name": "API Reference",
-      "url": "developer-guide/api-reference"
+      "name": "Developer Guide",
+      "url": "developer-guide"
     },
     {
       "name": "Usecases",
@@ -124,6 +124,10 @@
       "pages": ["support"]
     },
     {
+      "group": "Developer Guides",
+      "pages": ["developer-guide/getting-started"]
+    },
+    {
       "group": "API Reference",
       "pages": [
         "developer-guide/api-reference/introduction",
@@ -203,6 +207,18 @@
           ]
         }
       ]
+    },
+    {
+      "group": "Go SDK",
+      "pages": ["developer-guide/go-sdk/quickstart"]
+    },
+    {
+      "group": "Javascript SDK",
+      "pages": ["developer-guide/javascript-sdk/quickstart"]
+    },
+    {
+      "group": "Rust SDK",
+      "pages": ["developer-guide/rust-sdk/quickstart"]
     }
   ],
   "api": {
