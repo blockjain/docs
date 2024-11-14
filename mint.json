@@ -108,6 +108,10 @@
     },
     {
       "group": "Data Storage",
+      "pages": ["storage/quickstart"]
+    },
+    {
+      "group": "Overview",
       "pages": [
         "storage/data-layer",
         "storage/data-models",
