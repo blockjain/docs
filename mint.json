@@ -29,12 +29,12 @@
   ],
   "tabs": [
     {
-      "name": "Storage",
-      "url": "protocol-architecture/core-concepts/data-layer"
+      "name": "Compute",
+      "url": "compute"
     },
     {
-      "name": "Compute",
-      "url": "compute/overview"
+      "name": "Storage",
+      "url": "storage"
     },
     {
       "name": "API Reference",
@@ -83,10 +83,10 @@
     {
       "group": "Data Storage",
       "pages": [
-        "protocol-architecture/core-concepts/data-layer",
-        "core-concepts/data-models",
-        "core-concepts/data-assets",
-        "core-concepts/privacy-and-security-standards"
+        "storage/data-layer",
+        "storage/data-models",
+        "storage/data-assets",
+        "storage/privacy-and-security-standards"
       ]
     },
     {
