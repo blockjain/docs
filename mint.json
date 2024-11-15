@@ -89,9 +89,9 @@
     {
       "group": "Core Concepts",
       "pages": [
-        "introduction/core=concepts/private-state",
-        "introduction/core=concepts/private-compute",
-        "introduction/core=concepts/data-lake"
+        "introduction/core-concepts/private-state",
+        "introduction/core-concepts/private-compute",
+        "introduction/core-concepts/data-lake"
       ]
     },
     {
