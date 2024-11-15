@@ -80,8 +80,9 @@
     {
       "group": "Shield Testnet",
       "pages": [
-        "introduction/shield-testnet/connect-to-metamask",
+        "introduction/shield-testnet/wallet-setup",
         "introduction/shield-testnet/faucet",
+        "introduction/shield-testnet/bridge",
         "introduction/shield-testnet/hardhat"
       ]
     },

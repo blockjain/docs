@@ -1,0 +1,68 @@
+---
+title: Bridge
+---
+
+Our bridge application enables seamless asset transfers between [Arbitrum Sepolia](https://sepolia.arbiscan.io/) and Gateway Shield testnet. Access the bridge at [https://gateway-shield-testnet.bridge.caldera.xyz/](https://gateway-shield-testnet.bridge.caldera.xyz/).
+
+The bridge supports bidirectional asset movement through deposit and withdrawal operations. This page explains how to perform these operations securely.
+
+## Depositing Assets to Gateway Shield
+
+Transfer assets from Arbitrum Sepolia to Gateway Shield testnet by following these steps:
+
+### Prerequisites
+
+- MetaMask or another Web3 wallet
+- Assets on Arbitrum Sepolia
+- Some Sepolia ETH for gas fees
+
+### Step-by-Step Guide
+
+1. Connect your wallet to the bridge interface
+2. Ensure your wallet is connected to Arbitrum Sepolia
+3. Navigate to the "Deposit" section
+4. Select your desired asset
+5. For ERC20 tokens: Approve the Gateway Shield Bridge contract to access your tokens
+6. Enter the amount to deposit
+7. Confirm the transaction in your wallet
+8. Wait for transaction confirmation
+
+### Transaction Monitoring
+
+Track your deposit status through the transaction history panel, accessible via the icon next to your wallet address.
+
+## Withdrawing Assets to Arbitrum Sepolia
+
+The withdrawal process consists of two phases: initiating the withdrawal and claiming the funds.
+
+### Phase 1: Initiating Withdrawal
+
+1. Switch your wallet to Gateway Shield testnet
+2. Select the "Withdraw" section in the bridge interface
+3. Choose the asset to withdraw
+4. For ERC20 tokens: Approve the Gateway Shield Bridge contract
+5. Specify the withdrawal amount
+6. Confirm the transaction
+
+### Phase 2: Claiming Funds
+
+Before claiming, your withdrawal must be finalized on L1. This involves:
+
+1. Message propagation from Gateway Shield to Arbitrum Sepolia
+2. State verification on Arbitrum Sepolia
+
+This process typically completes within 30 minutes. Once finalized:
+
+1. Navigate to the transaction history panel
+2. Locate your withdrawal transaction
+3. Click "Claim" when it becomes available
+4. Confirm the claim transaction
+5. Your assets will appear in your Arbitrum Sepolia wallet after confirmation
+
+### Important Notes
+
+- Always verify network connections before initiating transfers
+- Ensure sufficient gas on both networks
+- Wait for transaction confirmations before attempting additional operations
+- Monitor transaction status through the history panel
+- For any issues, check transaction status on block explorers before contacting support
