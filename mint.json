@@ -156,35 +156,41 @@
           "icon": "upload",
           "group": "Uploading Data",
           "pages": [
-            "developer-guide/api-reference/data-assets/create-a-new-data-asset",
-            "developer-guide/api-reference/data-assets/assign-acl-items-to-data-asset"
+            "developer-guide/api-reference/data-assets/create-a-new-data-asset"
           ]
         },
         {
           "icon": "download",
           "group": "Reading Data",
           "pages": [
-            "developer-guide/api-reference/data-assets/get-my-data-assets",
+            "developer-guide/api-reference/data-assets/get-received-data-assets",
+            "developer-guide/api-reference/data-assets/get-created-data-assets",
             "developer-guide/api-reference/data-assets/get-data-asset-by-id",
-            "developer-guide/api-reference/data-assets/download-data-asset-by-id",
-            "developer-guide/api-reference/data-assets/get-created-data-assets"
+            "developer-guide/api-reference/data-assets/download-data-asset-by-id"
           ]
         },
         {
           "icon": "pen-nib",
           "group": "Updating Data",
           "pages": [
-            "developer-guide/api-reference/data-assets/update-data-asset-by-id",
+            "developer-guide/api-reference/data-assets/update-data-asset-by-id"
+          ]
+        },
+        {
+          "icon": "boxes-packing",
+          "group": "Data Access Control",
+          "pages": [
+            "developer-guide/api-reference/data-assets/share-data-asset-by-id",
+            "developer-guide/api-reference/data-assets/assign-acl-items-to-data-asset",
             "developer-guide/api-reference/data-assets/update-acl-items-to-data-asset",
-            "developer-guide/api-reference/data-assets/update-data-asset-metadata-by-id"
+            "developer-guide/api-reference/data-assets/delete-assigned-role-by-acl"
           ]
         },
         {
           "icon": "eraser",
           "group": "Deleting Data",
           "pages": [
-            "developer-guide/api-reference/data-assets/delete-data-asset-by-id",
-            "developer-guide/api-reference/data-assets/delete-assigned-role-by-acl"
+            "developer-guide/api-reference/data-assets/delete-data-asset-by-id"
           ]
         },
         {
@@ -196,14 +202,6 @@
             "developer-guide/api-reference/data-models/get-data-models-by-user",
             "developer-guide/api-reference/data-models/get-data-model-by-id",
             "developer-guide/api-reference/data-models/update-data-model"
-          ]
-        },
-        {
-          "icon": "boxes-packing",
-          "group": "Access Control",
-          "pages": [
-            "developer-guide/api-reference/data-assets/get-received-data-assets",
-            "developer-guide/api-reference/data-assets/share-data-asset-by-id"
           ]
         }
       ]
