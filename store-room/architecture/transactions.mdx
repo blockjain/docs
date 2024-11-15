@@ -1,0 +1,13 @@
+---
+title: Transactions
+---
+
+All events that happen on the protocol are broadcasted on-chain to ensure validation and publicly attest consent. The creation of users and organizations is also broadcasted to the chain, allowing the Gateway IDs to be publicly verifiable yet privacy-preserving.
+
+The transactions that are broadcasted are the following:
+
+- **Creation of users/organizations:** This anchors the Gateway ID on chain.
+- **Data Asset issuance:** This action anchors and timestamps the creation of a Data Asset, while broadcasting cryptographic artifacts for Data Asset validation.
+- **Data Asset status changes:** This anchors any changes in the Data Asset status, such as when a Data Asset is revoked.
+- **Request creation:** This anchors and timestamps the action of creating a request.
+- **Proof creation:** This anchors and timestamps the action of creating a proof. This can be in response to a request, or as an independent sharing action, and it includes cryptographic artifacts for its validation.

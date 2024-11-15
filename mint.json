@@ -23,15 +23,19 @@
   },
   "topbarLinks": [
     {
-      "name": "Support",
+      "name": "Get Support",
       "url": "mailto:support@mygateway.xyz"
     }
   ],
-  "topbarCtaButton": {
-    "name": "Dashboard",
-    "url": "https://mygateway.xyz/dashboard/user/home"
-  },
   "tabs": [
+    {
+      "name": "Compute",
+      "url": "compute"
+    },
+    {
+      "name": "Storage",
+      "url": "storage"
+    },
     {
       "name": "Developer Guide",
       "url": "developer-guide"
@@ -39,85 +43,80 @@
     {
       "name": "Usecases",
       "url": "usecases"
-    },
-    {
-      "name": "FAQ",
-      "url": "FAQ"
     }
   ],
   "anchors": [
     {
-      "name": "Docs Home",
-      "icon": "book-open-cover",
-      "url": "/"
-    },
-    {
-      "name": "Gateway Homepage",
+      "name": "Gateway",
       "icon": "house",
-      "url": "https://mygateway.xyz"
+      "url": "https://gateway.tech"
     },
     {
       "name": "Explorer",
       "icon": "compass",
-      "url": "https://mygateway.xyz/explorer"
+      "url": "https://gateway.tech/explorer"
     },
     {
       "name": "Discord",
       "icon": "discord",
       "url": "https://discord.gg/zjHJZRZzts"
+    },
+    {
+      "name": "GitHub",
+      "icon": "github",
+      "url": "https://github.com/Gateway-DAO"
     }
   ],
   "navigation": [
     {
       "group": "Gateway Protocol",
-      "pages": ["introduction", "quickstart"]
-    },
-    {
-      "group": "Gateway Protocol Architecture",
       "pages": [
-        "protocol-architecture/introduction",
-        "protocol-architecture/easy-explainer",
-        {
-          "group": "Core Concepts",
-          "pages": [
-            "protocol-architecture/core-concepts/client",
-            "protocol-architecture/core-concepts/validation-layer",
-            "protocol-architecture/core-concepts/data-layer"
-          ]
-        },
-        {
-          "group": "Process Flow",
-          "pages": [
-            "protocol-architecture/process-flows/create-identity",
-            "protocol-architecture/process-flows/contribute-data",
-            "protocol-architecture/process-flows/request-data",
-            "protocol-architecture/process-flows/delete-data"
-          ]
-        }
+        "introduction/eli5",
+        "introduction/roadmap",
+        "introduction/use-cases",
+        "introduction/what-is-gateway"
       ]
     },
-
     {
-      "group": "Key terms",
+      "group": "Shield Testnet",
       "pages": [
-        {
-          "group": "Fundamentals",
-          "pages": [
-            "core-concepts/personal-data-assets",
-            "core-concepts/data-models",
-            "core-concepts/data-requests",
-            "core-concepts/data-proofs",
-            "core-concepts/privacy-and-security-standards"
-          ]
-        },
-        {
-          "group": "Roles",
-          "pages": [
-            "gateway-network/contributors",
-            "gateway-network/owners",
-            "gateway-network/requestors"
-          ]
-        }
+        "introduction/shield-testnet/connect-to-metamask",
+        "introduction/shield-testnet/faucet",
+        "introduction/shield-testnet/hardhat"
+      ]
+    },
+    {
+      "group": "Core Concepts",
+      "pages": [
+        "introduction/core=concepts/private-state",
+        "introduction/core=concepts/private-compute",
+        "introduction/core=concepts/data-lake"
+      ]
+    },
+    {
+      "group": "Encrypted Compute",
+      "pages": ["compute/quickstart"]
+    },
+    {
+      "group": "Marketplace",
+      "pages": [
+        "compute/marketplace/encrypted-data-vault",
+        "compute/marketplace/garbled-circuit",
+        "compute/marketplace/pre",
+        "compute/marketplace/trusted-execution-environment"
+      ]
+    },
+    {
+      "group": "Data Storage",
+      "pages": ["storage/quickstart"]
+    },
+    {
+      "group": "Overview",
+      "pages": [
+        "storage/data-layer",
+        "storage/data-models",
+        "storage/data-assets",
+        "storage/privacy-and-security-standards"
       ]
     },
     {
@@ -125,131 +124,125 @@
       "pages": ["support"]
     },
     {
-      "group": "Developer Flow",
-      "pages": [
-        "developer-guide/developer-flow/overview",
-        "developer-guide/developer-flow/upload-data",
-        "developer-guide/developer-flow/retrieve-data",
-        "developer-guide/developer-flow/request-data"
-      ]
-    },
-    {
-      "group": "SDK",
-      "pages": [
-        "developer-guide/sdk/introduction",
-        "developer-guide/sdk/quickstart",
-        "developer-guide/sdk/code-snippets",
-        "developer-guide/sdk/reference",
-        "developer-guide/sdk/examples",
-        "developer-guide/sdk/troubleshooting"
-      ]
+      "group": "Developer Guides",
+      "pages": ["developer-guide/getting-started"]
     },
     {
       "group": "API Reference",
       "pages": [
         "developer-guide/api-reference/introduction",
-        "developer-guide/api-reference/authentication"
-      ]
-    },
-    {
-      "group": "Resources",
-      "pages": [
-        "developer-guide/api-reference/overview",
+        "developer-guide/api-reference/authentication",
+        {
+          "icon": "id-badge",
+          "group": "Accounts",
+          "pages": [
+            "developer-guide/api-reference/accounts/create-account",
+            "developer-guide/api-reference/accounts/get-my-account",
+            "developer-guide/api-reference/accounts/update-account",
+            "developer-guide/api-reference/accounts/add-wallet",
+            "developer-guide/api-reference/accounts/remove-wallet"
+          ]
+        },
+        {
+          "icon": "shield-check",
+          "group": "Authentication",
+          "pages": [
+            "developer-guide/api-reference/auth/authenticate-account",
+            "developer-guide/api-reference/auth/generate-sign-message",
+            "developer-guide/api-reference/auth/refresh-token"
+          ]
+        },
         {
           "icon": "upload",
           "group": "Uploading Data",
           "pages": [
-            "developer-guide/api-reference/pda/create-pda",
-            "developer-guide/api-reference/pda/fetch-pda",
-            "developer-guide/api-reference/pda/fetching-all-your-pdas",
-            "developer-guide/api-reference/pda/issued-pdas",
-            "developer-guide/api-reference/pda/update-pda",
-            "developer-guide/api-reference/pda/change-pda-status"
+            "developer-guide/api-reference/data-assets/create-a-new-data-asset",
+            "developer-guide/api-reference/data-assets/assign-acl-items-to-data-asset"
+          ]
+        },
+        {
+          "icon": "download",
+          "group": "Reading Data",
+          "pages": [
+            "developer-guide/api-reference/data-assets/get-my-data-assets",
+            "developer-guide/api-reference/data-assets/get-data-asset-by-id",
+            "developer-guide/api-reference/data-assets/download-data-asset-by-id",
+            "developer-guide/api-reference/data-assets/get-created-data-assets"
+          ]
+        },
+        {
+          "icon": "pen-nib",
+          "group": "Updating Data",
+          "pages": [
+            "developer-guide/api-reference/data-assets/update-data-asset-by-id",
+            "developer-guide/api-reference/data-assets/update-acl-items-to-data-asset",
+            "developer-guide/api-reference/data-assets/update-data-asset-metadata-by-id"
+          ]
+        },
+        {
+          "icon": "eraser",
+          "group": "Deleting Data",
+          "pages": [
+            "developer-guide/api-reference/data-assets/delete-data-asset-by-id",
+            "developer-guide/api-reference/data-assets/delete-assigned-role-by-acl"
           ]
         },
         {
           "icon": "database",
           "group": "Data Models",
           "pages": [
-            "developer-guide/api-reference/data-models/fetch-data-model",
-            "developer-guide/api-reference/data-models/fetch-all-data-models",
-            "developer-guide/api-reference/data-models/fetch-all-issuers",
-            "developer-guide/api-reference/data-models/create-data-model"
+            "developer-guide/api-reference/data-models/get-data-models",
+            "developer-guide/api-reference/data-models/create-data-model",
+            "developer-guide/api-reference/data-models/get-data-models-by-user",
+            "developer-guide/api-reference/data-models/get-data-model-by-id",
+            "developer-guide/api-reference/data-models/update-data-model"
           ]
         },
         {
-          "icon": "comments-question-check",
-          "group": "Data Requests",
+          "icon": "boxes-packing",
+          "group": "Access Control",
           "pages": [
-            "developer-guide/api-reference/data-requests/create-data-request",
-            "developer-guide/api-reference/data-requests/data-request-status",
-            "developer-guide/api-reference/data-requests/reject-data-request",
-            "developer-guide/api-reference/data-requests/create-data-request-template",
-            "developer-guide/api-reference/data-requests/verifiers-by-data-request-templates"
-          ]
-        },
-        {
-          "icon": "shield-check",
-          "group": "Authenitcation",
-          "pages": ["developer-guide/api-reference/authentication/createNonce"]
-        },
-        {
-          "icon": "group-arrows-rotate",
-          "group": "Organizations",
-          "pages": [
-            "developer-guide/api-reference/organizations/create-org",
-            "developer-guide/api-reference/organizations/add-member",
-            "developer-guide/api-reference/organizations/remove-member",
-            "developer-guide/api-reference/organizations/change-member-role",
-            "developer-guide/api-reference/organizations/fetch-all-org",
-            "developer-guide/api-reference/organizations/update-org"
-          ]
-        },
-        {
-          "icon": "inbox-in",
-          "group": "Transactions",
-          "pages": [
-            "developer-guide/api-reference/transactions/fetch-transactions",
-            "developer-guide/api-reference/transactions/my-transactions",
-            "developer-guide/api-reference/transactions/transactions"
+            "developer-guide/api-reference/data-assets/get-received-data-assets",
+            "developer-guide/api-reference/data-assets/share-data-asset-by-id"
           ]
         }
       ]
     },
     {
-      "group": "Widget",
-      "pages": [
-        "developer-guide/widget/introduction",
-        "developer-guide/widget/quickstart",
-        "developer-guide/widget/configuration"
-      ]
+      "group": "Go SDK",
+      "pages": ["developer-guide/go-sdk/quickstart"]
     },
     {
-      "group": "Usecases",
-      "pages": [
-        "usecases/introduction",
-        "usecases/artificial-intelligence",
-        "usecases/financial",
-        "usecases/governance",
-        "usecases/gaming",
-        "usecases/loyalty-programs"
-      ]
+      "group": "Javascript SDK",
+      "pages": ["developer-guide/javascript-sdk/quickstart"]
     },
     {
-      "group": "Frequently Asked Questions",
-      "pages": ["FAQ/FAQ"]
+      "group": "Rust SDK",
+      "pages": ["developer-guide/rust-sdk/quickstart"]
     }
   ],
-
+  "api": {
+    "baseUrl": "https://api.gateway.tech/",
+    "auth": {
+      "method": "bearer"
+    },
+    "playground": {
+      "mode": "show"
+    }
+  },
+  "openapi": "swagger.yaml",
   "footerSocials": {
     "twitter": "https://twitter.com/Gateway_xyz",
     "github": "https://github.com/Gateway-DAO",
     "linkedin": "https://www.linkedin.com/company/mygateway"
   },
-  "api": {
-    "baseUrl": "https://protocol.mygateway.xyz/graphql",
-    "auth": {
-      "method": "bearer"
+  "redirects": [
+    {
+      "source": "/developer-guide/api-reference-v3/:slug*",
+      "destination": "/developer-guide/api-reference/:slug*"
     }
+  ],
+  "primaryTab": {
+    "name": "Home"
   }
 }
