@@ -1,0 +1,98 @@
+---
+title: Data Assets
+---
+
+## Working with Data Assets
+
+The SDK supports two types of data assets:
+
+1. **Structured Data Assets:** JSON-like data that follows a predefined data model
+2. **Non-Structured Data Assets:** File-based data like documents, images, etc.
+
+### Working with Structured Data
+
+Structured data assets are useful when you need to store and share structured information like user profiles, credentials, or any JSON-compatible data that follows a specific format (that we call data models).
+
+```typescript
+// First, verify your identity
+const account = await gateway.account.getMe();
+console.log(`Connected as: ${account.username} (${account.did})`);
+
+// Create a structured data asset
+const profileData = {
+  firstName: "Jane",
+  lastName: "Doe",
+  department: "Engineering",
+  skills: ["JavaScript", "TypeScript", "React"],
+  joinDate: "2024-01-15",
+};
+
+const assetId = await gateway.dataAsset.createStructured({
+  name: "Employee Profile",
+  data_model_id: 123456789, // Reference to a pre-defined data model
+  tags: ["employee", "profile"],
+  claim: profileData,
+  acl: [
+    {
+      address: "recipient-did", // The DID of the user who will have access
+      roles: [AccessLevel.VIEW, AccessLevel.SHARE],
+    },
+  ],
+});
+
+console.log("Created profile with ID:", assetId);
+
+// Verify the asset was created
+const createdAssets = await gateway.dataAsset.getCreatedByMe();
+const assetExists = createdAssets.data.some((asset) => asset.id === assetId);
+console.log("Asset creation verified:", assetExists);
+```
+
+### Working with Files
+
+For non-structured data like documents or media files, use the non-structured data asset APIs:
+
+```typescript
+// You can create a file locally or also read a file from you file system using "fs"
+const fileContent = new Blob(
+  [
+    "Annual performance review for Jane Doe\n" +
+      "Period: 2024 Q1\n" +
+      "Rating: Excellent",
+  ],
+  {
+    type: "text/plain",
+  }
+);
+
+// Upload and share the file
+const fileAssetId = await gateway.dataAsset.createNonStructured(
+  "performance_review_2024_q1.txt",
+  fileContent,
+  {
+    address: "recipient-did",
+    roles: [AccessLevel.VIEW], // Recipient can view but not share
+  }
+);
+
+console.log("Created file asset with ID:", fileAssetId);
+```
+
+### Retrieving Data Assets
+
+The SDK provides several methods to retrieve and manage your data assets:
+
+```typescript
+// Get all assets shared with you
+const receivedAssets = await gateway.dataAsset.getReceivedToMe();
+console.log("Received assets:", receivedAssets.data);
+
+// Get details of a specific asset
+const assetDetails = await gateway.dataAsset.getDetail(assetId);
+console.log("Asset details:", assetDetails);
+
+// Download and read asset content
+const data = await gateway.dataAsset.download(assetId);
+const content = await data.file.text();
+console.log("Asset content:", content);
+```
