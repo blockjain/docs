@@ -208,7 +208,11 @@
     },
     {
       "group": "Go SDK",
-      "pages": ["developer-guide/go-sdk/quickstart"]
+      "pages": [
+        "developer-guide/go-sdk/quickstart",
+        "developer-guide/go-sdk/data-models",
+        "developer-guide/go-sdk/data-assets"
+      ]
     },
     {
       "group": "Javascript SDK",

@@ -1,0 +1,203 @@
+---
+title: Data Models
+---
+
+Data Models in the Gateway Protocol define the structure and validation rules for structured data assets. When using the Go SDK, Data Models ensure type safety and data consistency across your applications.
+
+## Understanding Data Models
+
+Before working with structured data assets in Go, it's essential to understand:
+
+- Data Models are immutable schemas that define data structure
+- They use [JSON Schema](https://json-schema.org/) for validation rules
+- Every **structured data asset** must conform to a Data Model
+
+## Creating Data Models
+
+Create Data Models using the SDK's strongly typed interfaces:
+
+```go
+import (
+   "fmt"
+   gateway "github.com/Gateway-DAO/gateway-go-sdk/client"
+)
+
+func createEmployeeModel(client *gateway.SDK) error {
+   // Define the schema properties
+   schema := map[string]interface{}{
+       "title": "Employee",
+       "type": "object",
+       "required": []string{"firstName", "email", "department"},
+       "properties": map[string]interface{}{
+           "firstName": map[string]interface{}{
+               "type": "string",
+               "title": "First Name",
+               "description": "Employee's first name",
+               "minLength": 2,
+           },
+           "lastName": map[string]interface{}{
+               "type": "string",
+               "title": "Last Name",
+               "description": "Employee's last name",
+               "minLength": 2,
+           },
+           "email": map[string]interface{}{
+               "type": "string",
+               "title": "Email",
+               "description": "Corporate email address",
+               "format": "email",
+           },
+           "department": map[string]interface{}{
+               "type": "string",
+               "title": "Department",
+               "description": "Employee's department",
+           },
+           "profilePhoto": map[string]interface{}{
+               "type": "string",
+               "title": "Profile Photo",
+               "description": "Employee's profile picture",
+               "contentMediaType": "image/png",
+           },
+       },
+       "additionalProperties": false,
+   }
+
+   // Create the data model
+   tags := []string{"HR", "Employee", "Profile"}
+   model, err := client.DataModel.Create(gateway.CreateDataModelRequest{
+       Title:       "Employee Profile",
+       Description: "Standard employee information schema",
+       Tags:        &tags,
+       Schema:      schema,
+   })
+   if err != nil {
+       return fmt.Errorf("failed to create data model: %w", err)
+   }
+
+   fmt.Printf("Created Data Model with ID: %d\n", model.Id)
+   return nil
+}
+```
+
+## Data Model Structure
+
+Data Models in Go use maps and interfaces to represent JSON Schema structures:
+
+```go
+// Example of a complex schema structure
+schema := map[string]interface{}{
+    "type": "object",
+    "properties": map[string]interface{}{
+        // String validation
+        "username": map[string]interface{}{
+            "type":      "string",
+            "minLength": 3,
+            "maxLength": 20,
+            "pattern":   "^[a-zA-Z0-9_]+$",
+        },
+
+        // Number validation
+        "age": map[string]interface{}{
+            "type":    "number",
+            "minimum": 0,
+            "maximum": 120,
+        },
+
+        // Array validation
+        "skills": map[string]interface{}{
+            "type":        "array",
+            "minItems":    1,
+            "maxItems":    10,
+            "uniqueItems": true,
+            "items": map[string]interface{}{
+                "type": "string",
+            },
+        },
+
+        // Object validation
+        "contact": map[string]interface{}{
+            "type": "object",
+            "required": []string{"email"},
+            "properties": map[string]interface{}{
+                "email": map[string]interface{}{
+                    "type":   "string",
+                    "format": "email",
+                },
+                "phone": map[string]interface{}{
+                    "type": "string",
+                    "pattern": "^\\+[1-9]\\d{1,14}$",
+                },
+            },
+        },
+    },
+}
+```
+
+## Retrieving Data Models
+
+The SDK provides several methods to fetch and query Data Models:
+
+```go
+// Get a specific Data Model by ID
+modelID := int64(123456789)
+model, err := client.DataModel.GetById(modelID)
+if err != nil {
+    log.Fatalf("Failed to get data model: %v", err)
+}
+fmt.Printf("Retrieved model: %s (ID: %d)\n", model.Title, model.Id)
+
+// List Data Models created by the current user (paginated)
+page := 1
+pageSize := 10
+myModels, err := client.DataModel.GetCreatedByMe(page, pageSize)
+if err != nil {
+    log.Fatalf("Failed to list models: %v", err)
+}
+
+for _, model := range myModels.Data {
+    fmt.Printf("Model: %s (ID: %d)\n", model.Title, model.Id)
+}
+```
+
+## Validating Against Data Models
+
+When creating data assets, ensure your data conforms to the model's schema:
+
+```go
+func createEmployeeAsset(client *gateway.SDK, modelID int64, employeeData map[string]interface{}) error {
+    // Define access control
+    acl := []gateway.ACLRequest{{
+        Address: "recipient-did",
+        Roles: []gateway.TypesAccessLevel{gateway.RoleView},
+    }}
+
+    // Create data asset
+    tags := []string{"employee"}
+    asset, err := client.DataAssets.Upload(gateway.CreateDataAssetRequest{
+        Name:        "New Employee Profile",
+        DataModelId: &modelID,
+        Tags:        &tags,
+        Claim:       &employeeData,
+        Acl:         &acl,
+    })
+    if err != nil {
+        return fmt.Errorf("failed to create asset: %w", err)
+    }
+
+    fmt.Printf("Created asset with ID: %d\n", asset.Id)
+    return nil
+}
+
+// Usage example
+employeeData := map[string]interface{}{
+    "firstName":    "Jane",
+    "lastName":     "Doe",
+    "email":        "jane.doe@company.com",
+    "department":   "Engineering",
+    "profilePhoto": "https://company.com/photos/jane.png",
+}
+
+if err := createEmployeeAsset(client, modelID, employeeData); err != nil {
+    log.Fatal(err)
+}
+```
