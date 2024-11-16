@@ -1,0 +1,120 @@
+---
+title: Overview
+---
+
+Gateway implements garbled circuits as its core cryptographic primitive for encrypted computation. This implementation enables privacy-preserving computations through a novel architecture that combines the efficiency of boolean circuits with strong security guarantees.
+
+## What are Garbled Circuits?
+
+Garbled circuits are a cryptographic technique that enables secure computation between multiple parties by allowing them to jointly compute a function over their inputs while keeping those inputs private. They work by converting computational operations into boolean circuits where the inputs are "garbled" (encrypted) while still allowing computation. This enables:
+
+- Private computation on encrypted data
+- Efficient parallel processing
+- Verifiable results
+- Deterministic operations
+
+## The Gateway Virtual Machine (GVM)
+
+The Gateway Virtual Machine (GVM) is our specialized runtime for processing garbled circuits. It manages the entire lifecycle of secure computations:
+
+1. **Input Processing**: Handles and verifies garbled inputs
+2. **Computation**: Executes programs on encrypted data
+3. **Output Delivery**: Returns encrypted results to authorized parties
+
+### Key Features
+
+- **Turing Completeness**: Can compute any algorithm, providing unlimited computational flexibility
+- **End-to-End Encryption**: Performs calculations on encrypted data without requiring decryption
+- **Deterministic Execution**: Given the same inputs, circuits always produce identical outputs
+
+## Why Garbled Circuits?
+
+Gateway chose garbled circuits for several compelling reasons:
+
+1. **Efficiency**
+
+   - Lower hardware requirements compared to linear secret sharing schemes
+   - Faster execution than fully homomorphic encryption (FHE) for arithmetic and boolean operations
+   - No bootstrapping overhead
+
+2. **Maturity**
+
+   - Extensive research history
+   - Well-optimized techniques
+   - Proven security properties
+
+3. **Flexibility**
+   - Cost-effective for complex functions
+   - Scalable for larger operations
+   - Efficient parallel processing capabilities
+
+## Comparison with FHE
+
+| Feature        | Garbled Circuits                                                                 | FHE                                                                  |
+| -------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------- |
+| **Strengths**  | **Efficiency**: More efficient for complex functions, circuit size defines cost. | **Flexibility**: Arbitrary computations on encrypted data.           |
+|                | **Established Research**: Optimized techniques like TinyOT.                      | **Non-Interactivity**: Less interaction after initial data transfer. |
+|                | **Security Against Malicious Adversaries**: Authenticated garbled circuits.      |                                                                      |
+| **Weaknesses** | **Circuit Dependency**: Predefined circuit needed.                               | **Efficiency**: Computationally intensive, noise accumulation.       |
+|                | **Interactivity**: Multiple rounds of interaction can impact performance.        | **Noise Accumulation**: Can lead to decryption failures.             |
+
+## Technical Implementation
+
+Gateway's implementation is based on the research paper ["Authenticated Garbling and Efficient Maliciously Secure Two-Party Computation" by Wang, Ranellucci, and Katz](https://acmccs.github.io/papers/p21-wangA.pdf), and leverages the [Tandem Project](https://github.com/sine-fdn/tandem) by Sine Foundation as its underlying engine.
+
+### Key Features of the Authenticated Garbled Circuit Scheme
+
+The Gateway Virtual Machine (GVM) implements authenticated garbled circuits with several key features:
+
+1. **Verifiable Computation**
+
+   - Intrinsic verification of inputs and outputs
+   - No requirement for external SNARKs or proof systems
+   - Built-in correctness guarantees
+
+2. **Security Guarantees**
+
+   - Complete confidentiality throughout computation
+   - Input and output privacy
+   - Protection of intermediate states
+   - Only authorized computations permitted
+
+3. **Efficient Processing**
+   - Verification integrated into circuit operations
+   - Minimized overhead from proof systems
+   - Optimized for performance
+
+## Security Properties
+
+### End-to-End Encryption
+
+The GVM ensures:
+
+- Full encryption of input data
+- Protected intermediate computation states
+- Encrypted output data
+- No exposure of sensitive information at any stage
+
+### Authentication and Verification
+
+- Built-in verification mechanisms
+- Guaranteed integrity of computations
+- Protection against unauthorized modifications
+- Verifiable results without additional proof systems
+
+## Performance
+
+Gateway's implementation provides significant performance advantages:
+
+- Millisecond-range operation times for most functions
+- Efficient handling of complex computations
+- Optimized for both simple and complex operations
+- Suitable for real-time applications
+
+For detailed performance metrics, see our [benchmarks](./benchmarks) page.
+
+## Next Steps
+
+- Learn about our [performance benchmarks](./benchmarks)
+- Explore the [Rust SDK](./rust-sdk) for circuit development
+- See practical [examples](./examples) of garbled circuits in action

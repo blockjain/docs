@@ -1,0 +1,184 @@
+---
+title: Examples
+---
+
+This page contains practical examples of using Gateway's garbled circuits for privacy-preserving computations. For more examples and the complete source code, visit our [GitHub repository](https://github.com/Gateway-DAO/gvm/tree/main/compute/examples).
+
+## Core Examples
+
+### 1. Discount Eligibility Check
+A simple example demonstrating threshold-based decision making:
+
+```rust
+use compute::prelude::*;
+
+#[encrypted(execute)]
+fn qualifies_for_discount(purchase_amount: u16) -> bool {
+    let DISCOUNT_THRESHOLD = 80;
+    purchase_amount >= DISCOUNT_THRESHOLD
+}
+```
+
+This example shows:
+
+- Basic comparison operations
+- Constant value handling
+- Boolean return types
+
+### 2. Loan Eligibility Assessment
+A complex example showcasing multi-criteria decision making:
+
+```rust
+use compute::prelude::*;
+
+#[encrypted(execute)]
+fn check_loan_eligibility(credit_score: u16, income: u16, debt_ratio: u16) -> u8 {
+    // Define eligibility levels
+    let PRIME = 1;
+    let SUBPRIME = 2;
+    let HIGH_RISK = 3;
+    let INELIGIBLE = 0;
+
+    // Nested range checks with if-let expressions
+    if let 750..=850 = credit_score {
+        if let 50..=200 = income {
+            if let 1..=30 = debt_ratio {
+                PRIME
+            } else {
+                HIGH_RISK
+            }
+        } else {
+            SUBPRIME
+        }
+    } else if let 650..=749 = credit_score {
+        if let 35..=199 = income {
+            if let 1..=40 = debt_ratio {
+                SUBPRIME
+            } else {
+                HIGH_RISK
+            }
+        } else {
+            HIGH_RISK
+        }
+    } else if let 300..=649 = credit_score {
+        HIGH_RISK
+    } else {
+        INELIGIBLE
+    }
+}
+```
+
+This example demonstrates:
+
+- Complex conditional logic
+- Range-based pattern matching
+- Multiple input parameters
+- Categorical output encoding
+
+### 3. Access Control System
+An example showing role-based access control:
+
+```rust
+use compute::prelude::*;
+
+#[encrypted(execute)]
+fn access_control(role: u8) -> u8 {
+    let SENSITIVE_DATA = 1;
+    let PATIENT_NOTES = 2;
+
+    let ADMIN_ROLE = 1;
+    let DOCTOR_ROLE = 2;
+    let NURSE_ROLE = 3;
+
+    match role {
+        ADMIN_ROLE => SENSITIVE_DATA,
+        DOCTOR_ROLE => PATIENT_NOTES + SENSITIVE_DATA,
+        NURSE_ROLE => PATIENT_NOTES,
+        _ => 0
+    }
+}
+```
+
+This example illustrates:
+
+- Match expressions
+- Role-based authorization
+- Bitwise operations for permission flags
+
+## Key Patterns
+### Pattern 1: Range-Based Logic
+
+```rust
+if let 1..=100 = value {
+    // Value is within acceptable range
+    perform_operation(value)
+} else {
+    // Value is outside range
+    handle_error()
+}
+```
+
+### Pattern 2: Multi-Level Decision Trees
+
+```rust
+match value {
+    0 => BASE_LEVEL,
+    1..=5 => INTERMEDIATE_LEVEL,
+    6..10 => ADVANCED_LEVEL,
+    _ => ERROR_LEVEL,
+}
+```
+
+### Pattern 3: Composite Conditions
+
+```rust
+if condition_a && condition_b {
+    // Both conditions must be true
+    POSITIVE_RESULT
+} else {
+    NEGATIVE_RESULT
+}
+```
+
+## Testing Examples
+Each example can be tested using the provided main function:
+
+```rust
+fn main() {
+    // Test case for loan eligibility
+    let credit_score = 780_u16;
+    let income = 75_u16;
+    let debt_ratio = 25_u16;
+    
+    let eligibility = check_loan_eligibility(credit_score, income, debt_ratio);
+    println!("Eligibility Level: {}", eligibility);
+}
+```
+
+Remember that these examples are running in a secure, encrypted environment where all computations maintain data privacy throughout the execution.
+
+## Best Practices Demonstrated
+
+### 1. Clear Constants
+
+- Define constants at the beginning of functions
+- Use descriptive names for better readability
+
+### 2. Range Validation
+
+- Use if-let with ranges for input validation
+- Handle out-of-range cases explicitly
+
+### 3. Error Handling
+
+- Always provide default/error cases
+- Use clear error codes or flags
+
+### 4. Code Organization
+
+- Structured decision trees
+- Clear separation of logic levels
+
+## Additional Resources
+
+You can find more examples in our [GitHub repository](https://github.com/Gateway-DAO/gvm/tree/main/compute/examples). Each example includes detailed comments and test cases. The repository also contains additional utilities and helper functions.

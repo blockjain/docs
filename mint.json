@@ -101,7 +101,16 @@
       "group": "Marketplace",
       "pages": [
         "compute/marketplace/encrypted-data-vault",
-        "compute/marketplace/garbled-circuit",
+        {
+          "icon": "network-wired",
+          "group": "Garbled Circuits",
+          "pages": [
+            "compute/marketplace/garbled-circuits/overview",
+            "compute/marketplace/garbled-circuits/benchmarks",
+            "compute/marketplace/garbled-circuits/rust-sdk",
+            "compute/marketplace/garbled-circuits/examples"
+          ]
+        },
         "compute/marketplace/pre",
         "compute/marketplace/trusted-execution-environment"
       ]
