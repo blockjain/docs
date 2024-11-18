@@ -2,4 +2,110 @@
 title: Getting Started
 ---
 
-> Content goes here
+Gateway's Go SDK provides a robust interface for interacting with encrypted storage and secure data sharing capabilities. The SDK offers a type-safe way to create, manage, and share data assets while maintaining strict access control.
+
+## Installation
+
+Install the SDK using Go modules:
+
+```bash
+go get github.com/Gateway-DAO/gateway-go-sdk
+```
+
+## Authentication
+
+The SDK supports multiple authentication methods:
+
+- JWT-based authentication
+- Wallet-based authentication (Ethereum, Solana, Sui)
+
+Initialize the SDK with your preferred authentication method:
+
+```go
+import (
+    gateway "github.com/Gateway-DAO/gateway-go-sdk/client"
+)
+
+// JWT-based authentication
+client := gateway.NewSDK(gateway.SDKConfig{
+    ApiKey: "your-jwt-token",
+})
+
+// Wallet-based authentication (Ethereum)
+client := gateway.NewSDK(gateway.SDKConfig{
+    WalletDetails: gateway.WalletDetails{
+        PrivateKey: "your-private-key",
+        WalletType: gateway.Ethereum,
+    },
+})
+
+// Custom API URL (for development)
+client := gateway.NewSDK(gateway.SDKConfig{
+    ApiKey: "your-jwt-token",
+    URL: "https://dev.api.gateway.tech",
+})
+```
+
+## Switching Accounts
+
+The SDK allows you to switch between different authentication methods during runtime:
+
+```go
+// Reinitialize with new credentials
+client = client.Reinitialize(gateway.SDKConfig{
+    WalletDetails: gateway.WalletDetails{
+        PrivateKey: "new-private-key",
+        WalletType: gateway.Solana,
+    },
+})
+
+// Verify new identity
+me, err := client.Account.GetMe()
+if err != nil {
+    log.Fatal(err)
+}
+fmt.Printf("Switched to: %s (%s)\n", me.Username, me.Did)
+```
+
+## Error Handling
+
+The SDK uses Go's standard error handling patterns. Always check returned errors:
+
+```
+func handleDataModelOperations(client *gateway.SDK) error {
+    model, err := client.DataModel.Create(gateway.CreateDataModelRequest{
+        // model definition
+    })
+    if err != nil {
+        switch {
+        case strings.Contains(err.Error(), "invalid schema"):
+            return fmt.Errorf("schema validation failed: %w", err)
+        case strings.Contains(err.Error(), "unauthorized"):
+            return fmt.Errorf("authentication required: %w", err)
+        default:
+            return fmt.Errorf("unexpected error: %w", err)
+        }
+    }
+    return nil
+}
+```
+
+## Best Practices
+
+1. Type safety
+
+   - Use Go structs for known data structures when possible
+   - Validate data before creating assets
+   - Handle type assertions carefully when working with interface{} values
+
+2. Resource Management
+
+   - Use defer for cleanup when necessary
+   - Close response bodies and other resources properly
+   - Handle pagination efficiently for large datasets
+
+3. Documentation
+
+   - Comment your schema definitions
+   - Document any custom validation rules
+   - Include examples in your code documentation

@@ -1,0 +1,125 @@
+---
+title: Data Assets
+---
+
+## Managing Data Assets
+
+The SDK supports two types of data assets:
+
+1. Structured Data Assets: JSON data conforming to a data model
+2. Non-Structured Data Assets: File-based data
+
+### Working with Structured Data
+
+Create and manage structured data assets using predefined data models:
+
+```go
+// Verify your identity
+me, err := client.Account.GetMe()
+if err != nil {
+    log.Fatal(err)
+}
+fmt.Printf("Connected as: %s (%s)\n", me.Username, me.Did)
+
+// Create a structured data asset
+dataModelID := 123456789
+tags := []string{"employee", "profile"}
+acl := []gateway.ACLRequest{{
+    Address: "recipient-did",
+    Roles: []gateway.TypesAccessLevel{gateway.RoleView, gateway.RoleShare},
+}}
+
+claim := map[string]interface{}{
+    "firstName":  "Jane",
+    "lastName":   "Doe",
+    "age":        30,
+    "department": "Engineering",
+    "skills":     []string{"Go", "Python", "Docker"},
+}
+
+id, err := client.DataAssets.Upload(gateway.CreateDataAssetRequest{
+    Name:        "Employee Profile",
+    DataModelId: &dataModelID,
+    Tags:        &tags,
+    Claim:       &claim,
+    Acl:         &acl,
+})
+if err != nil {
+    log.Fatal(err)
+}
+
+fmt.Printf("Created profile with ID: %d\n", id.Id)
+
+// Verify asset creation
+assets, err := client.DataAssets.GetCreatedByMe(1, 10)
+if err != nil {
+    log.Fatal(err)
+}
+
+for _, asset := range assets.Data {
+    if asset.Id == id.Id {
+        fmt.Println("✅ Data Asset verified in created list")
+    }
+}
+```
+
+### Working with Files
+
+Upload and share file-based data assets:
+
+```go
+// Create a simple file - can also read file from file system
+fileData := []byte("Annual performance review for Jane Doe\nPeriod: 2024 Q1\nRating: Excellent")
+
+// Upload and share the file
+acl := &[]gateway.ACLRequest{{
+    Address: "recipient-did",
+    Roles: []gateway.TypesAccessLevel{gateway.RoleView},
+}}
+
+id, err := client.DataAssets.UploadFile(
+    "performance_review_2024_q1.txt",
+    fileData,
+    acl,
+    nil, // expiration date (optional)
+)
+if err != nil {
+    log.Fatal(err)
+}
+
+fmt.Printf("Created file asset with ID: %d\n", id.Id)
+```
+
+### Retrieving Data Assets
+
+Access and download your data assets:
+
+```go
+// Get assets shared with you (paginated)
+receivedAssets, err := client.DataAssets.GetReceivedByMe(1, 10)
+if err != nil {
+    log.Fatal(err)
+}
+
+// Get specific asset details
+assetId := 123456789
+asset, err := client.DataAssets.Get(int64(assetId))
+if err != nil {
+    log.Fatal(err)
+}
+
+// Download asset content
+data, err := client.DataAssets.Download(int64(assetId))
+if err != nil {
+    log.Fatal(err)
+}
+
+// For file assets, access content directly
+fmt.Println(string(data.FileContent))
+
+// For structured data, parse JSON content
+var structuredData map[string]interface{}
+if err := json.Unmarshal(data.FileContent, &structuredData); err != nil {
+    log.Fatal(err)
+}
+```
