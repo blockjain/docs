@@ -233,7 +233,11 @@
     },
     {
       "group": "Rust SDK",
-      "pages": ["developer-guide/rust-sdk/quickstart"]
+      "pages": [
+        "developer-guide/rust-sdk/quickstart",
+        "developer-guide/rust-sdk/data-models",
+        "developer-guide/rust-sdk/data-assets"
+      ]
     }
   ],
   "api": {
