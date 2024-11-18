@@ -1,0 +1,263 @@
+---
+title: API Reference
+---
+
+Gateway's PRE nodes expose a gRPC service (`RecryptOperator`) that provides all necessary operations for proxy re-encryption functionality. The service is defined in `recrypt.proto` and provides endpoints for key generation, encryption, transformation, and decryption.
+
+## Node Endpoints
+
+### Production Nodes
+
+```
+pre.gateway.tech:443     // Primary production node
+pre-2.gateway.tech:443   // Secondary production node
+```
+
+### Testnet Nodes
+
+```
+pre-testnet.gateway.tech:443     // Primary testnet node
+pre-testnet-2.gateway.tech:443   // Secondary testnet node
+```
+
+## API Reference
+
+### 1. Generate Key Pair
+
+Generates a new public-private key pair for encryption.
+
+```protobuf
+rpc GenerateKeyPair(Empty) returns (EncodedKeyPair);
+
+message EncodedKeyPair {
+    string pubkey_base64 = 1;
+    string privkey_base64 = 10;
+}
+```
+
+#### Example Usage
+
+```typescript
+const response = await client.GenerateKeyPair({});
+// Returns: { pubkey_base64: "...", privkey_base64: "..." }
+```
+
+### 2. Encrypt Data
+
+Encrypts data using a public key.
+
+```protobuf
+rpc Encrypt(EncryptRequest) returns (EncryptReply);
+
+message EncryptRequest {
+    string data = 1;
+    string pubkey_base64 = 2;
+    bool is_data_base64 = 10;
+}
+
+message EncryptReply {
+    string cipher_base64 = 1;
+    float length = 10;
+}
+```
+
+#### Example Usage
+
+```typescript
+const response = await client.Encrypt({
+  data: "Hello, World!",
+  pubkey_base64: publicKey,
+  is_data_base64: false,
+});
+// Returns: { cipher_base64: "...", length: 13 }
+```
+
+### 3. Generate Transform Key
+
+Generates a transform key for re-encryption.
+
+```protobuf
+rpc GenerateTransformKey(GenerateTransformKeyRequest) returns (EncodedPayload);
+
+message GenerateTransformKeyRequest {
+    string to_pubkey_base64 = 1;
+    string from_privkey_base64 = 10;
+}
+
+message EncodedPayload {
+    string payload_base64 = 1;
+}
+```
+
+#### Example Usage
+
+```typescript
+const response = await client.GenerateTransformKey({
+  to_pubkey_base64: recipientPublicKey,
+  from_privkey_base64: senderPrivateKey,
+});
+// Returns: { payload_base64: "..." }
+```
+
+### 4. Transform Ciphertext
+
+Transforms (re-encrypts) a ciphertext using a transform key.
+
+```protobuf
+rpc Transform(TransformRequest) returns (EncodedPayload);
+
+message TransformRequest {
+    string cipher_base64 = 1;
+    string transformkey_base64 = 2;
+}
+```
+
+#### Example Usage
+
+```typescript
+const response = await client.Transform({
+  cipher_base64: encryptedData,
+  transformkey_base64: transformKey,
+});
+// Returns: { payload_base64: "..." }
+```
+
+### 5. Decrypt Data
+
+Decrypts a ciphertext using a private key.
+
+```protobuf
+rpc Decrypt(DecryptRequest) returns (EncodedPayload);
+
+message DecryptRequest {
+    string cipher_base64 = 1;
+    string privkey_base64 = 2;
+    float length = 3;
+}
+```
+
+#### Example Usage
+
+```typescript
+const response = await client.Decrypt({
+  cipher_base64: transformedData,
+  privkey_base64: recipientPrivateKey,
+  length: originalLength,
+});
+// Returns: { payload_base64: "..." }
+```
+
+## Complete Flow Example
+
+```typescript
+import { RecryptClient } from "@gateway/pre-client";
+
+async function demonstratePreFlow() {
+  const client = new RecryptClient("pre.gateway.tech:443");
+
+  // 1. Generate keys for sender and recipient
+  const sender = await client.GenerateKeyPair({});
+  const recipient = await client.GenerateKeyPair({});
+
+  // 2. Encrypt data
+  const encrypted = await client.Encrypt({
+    data: "Sensitive data",
+    pubkey_base64: sender.pubkey_base64,
+    is_data_base64: false,
+  });
+
+  // 3. Generate transform key
+  const transformKey = await client.GenerateTransformKey({
+    to_pubkey_base64: recipient.pubkey_base64,
+    from_privkey_base64: sender.privkey_base64,
+  });
+
+  // 4. Transform ciphertext
+  const transformed = await client.Transform({
+    cipher_base64: encrypted.cipher_base64,
+    transformkey_base64: transformKey.payload_base64,
+  });
+
+  // 5. Decrypt transformed data
+  const decrypted = await client.Decrypt({
+    cipher_base64: transformed.payload_base64,
+    privkey_base64: recipient.privkey_base64,
+    length: encrypted.length,
+  });
+
+  return decrypted.payload_base64;
+}
+```
+
+## Error Handling
+
+Common error scenarios and their handling:
+
+| Error Code          | Description                     | Resolution                          |
+| ------------------- | ------------------------------- | ----------------------------------- |
+| INVALID_ARGUMENT    | Invalid input parameters        | Check input format and encoding     |
+| FAILED_PRECONDITION | Operation prerequisites not met | Verify key pairs and transform keys |
+| INTERNAL            | Server-side error               | Retry with exponential backoff      |
+| UNAVAILABLE         | Service temporarily down        | Try alternate node                  |
+
+Example error handling:
+
+```typescript
+try {
+  const response = await client.Transform({
+    cipher_base64: encryptedData,
+    transformkey_base64: transformKey,
+  });
+} catch (error) {
+  if (error.code === "INVALID_ARGUMENT") {
+    console.error("Invalid input format:", error.message);
+  } else if (error.code === "UNAVAILABLE") {
+    // Try backup node
+    const backupClient = new RecryptClient("pre-2.gateway.tech:443");
+    const response = await backupClient.Transform({
+      cipher_base64: encryptedData,
+      transformkey_base64: transformKey,
+    });
+  }
+}
+```
+
+## Best Practices
+
+1. **Connection Management**
+
+   - Reuse client instances
+   - Implement connection pooling
+   - Handle reconnection gracefully
+
+2. **Error Handling**
+
+   - Implement retries with backoff
+   - Use backup nodes when primary is unavailable
+   - Validate inputs before sending
+
+3. **Security**
+
+   - Secure private key storage
+   - Validate public keys
+   - Implement proper key rotation
+
+4. **Performance**
+   - Batch operations when possible
+   - Cache transform keys
+   - Monitor response times
+
+## Rate Limits
+
+| Environment | Requests/Second | Burst Limit |
+| ----------- | --------------- | ----------- |
+| Production  | 100             | 200         |
+| Testnet     | 50              | 100         |
+
+## Monitoring
+
+Service status can be monitored at:
+
+```
+https://status.gateway.tech/pre
+```

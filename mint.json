@@ -117,7 +117,7 @@
           "pages": [
             "compute/marketplace/pre/overview",
             "compute/marketplace/pre/benchmarks",
-            "compute/marketplace/pre/rust-sdk",
+            "compute/marketplace/pre/api",
             "compute/marketplace/pre/examples"
           ]
         },
