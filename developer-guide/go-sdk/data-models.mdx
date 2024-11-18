@@ -149,7 +149,7 @@ fmt.Printf("Retrieved model: %s (ID: %d)\n", model.Title, model.Id)
 // List Data Models created by the current user (paginated)
 page := 1
 pageSize := 10
-myModels, err := client.DataModel.GetCreatedByMe(page, pageSize)
+myModels, err := client.DataModel.GetMy(page, pageSize)
 if err != nil {
     log.Fatalf("Failed to list models: %v", err)
 }
