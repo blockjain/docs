@@ -1,5 +1,105 @@
----
-title: Overview
----
+# Trusted Execution Environment (TEE)
 
-> Content
+## Overview
+
+Trusted Execution Environments (TEEs) are secure, isolated environments that run on hardware-level separation from the main operating system. Gateway's platform leverages TEEs to enable privacy-preserving computation, particularly for AI workloads that require both high performance and strong security guarantees.
+
+### Supported Platforms
+
+Gateway's TEE implementation currently supports:
+
+- AWS Nitro Enclaves (Primary)
+- Intel SGX (Planned - Q1 2025)
+- AMD EPYC SEV (Planned - Q1 2025)
+
+## Use Cases
+
+### AI Model Privacy
+
+1. **Private Inference**
+
+   - Run proprietary AI models in isolated environments
+   - Process sensitive user data without exposure
+   - Ensure model weights remain confidential
+   - Enable secure API access to model capabilities
+
+2. **Secure Training**
+   - Train models on sensitive datasets
+   - Federated learning coordination
+   - Multi-party computation for model updates
+   - Privacy-preserving gradient aggregation
+
+### Data Processing
+
+1. **Sensitive Data Analytics**
+
+   - Process PII and regulated data
+   - Perform computations on encrypted data
+   - Generate aggregated insights
+   - Maintain data sovereignty
+
+2. **Multi-party Computation**
+   - Secure data sharing between organizations
+   - Joint analytics on combined datasets
+   - Privacy-preserving data marketplaces
+   - Regulatory compliance workflows
+
+## Implementation Guide
+
+### Security Considerations
+
+1. **Attestation Requirements**
+
+   - Verify enclave measurements
+   - Validate platform certificates
+   - Check security version numbers
+   - Implement nonce-based freshness
+
+2. **Network Security**
+   - TLS termination inside enclave
+   - Certificate management
+   - Network isolation policies
+   - Secure packet forwarding
+
+### Best Practices
+
+1. **Resource Management**
+
+   - Appropriate memory allocation
+   - CPU core assignment
+   - Network bandwidth allocation
+   - Storage access patterns
+
+2. **Error Handling**
+   - Graceful degradation
+   - Secure error messages
+   - State recovery
+   - Audit logging
+
+## Future Roadmap
+
+1. **Platform Support**
+
+   - Intel SGX integration
+   - AMD EPYC SEV support
+   - Multi-platform orchestration
+   - Cross-platform attestation
+
+2. **SDK Integration**
+
+   - Native TEE support in SDKs
+   - Simplified deployment APIs
+   - Attestation verification helpers
+   - Secure state management
+
+3. **Scaling Features**
+   - Auto-scaling capabilities
+   - Load balancing
+   - State synchronization
+   - High availability patterns
+
+## References
+
+- [AWS Nitro Enclaves Documentation](https://docs.aws.amazon.com/enclaves/latest/user/nitro-enclave.html)
+- [Intel SGX Documentation](https://www.intel.com/content/www/us/en/developer/tools/software-guard-extensions/overview.html)
+- [AMD SEV Documentation](https://developer.amd.com/sev/)
