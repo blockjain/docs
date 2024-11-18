@@ -9,21 +9,21 @@ The Gateway JavaScript SDK provides a simple and intuitive way to interact with 
 Choose your preferred package manager to install the SDK:
 
 <CodeGroup>
-    ```bash npm
-    npm install @gateway-dao/sdk
-    ```
-    
-    ```bash pnpm
-    pnpm add @gateway-dao/sdk
-    ```
-    
-    ```bash yarn
-    yarn add @gateway-dao/sdk
-    ```
-    
-    ```bash bun
-    bun add @gateway-dao/sdk
-    ```
+  ```bash npm
+  npm install @gateway-dao/sdk
+  ```
+  
+  ```bash pnpm
+  pnpm add @gateway-dao/sdk
+  ```
+  
+  ```bash yarn
+  yarn add @gateway-dao/sdk
+  ```
+  
+  ```bash bun
+  bun add @gateway-dao/sdk
+  ```
 </CodeGroup>
 
 ## Authentication
@@ -40,7 +40,6 @@ import { Gateway, WalletTypeEnum } from "@gateway-dao/sdk";
 
 // Initialize with a private key
 const gateway = new Gateway({
-  environment: "dev", // or "prod" for production
   wallet: {
     privateKey: "your-private-key",
     walletType: WalletTypeEnum.Solana,
@@ -49,7 +48,6 @@ const gateway = new Gateway({
 
 // Or initialize with a JWT
 const gateway = new Gateway({
-  environment: "dev",
   jwt: "your-jwt-token",
 });
 ```
@@ -64,7 +62,7 @@ const account = await gateway.account.getMe();
 console.log(`Logged in as: ${account.username} (${account.did})`);
 
 // Create a structured data asset
-const dataAsset = await gateway.dataAsset.createStructured({
+const dataAsset = await gateway.dataAsset.upload({
   name: "User Profile",
   data_model_id: 123456789,
   tags: ["profile", "personal"],
@@ -88,7 +86,7 @@ The SDK uses standard Promise-based error handling. Always wrap your SDK calls i
 
 ```typescript
 try {
-  const assetDetails = await gateway.dataAsset.getDetail("non-existent-id");
+  const assetDetails = await gateway.dataAsset.get("non-existent-id");
 } catch (error) {
   console.error("Failed to retrieve asset:", error);
   // Handle the error appropriately

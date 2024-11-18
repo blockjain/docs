@@ -27,7 +27,7 @@ const profileData = {
   joinDate: "2024-01-15",
 };
 
-const assetId = await gateway.dataAsset.createStructured({
+const assetId = await gateway.dataAsset.upload({
   name: "Employee Profile",
   data_model_id: 123456789, // Reference to a pre-defined data model
   tags: ["employee", "profile"],
@@ -66,7 +66,7 @@ const fileContent = new Blob(
 );
 
 // Upload and share the file
-const fileAssetId = await gateway.dataAsset.createNonStructured(
+const fileAssetId = await gateway.dataAsset.uploadFile(
   "performance_review_2024_q1.txt",
   fileContent,
   {
@@ -88,7 +88,7 @@ const receivedAssets = await gateway.dataAsset.getReceivedToMe();
 console.log("Received assets:", receivedAssets.data);
 
 // Get details of a specific asset
-const assetDetails = await gateway.dataAsset.getDetail(assetId);
+const assetDetails = await gateway.dataAsset.get(assetId);
 console.log("Asset details:", assetDetails);
 
 // Download and read asset content

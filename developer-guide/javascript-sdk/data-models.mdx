@@ -159,15 +159,7 @@ You can retrieve Data Models using various methods:
 
 ```typescript
 // Get a specific Data Model by ID
-const dataModel = await gateway.dataModel.getById(modelId);
-
-// List Data Models created by the current user
-const myModels = await gateway.dataModel.getCreatedByMe();
-
-// Search Data Models by tags
-const searchResult = await gateway.dataModel.search({
-  tags: ["HR", "Employee"],
-});
+const dataModel = await gateway.dataModel.get(modelId);
 ```
 
 ## Best Practices
