@@ -1,0 +1,101 @@
+---
+title: Benchmarks
+---
+
+This benchmark suite compares the performance of Gateway's garbled circuits implementation against TFHE (Fully Homomorphic Encryption) for fundamental operations. All tests were performed using 128-bit integers to provide a comprehensive view of performance characteristics in privacy-preserving computation.
+
+## Performance Overview
+
+Gateway consistently demonstrates superior performance compared to TFHE, with most operations completing in milliseconds rather than seconds. This performance difference makes Gateway particularly suitable for:
+
+- Real-time applications
+- High-throughput environments
+- Performance-sensitive operations
+- Complex computational workflows
+
+## Detailed Benchmarks
+
+| Operation                      | Gateway Time (ms) | TFHE Time (ms) | Performance Ratio |
+| ------------------------------ | ----------------- | -------------- | ----------------- |
+| **Basic Bitwise Operations**   |
+| Bitwise AND                    | 36.323            | 454.66         | ~12.5x faster     |
+| Bitwise XOR                    | 34.371            | 461.06         | ~13.4x faster     |
+| Bitwise NOT                    | 35.107            | 309.42         | ~8.8x faster      |
+| Bitwise OR                     | 38.793            | 458.68         | ~11.8x faster     |
+| **Complex Bitwise Operations** |
+| NAND                           | 38.727            | 456.45         | ~11.8x faster     |
+| NOR                            | 39.228            | 457.36         | ~11.7x faster     |
+| XNOR                           | 35.852            | 457.43         | ~12.8x faster     |
+| **Comparison Operations**      |
+| Equality (EQ)                  | 38.752            | 527.59         | ~13.6x faster     |
+| Inequality (NEQ)               | 38.855            | 524.97         | ~13.5x faster     |
+| Greater Than (GT)              | 47.575            | 640.32         | ~13.5x faster     |
+| Less Than (LT)                 | 47.785            | 642.34         | ~13.4x faster     |
+| Greater Than or Equal (GE)     | 47.580            | 639.54         | ~13.4x faster     |
+| Less Than or Equal (LE)        | 47.571            | 645.66         | ~13.6x faster     |
+| **Arithmetic Operations**      |
+| Addition                       | 41.681            | 833.84         | ~20x faster       |
+| Subtraction                    | 44.541            | 839.91         | ~18.9x faster     |
+| Multiplication                 | 1,040.8           | 15,932         | ~15.3x faster     |
+| Division                       | 3,408.9           | 91,404         | ~26.8x faster     |
+| Modulus                        | 3,434.3           | 87,183         | ~25.4x faster     |
+| **Control Operations**         |
+| MUX                            | 36.123            | 172.44         | ~4.8x faster      |
+
+## Performance Analysis
+
+### Operation Categories
+
+1. **Bitwise Operations**
+
+   - Consistently fast (34-39ms)
+   - 8-13x performance improvement over TFHE
+   - Ideal for logical operations and data manipulation
+
+2. **Comparison Operations**
+
+   - Slightly higher latency (47-48ms)
+   - 13-14x faster than TFHE
+   - Efficient for conditional logic and sorting
+
+3. **Arithmetic Operations**
+
+   - Simple operations (addition/subtraction): 41-45ms
+   - Complex operations (multiplication/division):
+     - Multiplication: ~1 second
+     - Division/Modulus: ~3.4 seconds
+   - 15-27x performance improvement over TFHE
+
+4. **Control Operations**
+   - MUX operations complete in ~36ms
+   - ~5x faster than TFHE
+   - Efficient for conditional execution
+
+### Key Observations
+
+- Gateway shows consistent performance advantages across all operation types
+- Especially efficient for basic arithmetic and bitwise operations
+- Complex operations like division show the most significant performance difference
+- Suitable for both simple and complex computational workflows
+
+## Benchmark Environment
+
+- Hardware: Apple M3 Pro
+- Memory: 36 GB RAM
+- Testing Methodology: Isolated function testing
+- Integer Size: 128-bit
+
+## Implications for Development
+
+When building applications using Gateway:
+
+- Optimize complex operations (multiplication, division) for performance
+- Leverage efficient bitwise operations where possible
+- Consider operation costs when designing computational workflows
+- Plan for longer execution times with complex arithmetic operations
+
+## Further Resources
+
+- [Garbled Circuits Overview](./overview)
+- [Rust SDK Documentation](./rust-sdk)
+- [Implementation Examples](./examples)
