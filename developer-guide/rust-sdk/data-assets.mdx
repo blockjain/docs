@@ -1,0 +1,190 @@
+---
+title: Data Assets
+---
+
+Data Assets in the Gateway Protocol represent both structured and unstructured data that can be securely stored and shared. This guide covers how to work with Data Assets using the Rust SDK.
+
+## Creating Data Assets
+
+### Structured Data
+
+Create and manage structured data assets using predefined data models:
+
+```rust
+use gtw_rs_sdk::models::{CreateDataAssetRequest, AclRequest, TypesAccessLevel};
+use serde_json::json;
+
+#[tokio::main]
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    let mut gtw_sdk = GtwSDK::new().build().await?;
+
+    let upload_request = CreateDataAssetRequest {
+        claim: Some(json!({
+            "firstName": "Jane",
+            "lastName": "Doe",
+            "department": "Engineering",
+            "skills": ["Rust", "Cryptography", "Distributed Systems"]
+        })),
+        name: "Employee Profile".to_string(),
+        data_model_id: Some(123456789),
+        acl: Some(vec![AclRequest {
+            address: "recipient-did".to_string(),
+            roles: vec![TypesAccessLevel::View],
+        }]),
+        tags: Some(vec!["employee".to_string(), "profile".to_string()]),
+        expiration_date: None,
+    };
+
+    match gtw_sdk.data_asset.upload(upload_request).await {
+        Ok(response) => println!("Created asset ID: {}", response.id),
+        Err(e) => eprintln!("Error: {}", e),
+    }
+
+    Ok(())
+}
+```
+
+### File Upload
+
+Upload and share file-based data assets:
+
+```rust
+use std::fs::File;
+use std::io::Read;
+use gtw_rs_sdk::models::AclRequest;
+
+#[tokio::main]
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    let mut gtw_sdk = GtwSDK::new().build().await?;
+
+    // Read file
+    let mut file = File::open("document.pdf")?;
+    let mut buffer = Vec::new();
+    file.read_to_end(&mut buffer)?;
+
+    // Define access control
+    let acl = vec![AclRequest {
+        address: "recipient-did".to_string(),
+        roles: vec![TypesAccessLevel::View],
+    }];
+
+    // Upload with metadata
+    match gtw_sdk
+        .data_asset
+        .upload_file(
+            "document.pdf",
+            buffer,
+            Some(acl),
+            None  // No expiration
+        )
+        .await
+    {
+        Ok(response) => println!("File uploaded: {}", response.id),
+        Err(e) => eprintln!("Error: {}", e),
+    }
+
+    Ok(())
+}
+```
+
+## Retrieving Data Assets
+
+Access and download your data assets.
+
+### Pagination Examples
+
+```rust
+use gtw_rs_sdk::models::PaginationRequest;
+
+#[tokio::main]
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    let mut gtw_sdk = GtwSDK::new().build().await?;
+
+    // Basic pagination
+    let page_1 = gtw_sdk
+        .data_asset
+        .get_created_by_me(Some(1), Some(10))
+        .await?;
+
+    // Cursor-based pagination
+    let mut all_assets = Vec::new();
+    let mut current_page = 1;
+
+    loop {
+        let response = gtw_sdk
+            .data_asset
+            .get_created_by_me(Some(current_page), Some(50))
+            .await?;
+
+        all_assets.extend(response.data);
+
+        if response.data.len() < 50 {
+            break;
+        }
+        current_page += 1;
+    }
+
+    println!("Total assets collected: {}", all_assets.len());
+
+    Ok(())
+}
+```
+
+### Downloading Assets
+
+```rust
+use std::fs::File;
+use std::io::Write;
+use std::path::Path;
+
+#[tokio::main]
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    let mut gtw_sdk = GtwSDK::new().build().await?;
+
+    let file_id = 123456789;
+
+    match gtw_sdk.data_asset.download(file_id).await {
+        Ok(file_download) => {
+            // Determine file extension
+            let file_path = Path::new(&file_download.file_name)
+                .with_extension(file_download.mime_type.extension());
+
+            // Save file
+            let mut file = File::create(&file_path)?;
+            file.write_all(&file_download.file)?;
+
+            println!("File downloaded: {:?}", file_path);
+        }
+        Err(e) => eprintln!("Download failed: {}", e),
+    }
+
+    Ok(())
+}
+```
+
+## Batch Operations
+
+```rust
+#[tokio::main]
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    let mut gtw_sdk = GtwSDK::new().build().await?;
+
+    // Batch download
+    let asset_ids = vec![123, 456, 789];
+    let mut downloaded = Vec::new();
+
+    for id in asset_ids {
+        match gtw_sdk.data_asset.download(id).await {
+            Ok(file) => downloaded.push((id, file)),
+            Err(e) => eprintln!("Failed to download asset {}: {}", id, e),
+        }
+    }
+
+    // Process results
+    for (id, file) in downloaded {
+        println!("Asset {}: {} bytes", id, file.file.len());
+    }
+
+    Ok(())
+}
+```
