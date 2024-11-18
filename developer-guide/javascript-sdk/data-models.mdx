@@ -1,0 +1,193 @@
+---
+title: Data Models
+---
+
+Data Models are schemas that define the structure and validation rules for structured data assets in the Gateway Protocol. They ensure data consistency and provide a standardized way to validate and organize information.
+
+## Understanding Data Models
+
+Before working with structured data assets, it's important to understand:
+
+- Data Models define the expected structure of your data using JSON Schema
+- Every **structured data asset** must conform to a Data Model
+- Data Models help maintain data quality and consistency
+
+## Creating Data Models
+
+Use the SDK to create Data Models that define the structure of your data:
+
+```typescript
+import { Gateway } from "@gateway-dao/sdk";
+
+const gateway = new Gateway({
+  // your configuration here
+});
+
+const dataModel = await gateway.dataModel.create({
+  title: "Employee Profile",
+  description: "Standard employee information schema",
+  tags: ["HR", "Employee", "Profile"],
+  schema: {
+    title: "Employee",
+    type: "object",
+    required: ["firstName", "email", "department"],
+    properties: {
+      firstName: {
+        type: "string",
+        title: "First Name",
+        description: "Employee's first name",
+        minLength: 2,
+      },
+      lastName: {
+        type: "string",
+        title: "Last Name",
+        description: "Employee's last name",
+        minLength: 2,
+      },
+      email: {
+        type: "string",
+        title: "Email",
+        description: "Corporate email address",
+        format: "email",
+      },
+      department: {
+        type: "string",
+        title: "Department",
+        description: "Employee's department",
+      },
+      profilePhoto: {
+        type: "string",
+        title: "Profile Photo",
+        description: "Employee's profile picture",
+        contentMediaType: "image/png",
+      },
+      skills: {
+        type: "array",
+        title: "Skills",
+        description: "Professional skills and competencies",
+        items: {
+          type: "string",
+        },
+      },
+    },
+    additionalProperties: false,
+  },
+});
+
+console.log("Created Data Model with ID:", dataModel.id);
+```
+
+## Data Model Structure
+
+A Data Model consists of several key components:
+
+1. Metadata
+
+   - `title`: Name of the Data Model
+   - `description`: Detailed description of the Data Model's purpose
+   - `tags`: Array of keywords for categorization
+
+2. Schema
+
+   - Follows JSON Schema specification
+   - Defines the structure and validation rules
+   - Supports various data types and validations
+
+## Supported Data Types
+
+Data Models support all standard JSON Schema data types:
+
+- `string`: Text data
+- `number`: Numeric values
+- `boolean`: True/false values
+- `array`: Lists of items
+- `object`: Nested structures
+- `null`: Null values
+
+## Validation Rules
+
+You can specify various validation rules:
+
+```typescript
+const schema = {
+  type: "object",
+  properties: {
+    // String validation
+    username: {
+      type: "string",
+      minLength: 3,
+      maxLength: 20,
+      pattern: "^[a-zA-Z0-9_]+$",
+    },
+
+    // Number validation
+    age: {
+      type: "number",
+      minimum: 0,
+      maximum: 120,
+    },
+
+    // Array validation
+    tags: {
+      type: "array",
+      minItems: 1,
+      maxItems: 10,
+      uniqueItems: true,
+      items: {
+        type: "string",
+      },
+    },
+
+    // Format validation
+    email: {
+      type: "string",
+      format: "email",
+    },
+
+    // Media type specification
+    avatar: {
+      type: "string",
+      contentMediaType: "image/png",
+    },
+  },
+};
+```
+
+## Retrieving Data Models
+
+You can retrieve Data Models using various methods:
+
+```typescript
+// Get a specific Data Model by ID
+const dataModel = await gateway.dataModel.get(modelId);
+```
+
+## Best Practices
+
+1. Plan Your Schema
+
+   - Design your Data Model schema carefully before creation
+   - Consider future needs as schemas cannot be modified after creation
+   - Include all necessary validation rules
+
+2. Use Required Fields
+
+   - Specify required fields to ensure data completeness
+   - Be conservative with required fields to maintain flexibility
+
+3. Validation Rules
+
+   - Use appropriate validation rules to maintain data quality
+   - Consider adding min/max lengths for strings
+   - Add reasonable bounds for numeric values
+
+4. Documentation
+
+   - Provide clear descriptions for fields
+   - Use meaningful titles for properties
+   - Add relevant tags for better discoverability
+
+5. Property Constraints
+
+   - Consider setting `additionalProperties: false` to prevent extra fields
+   - Use appropriate formats for specialized strings (email, URI, etc.)

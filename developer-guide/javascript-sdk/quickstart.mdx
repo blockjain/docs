@@ -2,4 +2,93 @@
 title: Getting Started
 ---
 
-> Content goes here
+The Gateway JavaScript SDK provides a simple and intuitive way to interact with Gateway's encrypted storage and data sharing capabilities. This guide will help you get started with integrating the SDK into your JavaScript applications.
+
+## Installation
+
+Choose your preferred package manager to install the SDK:
+
+<CodeGroup>
+  ```bash npm
+  npm install @gateway-dao/sdk
+  ```
+  
+  ```bash pnpm
+  pnpm add @gateway-dao/sdk
+  ```
+  
+  ```bash yarn
+  yarn add @gateway-dao/sdk
+  ```
+  
+  ```bash bun
+  bun add @gateway-dao/sdk
+  ```
+</CodeGroup>
+
+## Authentication
+
+The SDK supports two authentication methods:
+
+- Wallet-based authentication using a private key
+- JWT-based authentication
+
+Choose the method that best suits your application's needs:
+
+```typescript
+import { Gateway, WalletTypeEnum } from "@gateway-dao/sdk";
+
+// Initialize with a private key
+const gateway = new Gateway({
+  wallet: {
+    privateKey: "your-private-key",
+    walletType: WalletTypeEnum.Solana,
+  },
+});
+
+// Or initialize with a JWT
+const gateway = new Gateway({
+  jwt: "your-jwt-token",
+});
+```
+
+## Basic Usage
+
+Here's a simple example to get started:
+
+```typescript
+// Get account information
+const account = await gateway.account.getMe();
+console.log(`Logged in as: ${account.username} (${account.did})`);
+
+// Create a structured data asset
+const dataAsset = await gateway.dataAsset.upload({
+  name: "User Profile",
+  data_model_id: 123456789,
+  tags: ["profile", "personal"],
+  claim: {
+    firstName: "Jane",
+    lastName: "Doe",
+    age: 30,
+  },
+  acl: [
+    {
+      address: "recipient-did",
+      roles: [AccessLevel.VIEW],
+    },
+  ],
+});
+```
+
+### Error Handling
+
+The SDK uses standard Promise-based error handling. Always wrap your SDK calls in try-catch blocks:
+
+```typescript
+try {
+  const assetDetails = await gateway.dataAsset.get("non-existent-id");
+} catch (error) {
+  console.error("Failed to retrieve asset:", error);
+  // Handle the error appropriately
+}
+```

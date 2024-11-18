@@ -221,7 +221,11 @@
     },
     {
       "group": "Javascript SDK",
-      "pages": ["developer-guide/javascript-sdk/quickstart"]
+      "pages": [
+        "developer-guide/javascript-sdk/quickstart",
+        "developer-guide/javascript-sdk/data-models",
+        "developer-guide/javascript-sdk/data-assets"
+      ]
     },
     {
       "group": "Rust SDK",
