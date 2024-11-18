@@ -111,7 +111,16 @@
             "compute/marketplace/garbled-circuits/examples"
           ]
         },
-        "compute/marketplace/pre",
+        {
+          "icon": "key",
+          "group": "Proxy Re-Encryption (PRE)",
+          "pages": [
+            "compute/marketplace/pre/overview",
+            "compute/marketplace/pre/benchmarks",
+            "compute/marketplace/pre/rust-sdk",
+            "compute/marketplace/pre/examples"
+          ]
+        },
         "compute/marketplace/trusted-execution-environment"
       ]
     },
