@@ -112,7 +112,14 @@
           ]
         },
         "compute/marketplace/pre",
-        "compute/marketplace/trusted-execution-environment"
+        {
+          "icon": "microchip",
+          "group": "Trusted Execution Environments (TEEs)",
+          "pages": [
+            "compute/marketplace/tee/overview",
+            "compute/marketplace/tee/architecture"
+          ]
+        }
       ]
     },
     {
