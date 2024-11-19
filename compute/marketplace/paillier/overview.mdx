@@ -79,43 +79,39 @@ graph TD
     end
 ```
 
-## Use Cases
+## Current Limitations
 
-1. **Private Financial Operations**
+### Limited Homomorphic Operations
 
-   - Account balance updates
-   - Private token transfers
-   - Confidential payment processing
+The Paillier cryptosystem is fundamentally restricted to additive homomorphic operations. While it excels at operations like summing encrypted values or multiplying them by constants, it cannot perform, for example, multiplication between two encrypted values.
 
-2. **Secure Aggregation**
+Developers must carefully design their applications around these constraints, as they are not possible out of the box.
 
-   - Vote tallying
-   - Survey results
-   - Anonymous analytics
+### Performance Constraints
 
-3. **Privacy-Preserving Calculations**
-   - Salary computations
-   - Tax calculations
-   - Price discovery
+Performance remains a significant challenge in the Paillier cryptosystem implementation. The encryption process produces ciphertexts that are substantially larger than their corresponding plaintexts, leading to increased storage requirements and higher gas costs for on-chain operations.
 
-## Security Considerations
+Key generation and encryption/decryption processes demand considerable computational resources, which can impact application responsiveness and scalability.
 
-1. **Key Management**
+### Restricted Features
 
-   - Secure storage of private keys
-   - Safe public key distribution
-   - Proper random value generation
+The system's inability to perform direct comparisons between encrypted values or execute boolean operations on encrypted data presents substantial practical limitations. Applications requiring complex business logic or conditional operations must implement workarounds or rely on additional cryptographic protocols.
 
-2. **Operation Security**
+## Comparison with Alternative Technologies
 
-   - Sigma verification for decryption
-   - Modular arithmetic overflow prevention
-   - Proper parameter validation
+<Warning>The Paillier cryptosystem implementation is meant to be deprecated in the future in favor of the Gateway Virtual Machine, a fully optimized, EVM-compatible layer 1 powered by garbled circuits.</Warning>
 
-3. **Gas Optimization**
-   - Efficient operation batching
-   - Optimized parameter sizes
-   - Smart contract gas limits
+| Feature | Paillier Encryption | Fully Homomorphic Encryption | Garbled Circuits |
+|---------|--------------------|-----------------------------|------------------|
+| **Supported Operations** | Addition and constant multiplication | All mathematical operations | Any computable function |
+| **Performance** | Moderate computation overhead | High computation overhead | Efficient for boolean and arithmetic operations |
+| **Ciphertext Size** | 2x plaintext size | 10-100x plaintext size | Circuit-dependent |
+| **Gas Costs** | Moderate | Very high | Operation-dependent |
+| **Use Case Fit** | Simple aggregations, voting | Complex computational workflows | Boolean logic, comparisons |
+| **Implementation Complexity** | Moderate | High | Moderate |
+| **Security Level** | Semantically secure | Fully secure | Secure in malicious model |
+| **On-chain Viability** | Practical | Currently impractical | Practical for specific operations |
+| **Development Maturity** | Well-established | Emerging | Production-ready |
 
 ## Getting Started
 
