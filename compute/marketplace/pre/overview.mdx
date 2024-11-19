@@ -15,8 +15,9 @@ sequenceDiagram
     participant B as Data Recipient
 
     A->>A: Encrypt data with own key
+    A->>A: Generate transform key
     A->>P: Send encrypted data
-    A->>P: Generate & send transform key
+    A->>P: Send transform key
     P->>P: Transform ciphertext
     P->>B: Send transformed ciphertext
     B->>B: Decrypt with own key
