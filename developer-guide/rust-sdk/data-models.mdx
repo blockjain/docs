@@ -1,0 +1,267 @@
+---
+title: Data Models
+---
+
+Data Models are schemas that define the structure and validation rules for structured data assets in the Gateway Protocol. They ensure data consistency and provide a standardized way to validate and organize information. This guide covers working with Data Models using the Rust SDK.
+
+## Understanding Data Models
+
+Before working with structured data assets, it's important to understand:
+
+- Data Models define the expected structure of your data using JSON Schema
+- Every **structured data asset** must conform to a Data Model
+- Data Models help maintain data quality and consistency
+
+## Creating Data Models
+
+Use the SDK to create Data Models that define the structure of your data:
+
+```rust
+use gtw_rs_sdk::models::DataModelCreateRequest;
+use serde_json::json;
+
+#[tokio::main]
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    let mut gtw_sdk = GtwSDK::new().build().await?;
+
+    let model = DataModelCreateRequest {
+        title: "Employee Profile".to_string(),
+        description: "Standard employee information schema".to_string(),
+        schema: json!({
+            "type": "object",
+            "required": ["firstName", "email", "department"],
+            "properties": {
+                "firstName": {
+                    "type": "string",
+                    "minLength": 2
+                },
+                "lastName": {
+                    "type": "string",
+                    "minLength": 2
+                },
+                "email": {
+                    "type": "string",
+                    "format": "email"
+                },
+                "department": {
+                    "type": "string",
+                    "enum": ["Engineering", "Marketing", "Sales", "HR"]
+                },
+                "skills": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "minItems": 1
+                },
+                "startDate": {
+                    "type": "string",
+                    "format": "date"
+                }
+            },
+            "additionalProperties": false
+        }),
+        tags: Some(vec![
+            "employee".to_string(),
+            "hr".to_string(),
+            "profile".to_string()
+        ]),
+    };
+
+    match gtw_sdk.data_model.create(model).await {
+        Ok(response) => println!("Data model created with ID: {}", response.id),
+        Err(e) => eprintln!("Error creating data model: {}", e),
+    }
+
+    Ok(())
+}
+```
+
+## Data Model Structure
+
+A Data Model consists of several key components:
+
+1. Metadata
+
+   - `title`: Name of the Data Model
+   - `description`: Detailed description of the Data Model's purpose
+   - `tags`: Array of keywords for categorization
+
+2. Schema
+
+   - Follows JSON Schema specification
+   - Defines the structure and validation rules
+   - Supports various data types and validations
+
+## Supported Data Types
+
+Data Models support all standard JSON Schema data types:
+
+- `string`: Text data
+- `number`: Numeric values
+- `boolean`: True/false values
+- `array`: Lists of items
+- `object`: Nested structures
+- `null`: Null values
+
+## Validation Rules
+
+You can specify various validation rules:
+
+```rust
+use serde_json::json;
+
+let schema = json!({
+    "type": "object",
+    "required": ["firstName", "email", "department"],
+    "properties": {
+        "firstName": {
+            "type": "string",
+            "minLength": 2
+        },
+        "lastName": {
+            "type": "string",
+            "minLength": 2
+        },
+        "email": {
+            "type": "string",
+            "format": "email"
+        },
+        "department": {
+            "type": "string",
+            "enum": ["Engineering", "Marketing", "Sales", "HR"]
+        },
+        "skills": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            },
+            "minItems": 1
+        },
+        "startDate": {
+            "type": "string",
+            "format": "date"
+        }
+    },
+    "additionalProperties": false
+});
+```
+
+## Retrieving Data Models
+
+You can retrieve Data Models using various methods.
+
+### Pagination Examples
+
+```rust
+#[tokio::main]
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    let mut gtw_sdk = GtwSDK::new().build().await?;
+
+    // Basic pagination with page size
+    let per_page = 20;
+
+    // Get first page
+    let page_1 = gtw_sdk
+        .data_model
+        .get_all(Some(1), Some(per_page))
+        .await?;
+    println!("First page models: {:?}", page_1.data);
+
+    // Implement cursor-based pagination
+    async fn fetch_all_models(
+        sdk: &mut GtwSDK,
+        per_page: u32
+    ) -> Result<Vec<DataModel>, Box<dyn std::error::Error>> {
+        let mut all_models = Vec::new();
+        let mut current_page = 1;
+
+        loop {
+            let response = sdk
+                .data_model
+                .get_all(Some(current_page), Some(per_page))
+                .await?;
+
+            let page_items = response.data.len();
+            all_models.extend(response.data);
+
+            // Check if we've received all items
+            if page_items < per_page as usize {
+                break;
+            }
+
+            current_page += 1;
+        }
+
+        Ok(all_models)
+    }
+
+    // Get all models created by current user with pagination
+    let my_models = gtw_sdk
+        .data_model
+        .get_my(Some(1), Some(per_page))
+        .await?;
+    println!("Your models (page 1): {:?}", my_models.data);
+
+    Ok(())
+}
+```
+
+## Batch Operations
+
+```rust
+#[tokio::main]
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    let mut gtw_sdk = GtwSDK::new().build().await?;
+
+    // Fetch multiple models in parallel
+    let model_ids = vec![123, 456, 789];
+
+    let results = futures::future::join_all(
+        model_ids
+            .into_iter()
+            .map(|id| gtw_sdk.data_model.get(id))
+    )
+    .await;
+
+    // Process results
+    for result in results {
+        match result {
+            Ok(model) => println!("Model {}: {}", model.id, model.title),
+            Err(e) => eprintln!("Error fetching model: {}", e),
+        }
+    }
+
+    Ok(())
+}
+```
+
+## Best Practices
+
+1. Plan Your Schema
+
+   - Design your Data Model schema carefully before creation
+   - Consider future needs as schemas cannot be modified after creation
+   - Include all necessary validation rules
+
+2. Use Required Fields
+
+   - Specify required fields to ensure data completeness
+   - Be conservative with required fields to maintain flexibility
+
+3. Validation Rules
+
+   - Use appropriate validation rules to maintain data quality
+   - Consider adding min/max lengths for strings
+   - Add reasonable bounds for numeric values
+
+4. Documentation
+
+   - Provide clear descriptions for fields
+   - Use meaningful titles for properties
+   - Add relevant tags for better discoverability
+
+5. Property Constraints
+
+   - Consider setting `additionalProperties: false` to prevent extra fields
+   - Use appropriate formats for specialized strings (email, URI, etc.)
