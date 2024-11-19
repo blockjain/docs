@@ -1,0 +1,286 @@
+---
+title: Real-World Examples
+---
+
+This guide demonstrates practical implementations of privacy-preserving applications using the Paillier cryptosystem on Gateway's Shield testnet. Each example includes a complete smart contract implementation, usage patterns, and security considerations.
+
+## 1. Private Voting System
+
+A decentralized voting system where individual votes remain encrypted while allowing for transparent vote tallying.
+
+### Smart Contract Implementation
+
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.24;
+
+import "./Paillier.sol";
+
+contract PrivateVoting {
+    Paillier public paillier;
+    address public owner;
+    BigNumber[] public encryptedVotes;
+
+    constructor(address _paillier) {
+        paillier = Paillier(_paillier);
+        owner = msg.sender;
+    }
+
+    function submitVote(bytes calldata vote, bytes calldata publicKey) public {
+        encryptedVotes.push(BigNumber(vote, false, BigNum.bitLength(vote)));
+    }
+
+    function tallyVotes(bytes calldata publicKey) public view returns (BigNumber memory) {
+        BigNumber memory total = encryptedVotes[0];
+        for (uint256 i = 1; i < encryptedVotes.length; i++) {
+            total = paillier.add(total.toBytes(), encryptedVotes[i].toBytes(), publicKey);
+        }
+        return total;
+    }
+}
+```
+
+### Key Features
+
+- Individual votes remain encrypted
+- Homomorphic addition for vote tallying
+- No intermediary can determine individual votes
+- Final tally can only be decrypted by authorized parties
+
+### Usage Example
+
+```javascript
+async function runVotingSystem() {
+  const voting = await PrivateVoting.deploy(paillierAddress);
+
+  // Encrypt and submit votes
+  const encryptedYesVote = await paillier.encrypt(1, randomness, publicKey);
+  const encryptedNoVote = await paillier.encrypt(0, randomness, publicKey);
+
+  await voting.submitVote(encryptedYesVote, publicKey);
+  await voting.submitVote(encryptedNoVote, publicKey);
+
+  // Get encrypted tally
+  const encryptedTotal = await voting.tallyVotes(publicKey);
+
+  // Decrypt total (off-chain)
+  const finalCount = await paillier.decrypt(
+    encryptedTotal,
+    publicKey,
+    privateKey
+  );
+}
+```
+
+## 2. Privacy-Preserving Payroll
+
+A system for managing employee salaries while keeping individual compensation private.
+
+### Smart Contract Implementation
+
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.24;
+
+import "./Paillier.sol";
+
+contract PrivatePayroll {
+    Paillier public paillier;
+    address public owner;
+    mapping(address => BigNumber) public encryptedSalaries;
+
+    constructor(address _paillier) {
+        paillier = Paillier(_paillier);
+        owner = msg.sender;
+    }
+
+    function setSalary(address employee, bytes calldata encryptedSalary, bytes calldata publicKey) public {
+        require(msg.sender == owner, "Only owner can set salary");
+        encryptedSalaries[employee] = BigNumber(encryptedSalary, false, BigNum.bitLength(encryptedSalary));
+    }
+
+    function totalPayroll(bytes calldata publicKey) public view returns (BigNumber memory) {
+        BigNumber memory total = BigNumber("0", false, 1);
+        for (address employee : encryptedSalaries) {
+            total = paillier.add(total.toBytes(), encryptedSalaries[employee].toBytes(), publicKey);
+        }
+        return total;
+    }
+}
+```
+
+### Key Features
+
+- Individual salaries remain confidential
+- Total payroll calculation without revealing individual amounts
+- Access control for salary management
+- Transparent budget tracking
+
+## 3. Anonymous Donations
+
+A system enabling private charitable donations while maintaining transparency of total funds raised.
+
+### Smart Contract Implementation
+
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.24;
+
+import "./Paillier.sol";
+
+contract AnonymousDonations {
+    Paillier public paillier;
+    address public owner;
+    BigNumber[] public encryptedDonations;
+
+    constructor(address _paillier) {
+        paillier = Paillier(_paillier);
+        owner = msg.sender;
+    }
+
+    function donate(bytes calldata encryptedAmount, bytes calldata publicKey) public {
+        encryptedDonations.push(BigNumber(encryptedAmount, false, BigNum.bitLength(encryptedAmount)));
+    }
+
+    function totalDonations(bytes calldata publicKey) public view returns (BigNumber memory) {
+        BigNumber memory total = encryptedDonations[0];
+        for (uint256 i = 1; i < encryptedDonations.length; i++) {
+            total = paillier.add(total.toBytes(), encryptedDonations[i].toBytes(), publicKey);
+        }
+        return total;
+    }
+}
+```
+
+### Key Features
+
+- Donor privacy protection
+- Transparent total donation tracking
+- No minimum donation requirement
+- Public verification of total funds
+
+## 4. Private Auction System
+
+A sealed-bid auction system where bids remain private until the auction concludes.
+
+### Smart Contract Implementation
+
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.24;
+
+import "./Paillier.sol";
+
+contract PrivateAuction {
+    Paillier public paillier;
+    address public owner;
+    mapping(address => BigNumber) public encryptedBids;
+    address public highestBidder;
+    BigNumber public highestBid;
+
+    constructor(address _paillier) {
+        paillier = Paillier(_paillier);
+        owner = msg.sender;
+        highestBid = BigNumber("0", false, 1);
+    }
+
+    function placeBid(address bidder, bytes calldata encryptedBid, bytes calldata publicKey) public {
+        BigNumber memory currentBid = BigNumber(encryptedBid, false, BigNum.bitLength(encryptedBid));
+        encryptedBids[bidder] = currentBid;
+
+        if (paillier.compare(currentBid.toBytes(), highestBid.toBytes(), publicKey) > 0) {
+            highestBidder = bidder;
+            highestBid = currentBid;
+        }
+    }
+
+    function getHighestBid() public view returns (address, BigNumber memory) {
+        return (highestBidder, highestBid);
+    }
+}
+```
+
+### Key Features
+
+- Private bid submissions
+- Automatic highest bid tracking
+- Fair price discovery
+- Bid privacy until auction conclusion
+
+## 5. Private Tax Calculation
+
+A system for calculating taxes on private income data.
+
+### Smart Contract Implementation
+
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.24;
+
+import "./Paillier.sol";
+
+contract PrivateTaxCalculation {
+    Paillier public paillier;
+    address public owner;
+    mapping(address => BigNumber) public encryptedIncomes;
+    uint256 public taxRate;
+
+    constructor(address _paillier, uint256 _taxRate) {
+        paillier = Paillier(_paillier);
+        owner = msg.sender;
+        taxRate = _taxRate;
+    }
+
+    function setIncome(address taxpayer, bytes calldata encryptedIncome, bytes calldata publicKey) public {
+        require(msg.sender == owner, "Only owner can set income");
+        encryptedIncomes[taxpayer] = BigNumber(encryptedIncome, false, BigNum.bitLength(encryptedIncome));
+    }
+
+    function totalTax(bytes calldata publicKey) public view returns (BigNumber memory) {
+        BigNumber memory total = BigNumber("0", false, 1);
+        for (address taxpayer : encryptedIncomes) {
+            BigNumber memory tax = paillier.mul(encryptedIncomes[taxpayer].toBytes(), taxRate, publicKey);
+            total = paillier.add(total.toBytes(), tax.toBytes(), publicKey);
+        }
+        return total;
+    }
+}
+```
+
+### Key Features
+
+- Private income reporting
+- Automated tax calculation
+- Transparent tax rate application
+- Total tax revenue tracking
+
+## Security Considerations
+
+### 1. Key Management
+
+- Secure generation and storage of encryption keys
+- Regular key rotation
+- Access control for private keys
+
+### 2. Gas Optimization
+
+- Batch processing for multiple operations
+- Efficient storage patterns
+- Gas limit considerations
+
+### 3. Privacy Protection
+
+- Input validation
+- Prevention of data leakage
+- Secure random number generation
+
+### 4. Access Control
+
+- Role-based permissions
+- Owner-only functions
+- Emergency pause mechanisms
+
+## Integration Resources
+
+- Full source code: [GitHub Repository](https://github.com/Gateway-DAO/paillier)
+- Support: [Discord Community](https://discord.gg/tgt3KjcHGs)
