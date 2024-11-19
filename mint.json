@@ -80,17 +80,18 @@
     {
       "group": "Shield Testnet",
       "pages": [
-        "introduction/shield-testnet/connect-to-metamask",
+        "introduction/shield-testnet/wallet-setup",
         "introduction/shield-testnet/faucet",
+        "introduction/shield-testnet/bridge",
         "introduction/shield-testnet/hardhat"
       ]
     },
     {
       "group": "Core Concepts",
       "pages": [
-        "introduction/core=concepts/private-state",
-        "introduction/core=concepts/private-compute",
-        "introduction/core=concepts/data-lake"
+        "introduction/core-concepts/private-state",
+        "introduction/core-concepts/private-compute",
+        "introduction/core-concepts/data-lake"
       ]
     },
     {
