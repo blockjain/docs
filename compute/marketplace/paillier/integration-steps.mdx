@@ -1,0 +1,328 @@
+---
+title: Integration Steps
+---
+
+This guide will walk you through integrating the Paillier homomorphic encryption system on Gateway's Shield testnet. Paillier encryption allows you to perform calculations on encrypted data without revealing the underlying values, enabling privacy-preserving applications.
+
+## Who is this guide for?
+
+- Developers building privacy-focused DApps
+- Teams implementing confidential smart contracts
+- Anyone interested in homomorphic encryption on blockchain
+
+## Understanding the Basics
+
+Before diving into the implementation, it's important to understand a few key concepts:
+
+1. **Homomorphic Encryption**: Allows computations on encrypted data without decryption
+2. **Shield Testnet**: Gateway's L2 testnet optimized for privacy-preserving computations
+3. **Paillier Operations**: The types of operations possible with Paillier encryption:
+   - Adding two encrypted values
+   - Adding/subtracting constants from encrypted values
+   - Multiplying encrypted values by constants
+
+## Prerequisites
+
+### Development Environment
+
+First, ensure you have the necessary tools and dependencies:
+
+```bash
+# Create a new project directory
+mkdir my-paillier-project
+cd my-paillier-project
+
+# Initialize a new Node.js project
+npm init -y
+
+# Install required dependencies
+npm install ethers@5.7.2 paillier-bigint
+```
+
+### Why these dependencies?
+
+- `ethers`: For interacting with the Ethereum blockchain
+- `paillier-bigint`: For generating Paillier-compatible keypairs
+
+## Step-by-Step Integration
+
+### 1. Network Setup
+
+First, you'll need to connect to the Shield testnet. This network is specifically designed for privacy-preserving computations.
+
+```javascript
+const network = {
+  chainId: "0xA5B5A", // 678746
+  chainName: "Gateway Shield Testnet",
+  nativeCurrency: {
+    name: "OWN",
+    symbol: "OWN",
+    decimals: 18,
+  },
+  rpcUrls: ["https://gateway-shield-testnet.rpc.caldera.xyz/http"],
+};
+```
+
+#### What's happening here?
+
+- We're defining the Shield testnet configuration
+- The chainId `678746` identifies our testnet
+- OWN is the native currency used for gas fees
+
+<Note>
+  Please keep in mind these details might change at any time, as this is a
+  testnet. Up to date information can be found on the Wallet Setup page.
+</Note>
+
+### 2. Connecting to the Network
+
+```javascript
+import { ethers } from "ethers";
+
+async function connectToShieldTestnet() {
+  try {
+    // Connect to Shield Testnet
+    const provider = new ethers.providers.JsonRpcProvider(
+      "https://gateway-shield-testnet.rpc.caldera.xyz/http"
+    );
+
+    // Request network addition to MetaMask
+    if (window.ethereum) {
+      await window.ethereum.request({
+        method: "wallet_addEthereumChain",
+        params: [network],
+      });
+    } else {
+      throw new Error(
+        "Please install MetaMask to interact with the Shield testnet"
+      );
+    }
+
+    // Get signer
+    const signer = provider.getSigner();
+    return { provider, signer };
+  } catch (error) {
+    console.error("Failed to connect to Shield testnet:", error);
+    throw error;
+  }
+}
+```
+
+#### Important Considerations:
+
+- Always handle connection errors gracefully
+- Ensure users have MetaMask installed
+- Check if users have sufficient OWN for gas fees
+
+### 3. Working with the Paillier Contract
+
+#### Initialize the Contract
+
+```javascript
+const PAILLIER_ADDRESS = "0x..."; // Shield Testnet deployment address
+
+async function initializePaillier(signer) {
+  try {
+    const paillier = new Contract(PAILLIER_ADDRESS, PAILLIER_ABI, signer);
+    return paillier;
+  } catch (error) {
+    console.error("Failed to initialize Paillier contract:", error);
+    throw error;
+  }
+}
+```
+
+#### Understanding Key Generation
+
+Keys in Paillier encryption consist of public and private components. The public key is used for encryption and computations, while the private key is used for decryption.
+
+```javascript
+import { generateRandomKeys } from "paillier-bigint";
+
+async function setupKeys() {
+  try {
+    // Generate new key pair
+    const { publicKey, privateKey } = await generateRandomKeys(2048);
+
+    // Format keys for contract interaction
+    const contractPublicKey = {
+      n: ethers.utils.hexlify(publicKey.n),
+      g: ethers.utils.hexlify(publicKey.g),
+    };
+
+    return { contractPublicKey, privateKey };
+  } catch (error) {
+    console.error("Key generation failed:", error);
+    throw error;
+  }
+}
+```
+
+#### Security Considerations for Keys:
+
+- Never share or expose private keys
+- Store private keys securely (preferably in a hardware security module)
+- Use appropriate key lengths (minimum 2048 bits recommended)
+
+### 4. Basic Operations
+
+#### Encrypting Values
+
+When you encrypt a value, it becomes a ciphertext that can be safely shared and computed upon.
+
+```javascript
+async function encryptValue(paillier, value, publicKey) {
+  try {
+    // Input validation
+    if (value < 0 || value > Number.MAX_SAFE_INTEGER) {
+      throw new Error("Value out of range");
+    }
+
+    // Generate randomness for encryption
+    const randomness = ethers.utils.randomBytes(256);
+
+    // Perform encryption
+    const encrypted = await paillier.encrypt(value, randomness, publicKey);
+
+    return encrypted;
+  } catch (error) {
+    console.error("Encryption failed:", error);
+    throw error;
+  }
+}
+```
+
+#### Why use randomness?
+
+- Ensures semantic security
+- Same input value produces different ciphertexts
+- Prevents statistical analysis attacks
+
+#### Adding Encrypted Values
+
+One of the key features of Paillier encryption is the ability to add encrypted values:
+
+```javascript
+async function addEncryptedValues(paillier, enc1, enc2, publicKey) {
+  try {
+    const sum = await paillier.add({ value: enc1 }, { value: enc2 }, publicKey);
+
+    // Gas optimization
+    const gasEstimate = await paillier.estimateGas.add(
+      { value: enc1 },
+      { value: enc2 },
+      publicKey
+    );
+
+    return sum;
+  } catch (error) {
+    console.error("Addition failed:", error);
+    throw error;
+  }
+}
+```
+
+## Real-World Example: Private Voting System
+
+Let's implement a simple private voting system to demonstrate these concepts working together:
+
+```javascript
+async function implementPrivateVoting() {
+  try {
+    // 1. Setup
+    const { signer } = await connectToShieldTestnet();
+    const paillier = await initializePaillier(signer);
+    const { contractPublicKey, privateKey } = await setupKeys(); // Defined above
+
+    // 2. Initialize vote counting
+    let encryptedTotal = await paillier.encryptZero(
+      ethers.utils.randomBytes(256),
+      contractPublicKey
+    );
+
+    // 3. Process votes
+    async function castVote(choice) {
+      // Encrypt the vote (1 for yes, 0 for no)
+      const encryptedVote = await encryptValue(
+        paillier,
+        choice ? 1 : 0,
+        contractPublicKey
+      );
+
+      // Add to running total
+      encryptedTotal = await addEncryptedValues(
+        paillier,
+        encryptedTotal,
+        encryptedVote,
+        contractPublicKey
+      );
+    }
+
+    // 4. Example voting sequence
+    await castVote(true); // Yes vote
+    await castVote(false); // No vote
+    await castVote(true); // Yes vote
+
+    // 5. Decrypt final tally
+    const sigma = calculateSigma(encryptedTotal, privateKey);
+    const finalCount = await paillier.decrypt(
+      { value: encryptedTotal },
+      contractPublicKey,
+      privateKey,
+      sigma
+    );
+
+    return finalCount.toString();
+  } catch (error) {
+    console.error("Voting process failed:", error);
+    throw error;
+  }
+}
+```
+
+## Best Practices and Tips
+
+### 1. Error Handling
+
+- Always implement proper error handling
+- Provide meaningful error messages to users
+- Log errors for debugging purposes
+
+### 2. Gas Optimization
+
+- Batch operations when possible
+- Estimate gas costs before transactions
+- Implement retry mechanisms for failed transactions
+
+### 3. Security
+
+- Validate all inputs
+- Keep private keys secure
+- Implement access controls
+- Regular security audits
+
+### 4. Testing
+
+- Test with different input ranges
+- Verify homomorphic properties
+- Test edge cases and error conditions
+
+## Common Issues and Solutions
+
+1. **Transaction Fails with "Out of Gas"**
+
+   - Solution: Increase gas limit or optimize operations
+
+2. **Invalid Public Key Format**
+
+   - Solution: Ensure proper key formatting and encoding
+
+3. **Decryption Fails**
+   - Solution: Verify sigma calculation and key usage
+
+## Next Steps
+
+1. Explore more complex operations
+2. Implement additional privacy features
+3. Integrate with other Gateway Protocol features
+4. Join our developer community
