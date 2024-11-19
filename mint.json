@@ -112,7 +112,17 @@
           ]
         },
         "compute/marketplace/pre",
-        "compute/marketplace/trusted-execution-environment"
+        "compute/marketplace/trusted-execution-environment",
+        {
+          "icon": "binary",
+          "group": "Homomorphic Encryption (Paillier)",
+          "pages": [
+            "compute/marketplace/paillier/overview",
+            "compute/marketplace/paillier/smart-contract",
+            "compute/marketplace/paillier/integration-steps",
+            "compute/marketplace/paillier/examples"
+          ]
+        }
       ]
     },
     {
