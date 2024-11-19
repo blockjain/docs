@@ -101,7 +101,6 @@
     {
       "group": "Marketplace",
       "pages": [
-        "compute/marketplace/encrypted-data-vault",
         {
           "icon": "network-wired",
           "group": "Garbled Circuits",
