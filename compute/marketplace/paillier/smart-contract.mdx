@@ -1,0 +1,379 @@
+---
+title: Smart Contract Documentation
+---
+
+The Paillier smart contract implements the Paillier homomorphic cryptosystem on the Gateway Shield testnet. It provides a comprehensive set of operations for performing computations on encrypted data while maintaining privacy.
+
+## Contract Address
+
+```solidity
+Shield Testnet: 0x2171D6cdA8Db35FCdAD415a8685A174a3D168f5E
+```
+
+## Data Structures
+
+### Ciphertext
+
+```solidity
+struct Ciphertext {
+    bytes value;
+}
+```
+
+A wrapper for encrypted values stored as byte arrays. The byte array represents the encrypted value in the Paillier cryptosystem.
+
+### PublicKey
+
+```solidity
+struct PublicKey {
+    bytes n;  // Modulus n = p * q
+    bytes g;  // Generator typically = n + 1
+}
+```
+
+Contains the public parameters needed for encryption and homomorphic operations.
+
+### PrivateKey
+
+```solidity
+struct PrivateKey {
+    bytes lambda;  // Carmichael's function of n
+    bytes mu;      // Modular multiplicative inverse
+}
+```
+
+Contains the private parameters needed for decryption. These should never be shared or stored on-chain.
+
+## Core Functions
+
+### Addition Operations
+
+#### `add`
+
+```solidity
+function add(
+    Ciphertext calldata a,
+    Ciphertext calldata b,
+    PublicKey calldata publicKey
+) public view returns (BigNumber memory)
+```
+
+Performs homomorphic addition of two encrypted values.
+
+**Parameters:**
+
+- `a`: First encrypted value
+- `b`: Second encrypted value
+- `publicKey`: Public key parameters
+
+**Returns:**
+
+- `BigNumber`: Encrypted sum E(m₁ + m₂)
+
+**Example:**
+
+```javascript
+const sum = await paillierContract.add(
+  { value: encrypted1 },
+  { value: encrypted2 },
+  { n: publicKey.n, g: publicKey.g }
+);
+```
+
+#### `add_const`
+
+```solidity
+function add_const(
+    Ciphertext calldata a,
+    uint256 b,
+    PublicKey calldata publicKey
+) public view returns (BigNumber memory)
+```
+
+Adds a plaintext constant to an encrypted value.
+
+**Parameters:**
+
+- `a`: Encrypted value
+- `b`: Plaintext constant to add
+- `publicKey`: Public key parameters
+
+**Returns:**
+
+- `BigNumber`: Encrypted result E(m + k)
+
+**Example:**
+
+```javascript
+const result = await paillierContract.add_const(
+  { value: encrypted },
+  plaintext,
+  { n: publicKey.n, g: publicKey.g }
+);
+```
+
+### Subtraction Operations
+
+#### `sub`
+
+```solidity
+function sub(
+    Ciphertext calldata a,
+    Ciphertext calldata b,
+    PublicKey calldata publicKey
+) public view returns (BigNumber memory)
+```
+
+Performs homomorphic subtraction of two encrypted values.
+
+**Parameters:**
+
+- `a`: Encrypted minuend
+- `b`: Encrypted subtrahend
+- `publicKey`: Public key parameters
+
+**Returns:**
+
+- `BigNumber`: Encrypted difference E(m₁ - m₂)
+
+#### `sub_const`
+
+```solidity
+function sub_const(
+    Ciphertext calldata a,
+    int256 b,
+    PublicKey calldata publicKey
+) public view returns (BigNumber memory)
+```
+
+Subtracts a plaintext constant from an encrypted value.
+
+**Parameters:**
+
+- `a`: Encrypted value
+- `b`: Plaintext constant to subtract
+- `publicKey`: Public key parameters
+
+**Returns:**
+
+- `BigNumber`: Encrypted result E(m - k)
+
+### Multiplication and Division
+
+#### `mul_const`
+
+```solidity
+function mul_const(
+    Ciphertext calldata a,
+    uint256 b,
+    PublicKey calldata publicKey
+) public view returns (BigNumber memory)
+```
+
+Multiplies an encrypted value by a plaintext constant.
+
+**Parameters:**
+
+- `a`: Encrypted value
+- `b`: Plaintext multiplier
+- `publicKey`: Public key parameters
+
+**Returns:**
+
+- `BigNumber`: Encrypted product E(m \* k)
+
+#### `div_const`
+
+```solidity
+function div_const(
+    Ciphertext calldata a,
+    uint256 b,
+    PublicKey calldata publicKey
+) public view returns (BigNumber memory)
+```
+
+Divides an encrypted value by a plaintext constant.
+
+**Parameters:**
+
+- `a`: Encrypted value
+- `b`: Plaintext divisor
+- `publicKey`: Public key parameters
+
+**Returns:**
+
+- `BigNumber`: Encrypted quotient E(m / k)
+
+### Cryptographic Operations
+
+#### `encryptZero`
+
+```solidity
+function encryptZero(
+    bytes memory rnd,
+    PublicKey calldata publicKey
+) public view returns (BigNumber memory)
+```
+
+Creates an encryption of zero using a random value.
+
+**Parameters:**
+
+- `rnd`: Random value for probabilistic encryption
+- `publicKey`: Public key parameters
+
+**Returns:**
+
+- `BigNumber`: Encryption of zero E(0)
+
+#### `encrypt`
+
+```solidity
+function encrypt(
+    uint256 value,
+    bytes memory rnd,
+    PublicKey calldata publicKey
+) public view returns (BigNumber memory)
+```
+
+Encrypts a plaintext value using the Paillier cryptosystem.
+
+**Parameters:**
+
+- `value`: Plaintext value to encrypt
+- `rnd`: Random value for probabilistic encryption
+- `publicKey`: Public key parameters
+
+**Returns:**
+
+- `BigNumber`: Encrypted value E(m)
+
+#### `decrypt`
+
+```solidity
+function decrypt(
+    Ciphertext calldata encValue,
+    PublicKey calldata publicKey,
+    PrivateKey calldata privateKey,
+    bytes calldata sigma
+) public view returns (BigNumber memory)
+```
+
+Decrypts an encrypted value using the private key.
+
+**Parameters:**
+
+- `encValue`: Encrypted value to decrypt
+- `publicKey`: Public key parameters
+- `privateKey`: Private key parameters
+- `sigma`: Precomputed sigma value for efficient decryption
+
+**Returns:**
+
+- `BigNumber`: Decrypted plaintext value
+
+**Security Note:** The `sigma` parameter is a precomputed value to avoid expensive big integer division on-chain. The contract verifies that the provided sigma is correct before completing the decryption.
+
+## Security Considerations
+
+### Key Generation
+
+- Keys should be generated off-chain using secure random number generation
+- Public and private keys should have sufficient bit length (recommended: 2048 bits)
+- Private keys should never be exposed or stored on-chain
+
+### Parameter Validation
+
+```solidity
+// Example parameter validation
+require(BigNum.bitLength(publicKey.n) >= 2048, "Insufficient key length");
+require(BigNum.divVerify(alpha, n, sig), "Invalid sigma");
+```
+
+### Gas Optimization
+
+1. **Batch Operations**
+
+   ```javascript
+   // Preferred: Batch multiple operations
+   const batchResult = await paillierContract.add(
+     encryptedSum,
+     newValue,
+     publicKey
+   );
+   ```
+
+2. **Parameter Size**
+
+   - Use minimum required bit lengths for parameters
+   - Consider gas costs when choosing parameter sizes
+
+3. **Operation Ordering**
+   - Perform as many operations off-chain as possible
+   - Batch similar operations together
+
+## Integration Example
+
+```javascript
+// Initialize contract
+const PaillierContract = await ethers.getContractFactory("Paillier");
+const paillier = await PaillierContract.attach(DEPLOYED_ADDRESS);
+
+// Prepare parameters
+const publicKey = {
+  n: "0x...", // Your public modulus
+  g: "0x...", // Your generator
+};
+
+// Encrypt values
+const encrypted1 = await paillier.encrypt(value1, randomness1, publicKey);
+
+const encrypted2 = await paillier.encrypt(value2, randomness2, publicKey);
+
+// Perform operations
+const encryptedSum = await paillier.add(
+  { value: encrypted1 },
+  { value: encrypted2 },
+  publicKey
+);
+
+// Decrypt result
+const result = await paillier.decrypt(
+  { value: encryptedSum },
+  publicKey,
+  privateKey,
+  sigma
+);
+```
+
+## Error Handling
+
+Common errors and their solutions:
+
+1. **Invalid Sigma Error**
+
+   ```
+   Error: Invalid sigma
+   ```
+
+   Solution: Ensure sigma is correctly precomputed off-chain
+
+2. **Gas Limit Exceeded**
+
+   ```
+   Error: Transaction exceeds gas limit
+   ```
+
+   Solution: Batch operations or reduce parameter sizes
+
+3. **Invalid Parameter Size**
+   ```
+   Error: Insufficient key length
+   ```
+   Solution: Use appropriate key sizes (≥2048 bits)
+
+## Next Steps
+
+1. [Integration Guide](./paillier-integration)
+2. [Example Implementations](./paillier-examples)
+3. [Security Best Practices](./paillier-security)
