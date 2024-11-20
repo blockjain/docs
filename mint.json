@@ -96,14 +96,11 @@
     },
     {
       "group": "Encrypted Compute",
-      "pages": [
-        "compute/quickstart"
-      ]
+      "pages": ["compute/quickstart"]
     },
     {
       "group": "Marketplace",
       "pages": [
-        "compute/marketplace/encrypted-data-vault",
         {
           "icon": "network-wired",
           "group": "Garbled Circuits",
@@ -112,6 +109,14 @@
             "compute/marketplace/garbled-circuits/benchmarks",
             "compute/marketplace/garbled-circuits/rust-sdk",
             "compute/marketplace/garbled-circuits/examples"
+          ]
+        },
+        {
+          "icon": "microchip",
+          "group": "Trusted Execution Environments (TEEs)",
+          "pages": [
+            "compute/marketplace/tee/overview",
+            "compute/marketplace/tee/architecture"
           ]
         },
         {
@@ -124,7 +129,6 @@
             "compute/marketplace/pre/examples"
           ]
         },
-        "compute/marketplace/trusted-execution-environment",
         {
           "icon": "binary",
           "group": "Homomorphic Encryption (Paillier)",
@@ -139,9 +143,7 @@
     },
     {
       "group": "Data Storage",
-      "pages": [
-        "storage/quickstart"
-      ]
+      "pages": ["storage/quickstart"]
     },
     {
       "group": "Overview",
@@ -154,15 +156,11 @@
     },
     {
       "group": "Help",
-      "pages": [
-        "support"
-      ]
+      "pages": ["support"]
     },
     {
       "group": "Developer Guides",
-      "pages": [
-        "developer-guide/getting-started"
-      ]
+      "pages": ["developer-guide/getting-started"]
     },
     {
       "group": "API Reference",
