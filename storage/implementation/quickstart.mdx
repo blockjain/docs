@@ -116,6 +116,22 @@ const uploadResponse = await fetch(`https://api.gateway.network/files/${fid}`, {
 });
 ```
 
+## Best Practices
+
+1. Implement retry logic for API calls
+2. Verify transaction confirmations
+3. Validate file integrity
+4. Monitor storage quotas
+5. Handle API rate limits
+
+## Security Considerations
+
+1. Secure API key management
+2. Client-side encryption before upload
+3. Checksum verification
+4. Transaction signature verification
+5. Regular permission audits
+
 ## Error Handling
 
 Common integration points requiring error handling:
@@ -131,21 +147,3 @@ Common integration points requiring error handling:
    - Invalid parameters
    - Insufficient funds
    - Permission errors
-
-## Security Considerations
-
-1. Secure API key management
-2. Client-side encryption before upload
-3. Checksum verification
-4. Transaction signature verification
-5. Regular permission audits
-
-## Best Practices
-
-1. Implement retry logic for API calls
-2. Verify transaction confirmations
-3. Validate file integrity
-4. Monitor storage quotas
-5. Handle API rate limits
-
-Note: API endpoints shown are examples. Actual endpoints and request/response formats will be provided in the final documentation.
