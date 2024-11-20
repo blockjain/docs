@@ -96,7 +96,9 @@
     },
     {
       "group": "Encrypted Compute",
-      "pages": ["compute/quickstart"]
+      "pages": [
+        "compute/quickstart"
+      ]
     },
     {
       "group": "Marketplace",
@@ -122,7 +124,7 @@
             "compute/marketplace/pre/examples"
           ]
         },
-        "compute/marketplace/trusted-execution-environment"
+        "compute/marketplace/trusted-execution-environment",
         {
           "icon": "binary",
           "group": "Homomorphic Encryption (Paillier)",
@@ -137,7 +139,9 @@
     },
     {
       "group": "Data Storage",
-      "pages": ["storage/quickstart"]
+      "pages": [
+        "storage/quickstart"
+      ]
     },
     {
       "group": "Overview",
@@ -150,11 +154,15 @@
     },
     {
       "group": "Help",
-      "pages": ["support"]
+      "pages": [
+        "support"
+      ]
     },
     {
       "group": "Developer Guides",
-      "pages": ["developer-guide/getting-started"]
+      "pages": [
+        "developer-guide/getting-started"
+      ]
     },
     {
       "group": "API Reference",
