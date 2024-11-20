@@ -1,0 +1,330 @@
+---
+title: API Reference
+---
+
+Gateway's PRE nodes expose a gRPC service (`RecryptOperator`) that provides all necessary operations for proxy re-encryption functionality. The service is defined in `recrypt.proto` and provides endpoints for key generation, encryption, transformation, and decryption.
+
+<Warning>Compute <b>key generation</b> (e.g. keypairs, transformation keys) <b>and encryption on the client</b>.</Warning>
+
+## Expected Flow
+
+<Info>
+Some operations require a `signing_keypair` to provide computation provenance.
+
+For example; <i>Who</i> performed <i>what</i> operation
+</Info>
+<Steps>
+  <Step title="Generate Key Pair" href="###">
+    Generate a new <b>encryption (private & public) keypair</b>. This will follow standard KPI practices where the public key encrypts data and the corresponding private key decrypts the ciphertext.
+    <Warning>Compute <b>client-side</b> in production environments to avoid <b>private key exposure</b>.</Warning>
+  </Step>
+
+  <Step title="Encrypt Data">
+    Encrypt data using a public key.
+    <Warning>Compute <b>client-side</b> in production environments to avoid <b>private key exposure</b>.</Warning>
+  </Step>
+
+  <Step title="Generate Transformation Key">
+    Generate a transform key for re-encryption using the sender's private key and the recipient's public key.
+
+    The transformation key is a <b>unique primitive that does not expose either crypto artifact</b> in plaintext.
+    <Warning>Compute <b>client-side</b> in production environments to avoid known-cipher vulnerabilities.</Warning>
+  </Step>
+
+  <Step title="Transform Ciphertext">
+    Transforms (re-encrypts) a ciphertext using a transform key.
+    <Info>This operation can be computed in any environment (TEE recommended).</Info>
+  </Step>
+
+  <Step title="Decrypt Data">
+    Decrypts a ciphertext using a private key.
+    <Warning>Compute <b>client-side</b> in production environments to avoid <b>private key exposure</b>.</Warning>
+  </Step>
+</Steps>
+
+## Node Endpoints
+
+<CodeGroup>
+
+```markdown Production
+pre.gateway.tech:443     // Primary production node
+pre-2.gateway.tech:443   // Secondary production node
+```
+
+```markdown Testnet
+pre-testnet.gateway.tech:443     // Primary testnet node
+pre-testnet-2.gateway.tech:443   // Secondary testnet node
+```
+
+</CodeGroup>
+
+## Code Examples
+
+### Libraries
+
+Gateway provides an SDK and gRPC API to interact with Transform Encryption.
+
+| Language | Library |
+| :--- | --- |
+| Rust | https://github.com/Gateway-DAO/gtw-recrypt |
+| Typescript / Javascript | [https://github.com/Gateway-DAO/recrypt-wasm-binding](https://github.com/Gateway-DAO/recrypt-wasm-binding/blob/main/lib/Api256Shim.ts) |
+
+### 1. Generate Key Pair
+
+Generates a new public-private key pair for encryption.
+
+<CodeGroup>
+
+```rust Rust
+use recrypt_compute::crypto::encryption::recrypt::new_encryption_keypair;
+// or for larger key size:
+// use recrypt_compute::crypto::encryption::recrypt480::new_encryption_keypair;
+
+let (priv_key, pub_key) = new_encryption_keypair();
+```
+
+```typescript TypeScript (WASM)
+import { Api480 } from "./Api480Shim";
+
+const { privateKey, publicKey } = Api480.generateKeyPair();
+```
+
+</CodeGroup>
+
+#### Public API
+<Warning>Avoid using this gRPC endpoint in production environments to avoid <b>private key exposure</b>.</Warning>
+
+```protobuf
+rpc GenerateKeyPair(Empty) returns (EncodedKeyPair);
+
+message EncodedKeyPair {
+    string pubkey_base64 = 1;
+    string privkey_base64 = 10;
+}
+```
+
+```typescript
+const response = await client.GenerateKeyPair();
+// Returns: { pubkey_base64: "...", privkey_base64: "..." }
+```
+
+### 2. Encrypt Data
+
+Encrypts data using a public key.
+
+<CodeGroup>
+
+```rust Rust
+use recrypt_compute::crypto::{encryption::recrypt::{new_encryption_keypair, encrypt}, signature::new_signing_keypair};
+
+let data = "eu falo ingles";
+
+let (_, pubkey) = new_encryption_keypair();
+let signing_keypair = new_signing_keypair();
+
+let encryption = encrypt(data.as_bytes(), &pubkey, &signing_keypair).unwrap();
+```
+
+```typescript TypeScript (WASM)
+import { Api480 as api } from "./Api480Shim";
+
+const data = "eu falo ingles";
+
+const buffer = TextEncoder().encode(data);
+const toPublicKey = api.generateKeyPair().publicKey;
+const encryptedVal = api.encrypt(buffer, toPublicKey, privateSigningKey);
+```
+
+</CodeGroup>
+
+#### Public API
+<Warning>Avoid using this gRPC endpoint in production environments to avoid known-cipher vulnerabilities.</Warning>
+
+```protobuf
+rpc Encrypt(EncryptRequest) returns (EncryptReply);
+
+message EncryptRequest {
+    string data = 1;
+    string pubkey_base64 = 2;
+    bool is_data_base64 = 10;
+}
+
+message EncryptReply {
+    string cipher_base64 = 1;
+    float length = 10;
+}
+```
+
+```typescript
+const response = await client.Encrypt({
+  data: "Hello, World!",
+  pubkey_base64: publicKey,
+  is_data_base64: false,
+});
+// Returns: { cipher_base64: "...", length: 13 }
+```
+
+### 3. Generate Transform Key
+
+Generates a transform key for re-encryption.
+
+<CodeGroup>
+```rust Rust
+use recrypt_compute::crypto::{encryption::recrypt::{new_encryption_keypair, new_transform_key}, signature::ed25519::new_signing_keypair};
+
+let (privkey, pubkey) = new_encryption_keypair();
+let (privkey2, pubkey2) = new_encryption_keypair();
+let signing_keypair = new_signing_keypair();
+
+let transformkey = new_transform_key(&privkey, &pubkey2, &signing_keypair);
+```
+
+```typescript TypeScript (WASM)
+import { Api480 as api } from "./Api480Shim";
+
+const userKeys = api.generateKeyPair();
+const deviceKeys = api.generateKeyPair();
+
+const transformKey = api.generateTransformKey(userKeys.privateKey, deviceKeys.publicKey, privateSigningKey);
+```
+</CodeGroup>
+
+#### Public API
+<Warning>Avoid using this gRPC endpoint in production environments to avoid <b>private key exposure</b>.</Warning>
+
+```protobuf
+rpc GenerateTransformKey(GenerateTransformKeyRequest) returns (EncodedPayload);
+
+message GenerateTransformKeyRequest {
+    string to_pubkey_base64 = 1;
+    string from_privkey_base64 = 10;
+}
+
+message EncodedPayload {
+    string payload_base64 = 1;
+}
+```
+
+```typescript
+const response = await client.GenerateTransformKey({
+  to_pubkey_base64: recipientPublicKey,
+  from_privkey_base64: senderPrivateKey,
+});
+// Returns: { payload_base64: "..." }
+```
+
+### 4. Transform Ciphertext
+
+Transforms (re-encrypts) a ciphertext using a transform key.
+
+<CodeGroup>
+
+```rust Rust
+use recrypt_compute::crypto::encryption::transform;
+
+let transformed_data = transform(encryption.clone(), transformkey.clone(), &signing_keypair3);
+```
+
+
+```typescript TypeScript (WASM)
+let signing_keypair = new_signing_keypair();
+```
+
+</CodeGroup>
+
+#### Public API
+
+```protobuf
+rpc Transform(TransformRequest) returns (EncodedPayload);
+
+message TransformRequest {
+    string cipher_base64 = 1;
+    string transformkey_base64 = 2;
+}
+```
+
+```typescript
+const response = await client.Transform({
+  cipher_base64: encryptedData,
+  transformkey_base64: transformKey,
+});
+// Returns: { payload_base64: "..." }
+```
+
+### 5. Decrypt Data
+
+Decrypts a ciphertext using a private key.
+
+<CodeGroup>
+
+```rust Rust
+use recrypt_compute::crypto::encryption::decrypt;
+
+let unencryption = decrypt(&transformed_data, &privkey2, data.len()).unwrap();
+```
+
+```typescript TypeScript (WASM)
+import { Api480 as api } from "./Api480Shim";
+
+const decryptedPlaintext = api.decrypt(lvl0EncryptedValue, keys.privateKey);
+```
+
+</CodeGroup>
+
+#### Public API
+<Warning>Avoid using this gRPC endpoint in production environments to avoid <b>private key exposure</b>.</Warning>
+
+```protobuf
+rpc Decrypt(DecryptRequest) returns (EncodedPayload);
+
+message DecryptRequest {
+    string cipher_base64 = 1;
+    string privkey_base64 = 2;
+    float length = 3;
+}
+```
+
+```typescript
+const response = await client.Decrypt({
+  cipher_base64: transformedData,
+  privkey_base64: recipwwientPrivateKey,
+  length: originalLength,
+});
+// Returns: { payload_base64: "..." }
+```
+
+## Best Practices
+
+1. **Security**
+
+   - Secure private key storage
+   - Validate public keys
+   - Implement proper key rotation
+
+1. **Connection Management**
+
+   - Reuse client instances
+   - Implement connection pooling
+   - Handle reconnection gracefully
+
+1. **Error Handling**
+
+   - Implement retries with backoff
+   - Use backup nodes when primary is unavailable
+   - Validate inputs before sending
+
+1. **Performance**
+   - Batch operations when possible
+   - Cache transform keys
+   - Monitor response times
+
+## Rate Limits
+
+| Environment | Requests/Second | Burst Limit |
+| ----------- | --------------- | ----------- |
+| Production  | 100             | 200         |
+| Testnet     | 50              | 100         |
+
+## Monitoring
+
+Service status can be monitored at https://status.gateway.tech/pre
