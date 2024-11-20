@@ -29,7 +29,7 @@
   ],
   "tabs": [
     {
-      "name": "Compute",
+      "name": "PET Marketplace",
       "url": "compute"
     },
     {
@@ -95,50 +95,34 @@
       ]
     },
     {
-      "group": "Encrypted Compute",
-      "pages": ["compute/quickstart"]
+      "group": "Garbled Circuits",
+      "pages": [
+        "compute/garbled-circuits/overview",
+        "compute/garbled-circuits/benchmarks",
+        "compute/garbled-circuits/rust-sdk",
+        "compute/garbled-circuits/examples"
+      ]
     },
     {
-      "group": "Marketplace",
+      "group": "Trusted Execution Environments (TEEs)",
+      "pages": ["compute/tee/overview", "compute/tee/architecture"]
+    },
+    {
+      "group": "Proxy Re-Encryption (PRE)",
       "pages": [
-        {
-          "icon": "network-wired",
-          "group": "Garbled Circuits",
-          "pages": [
-            "compute/marketplace/garbled-circuits/overview",
-            "compute/marketplace/garbled-circuits/benchmarks",
-            "compute/marketplace/garbled-circuits/rust-sdk",
-            "compute/marketplace/garbled-circuits/examples"
-          ]
-        },
-        {
-          "icon": "microchip",
-          "group": "Trusted Execution Environments (TEEs)",
-          "pages": [
-            "compute/marketplace/tee/overview",
-            "compute/marketplace/tee/architecture"
-          ]
-        },
-        {
-          "icon": "key",
-          "group": "Proxy Re-Encryption (PRE)",
-          "pages": [
-            "compute/marketplace/pre/overview",
-            "compute/marketplace/pre/benchmarks",
-            "compute/marketplace/pre/api",
-            "compute/marketplace/pre/examples"
-          ]
-        },
-        {
-          "icon": "binary",
-          "group": "Homomorphic Encryption (Paillier)",
-          "pages": [
-            "compute/marketplace/paillier/overview",
-            "compute/marketplace/paillier/smart-contract",
-            "compute/marketplace/paillier/integration-steps",
-            "compute/marketplace/paillier/examples"
-          ]
-        }
+        "compute/pre/overview",
+        "compute/pre/benchmarks",
+        "compute/pre/api",
+        "compute/pre/examples"
+      ]
+    },
+    {
+      "group": "Homomorphic Encryption (Paillier)",
+      "pages": [
+        "compute/paillier/overview",
+        "compute/paillier/smart-contract",
+        "compute/paillier/integration-steps",
+        "compute/paillier/examples"
       ]
     },
     {
