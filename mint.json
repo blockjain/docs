@@ -96,7 +96,9 @@
     },
     {
       "group": "Encrypted Compute",
-      "pages": ["compute/quickstart"]
+      "pages": [
+        "compute/quickstart"
+      ]
     },
     {
       "group": "Marketplace",
@@ -112,7 +114,16 @@
             "compute/marketplace/garbled-circuits/examples"
           ]
         },
-        "compute/marketplace/pre",
+        {
+          "icon": "key",
+          "group": "Proxy Re-Encryption (PRE)",
+          "pages": [
+            "compute/marketplace/pre/overview",
+            "compute/marketplace/pre/benchmarks",
+            "compute/marketplace/pre/api",
+            "compute/marketplace/pre/examples"
+          ]
+        },
         "compute/marketplace/trusted-execution-environment",
         {
           "icon": "binary",
@@ -128,7 +139,9 @@
     },
     {
       "group": "Data Storage",
-      "pages": ["storage/quickstart"]
+      "pages": [
+        "storage/quickstart"
+      ]
     },
     {
       "group": "Overview",
@@ -141,11 +154,15 @@
     },
     {
       "group": "Help",
-      "pages": ["support"]
+      "pages": [
+        "support"
+      ]
     },
     {
       "group": "Developer Guides",
-      "pages": ["developer-guide/getting-started"]
+      "pages": [
+        "developer-guide/getting-started"
+      ]
     },
     {
       "group": "API Reference",
