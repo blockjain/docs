@@ -112,6 +112,14 @@
           ]
         },
         {
+          "icon": "microchip",
+          "group": "Trusted Execution Environments (TEEs)",
+          "pages": [
+            "compute/marketplace/tee/overview",
+            "compute/marketplace/tee/architecture"
+          ]
+        },
+        {
           "icon": "key",
           "group": "Proxy Re-Encryption (PRE)",
           "pages": [
@@ -121,7 +129,6 @@
             "compute/marketplace/pre/examples"
           ]
         },
-        "compute/marketplace/trusted-execution-environment",
         {
           "icon": "binary",
           "group": "Homomorphic Encryption (Paillier)",
