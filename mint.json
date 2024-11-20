@@ -138,6 +138,8 @@
       "group": "Overview",
       "pages": [
         "storage/data-layer",
+        "storage/coordination",
+        "storage/identity",
         "storage/data-models",
         "storage/data-assets",
         "storage/privacy-and-security-standards"
