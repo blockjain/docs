@@ -1,0 +1,75 @@
+---
+title: Identity
+---
+
+The Gateway identity system combines blockchain wallet capabilities with proxy re-encryption requirements, creating a robust framework for secure data access and sharing. This dual-key approach enables both secure transaction signing and privacy-preserving data operations.
+
+## Identity Components
+
+### PRE-Compatible Key
+The system requires an elliptic curve cryptography key pair for proxy re-encryption operations. This key enables:
+
+1. Secure data encryption
+2. Generation of re-encryption keys
+3. Secure data sharing
+
+### Blockchain Wallet
+A Solana-compatible wallet provides essential capabilities for network interaction:
+
+1. Transaction signing
+2. Smart contract interaction
+3. State verification
+4. Access management
+
+## Decentralized Identity (DID)
+
+Gateway implements a DID system that abstracts underlying blockchain identities, enabling seamless multi-chain support. This abstraction layer provides several key benefits:
+
+### Chain Agnosticism
+The DID system encapsulates different blockchain identities, allowing Gateway to maintain consistent identity management across different blockchain networks. Users can interact with the system using their preferred blockchain wallet while maintaining consistent access rights.
+
+### Identity Resolution
+The resolution process converts blockchain-specific identities into Gateway's internal format through a deterministic mapping process. This enables consistent access control regardless of the underlying blockchain identity used for authentication.
+
+## Authentication Flow
+
+1. User initiates connection with blockchain wallet
+2. System verifies PRE key association
+3. DID resolution maps to internal identifier
+4. Access permissions resolve based on on-chain roles
+5. System establishes authenticated session
+
+## Permission Management
+
+The identity system integrates directly with the coordination layer's role management contract. Users can manage permissions through direct blockchain transactions, with all changes recorded on-chain. The system supports granular permission controls including:
+
+1. View/Update/Delete access levels
+2. Data sharing capabilities
+3. Time-based access restrictions
+4. Role-based permissions
+
+## Security Architecture
+
+### Key Security
+
+Identity security relies on proper management of both PRE and blockchain keys. Users must:
+
+1. Maintain secure private key storage
+2. Implement proper backup procedures
+3. Follow key rotation best practices
+4. Keep PRE and blockchain keys separate
+
+### Access Control
+The system enforces access control through cryptographic verification of both PRE and blockchain signatures. All access attempts are logged on-chain through the coordination layer's event system.
+
+## Integration Guidelines
+
+<Warning>Gateway is not opinionated on how users choose to maintain and use both sets of key pairs.</Warning>
+
+When implementing Gateway identity support, applications must:
+
+1. Support both PRE and blockchain key management
+2. Implement secure key storage
+3. Handle DID resolution properly
+4. Manage authentication sessions securely
+5. Monitor identity-related events
