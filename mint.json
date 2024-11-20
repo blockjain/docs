@@ -142,16 +142,23 @@
       ]
     },
     {
-      "group": "Data Storage",
-      "pages": ["storage/quickstart"]
-    },
-    {
       "group": "Overview",
       "pages": [
         "storage/data-layer",
-        "storage/data-models",
-        "storage/data-assets",
-        "storage/privacy-and-security-standards"
+        "storage/coordination",
+        "storage/identity"
+      ]
+    },
+    {
+      "group": "Implementation",
+      "pages": ["storage/implementation/quickstart"]
+    },
+    {
+      "group": "Node Operators",
+      "pages": [
+        "storage/operators/requirements",
+        "storage/operators/running-a-node",
+        "storage/operators/maintenance"
       ]
     },
     {

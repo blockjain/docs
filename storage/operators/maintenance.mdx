@@ -1,0 +1,264 @@
+---
+title: Node Maintenance
+---
+
+Proper maintenance of an Encrypted Data Vault (EDV) node is crucial for ensuring reliable operation, optimal performance, and data security. This guide covers essential maintenance tasks, monitoring procedures, and best practices for long-term node operation.
+
+## Performance Monitoring
+
+### Metrics Collection
+
+EDV nodes export metrics in Prometheus format on port 1234 by default. These metrics provide valuable insights into node performance and health. Access the metrics endpoint through:
+
+```bash
+curl http://<your-node-ip>:1234/metrics
+```
+
+### Setting Up Prometheus and Grafana
+
+For comprehensive monitoring, set up Prometheus to scrape your node's metrics. Create a basic Prometheus configuration:
+
+```yaml
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  - job_name: "edv-node"
+    static_configs:
+      - targets: ["<your-node-ip>:1234"]
+```
+
+Grafana can visualize these metrics with custom dashboards. Essential panels should display:
+
+- Storage capacity and usage trends
+- Network bandwidth utilization
+- Operation throughput and latency
+- Error rates and types
+- System resource utilization
+
+## System Updates
+
+### EDV Software Updates
+
+The update process should be performed regularly to ensure security and performance improvements:
+
+```bash
+# Check current version
+docker images gatewaylabs/edv
+
+# Pull latest version
+docker pull gatewaylabs/edv:testnet
+
+# Gracefully stop current node
+docker-compose down
+
+# Update docker-compose.yml if necessary
+# Start node with new version
+docker-compose up -d
+```
+
+### System Maintenance
+
+Regular system maintenance ensures optimal node performance:
+
+```bash
+# Update system packages
+sudo apt update
+sudo apt upgrade
+
+# Clean up Docker resources
+docker system prune -f --volumes
+
+# Check disk usage
+df -h /data
+
+# Monitor system logs
+journalctl -u docker.service
+```
+
+## Backup Procedures
+
+### Configuration Backup
+
+Maintain backups of essential configuration files:
+
+```plaintext
+/etc/docker/daemon.json
+docker-compose.yml
+.env files
+Custom scripts and configurations
+```
+
+Store these backups securely and maintain version control for configuration changes.
+
+### Data Backup
+
+While the EDV network provides redundancy through sharding, local backups of critical data are recommended:
+
+```bash
+# Create backup directory
+mkdir -p /backup/edv
+
+# Stop the node temporarily
+docker-compose down
+
+# Backup data directory
+tar czf /backup/edv/data-$(date +%Y%m%d).tar.gz /data
+
+# Restart the node
+docker-compose up -d
+```
+
+## Security Maintenance
+
+Regular security maintenance helps protect your node and the network. Implement these security practices:
+
+### Access Control
+
+Configure appropriate firewall rules to restrict access to required ports. Update SSH configuration to enhance security:
+
+```bash
+# Edit SSH configuration
+sudo nano /etc/ssh/sshd_config
+
+# Recommended settings
+PermitRootLogin no
+PasswordAuthentication no
+MaxAuthTries 3
+
+# Restart SSH service
+sudo systemctl restart sshd
+```
+
+### SSL/TLS Configuration
+
+Maintain up-to-date SSL certificates for secure communication:
+
+```bash
+# Install certbot
+sudo apt install certbot
+
+# Obtain and renew certificates
+sudo certbot renew --dry-run
+```
+
+## Resource Management
+
+### Storage Management
+
+Monitor and manage storage resources effectively:
+
+```bash
+# Check storage usage
+du -sh /data/*
+
+# Clean up old logs
+find /data/events -type f -name "*.log" -mtime +30 -delete
+
+# Monitor inode usage
+df -ih /data
+```
+
+### Memory Management
+
+Monitor memory usage and adjust configurations as needed:
+
+```bash
+# Check memory usage
+free -h
+
+# Monitor specific container resources
+docker stats volume1
+```
+
+## Troubleshooting Common Issues
+
+### Network Connectivity
+
+When experiencing network issues:
+
+```bash
+# Check network connectivity
+ping testnet.edv.gateway.tech
+
+# Verify port availability
+netstat -tulpn | grep LISTEN
+
+# Test internal network performance
+iperf3 -c testnet.edv.gateway.tech
+```
+
+### Storage Performance
+
+For storage-related issues:
+
+```bash
+# Check disk performance
+fio --name=random-write --ioengine=posixaio --rw=randwrite --bs=4k --size=4g --numjobs=1 --runtime=60
+
+# Monitor IO operations
+iostat -x 1
+```
+
+## Emergency Procedures
+
+### Node Recovery
+
+In case of node failure:
+
+```bash
+# Stop the node
+docker-compose down
+
+# Check logs for errors
+docker logs volume1 > debug.log
+
+# Verify data integrity
+find /data -type f -exec md5sum {} \; > checksums.txt
+
+# Restart with debug logging
+VOLUME_LOG_LEVEL=5 docker-compose up -d
+```
+
+### Performance Recovery
+
+When experiencing performance degradation:
+
+```bash
+# Restart the node gracefully
+docker-compose restart
+
+# Clear system caches
+echo 3 > /proc/sys/vm/drop_caches
+
+# Check for resource constraints
+top -b -n 1
+```
+
+## Maintenance Schedule
+
+Implement a regular maintenance schedule:
+
+```plaintext
+Daily:
+- Monitor metrics and logs
+- Verify node connectivity
+- Check storage usage
+
+Weekly:
+- Review error logs
+- Update system packages
+- Backup configurations
+
+Monthly:
+- Perform full system backup
+- Review security configurations
+- Clean up old logs and temporary files
+
+Quarterly:
+- Evaluate hardware performance
+- Update SSL certificates
+- Review and update firewall rules
+```
+
+Contact [Gateway Protocol support](/support) if you need assistance with maintenance procedures or encounter issues requiring expert attention.

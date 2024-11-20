@@ -1,0 +1,237 @@
+---
+title: Running a Node
+---
+
+This guide walks through the process of setting up and running an Encrypted Data Vault (EDV) node. EDV nodes form the backbone of Gateway Protocol's distributed storage network, providing secure and private data storage capabilities.
+
+<Warning>
+  Before proceeding, you **must obtain an mTLS certificate** from the Gateway team. See [Authentication Requirements](/storage/operators/requirements#authentication-requirements) for details on requesting your certificate.
+</Warning>
+
+## Installation Prerequisites
+
+Before deploying an EDV node, ensure your system meets the hardware requirements outlined [in the previous section](/storage/operators/requirements) and has the following software prerequisites installed:
+
+```bash
+# Install Docker Engine
+curl -fsSL https://get.docker.com -o get-docker.sh
+sudo sh get-docker.sh
+
+# Verify Docker installation
+docker --version
+```
+
+The system should have **Docker Engine version 20.10** or later installed. Docker manages container deployment, ensuring consistent operation across different environments.
+
+## Configuration Options
+
+EDV nodes offer various configuration options to customize their behavior and performance. These options can be specified as command-line arguments or environment variables.
+
+### Essential Configuration Parameters
+
+The following parameters are crucial for proper node operation:
+
+- `dataCenter`: Geographical location identifier for the node
+- `rack`: Rack identifier within the datacenter
+- `dir`: Data directory path for storing encrypted data
+- `events.dir`: Directory path for event logs
+- `port`: HTTP port for client connections (default: 8080)
+- `ip`: Bind IP address for the node
+- `publicUrl`: Public URL or IP address for node access
+- `mserver`: Master server address for network coordination
+- `metricsPort`: Port for exposing Prometheus metrics
+
+### Volume Management
+
+EDV nodes use Docker volumes for persistent storage. The primary volumes include:
+
+- `/data`: Primary storage for encrypted data
+- `/events`: Event log storage
+- `/etc/gatewayfs/certs`: Gateway-signed certificates for mTLS authentication
+  <Note>
+  See [Authentication Requirements](/storage/operators/requirements#authentication-requirements) for details on requesting your certificate.
+  </Note>
+
+These volumes persist data across container restarts and updates. Regular backup of these volumes is recommended for data safety.
+
+## Deployment
+
+### Docker CLI
+
+The simplest way to deploy an EDV node is using Docker. Our official Docker image contains all necessary components pre-configured for immediate deployment:
+
+```bash
+# Pull the latest EDV node image
+docker pull gatewaylabs/edv:testnet
+
+# Set environment variables
+ORG="<org-name>"
+RACK="<org-subidentity>"
+BINDIP="<network-interface-address>"
+PUBLICURL="<public-access-address>"
+
+# Run the EDV node
+docker run -d \
+    --name edv1 \
+    -p 8080:8080 \
+    -p 18080:18080 \
+    -p 1234:1234 \
+    -v edv1-data:/data \
+    -v edv1-events:/events \
+    -v $(pwd)/ca.crt:/etc/gatewayfs/ca.crt \
+    -v $(pwd)/node.crt:/etc/gatewayfs/node.crt \
+    -v $(pwd)/node.key:/etc/gatewayfs/node.key \
+    --restart unless-stopped \
+    --log-driver json-file \
+    --log-opt max-size=200m \
+    --log-opt max-file=3 \
+    gatewaylabs/edv:testnet \
+    -v=${VOLUME_LOG_LEVEL:-3} \
+    volume -dataCenter=$ORG -rack=$RACK \
+    -dir /data -events.dir /events \
+    -port=8080 -ip=$BINDIP -publicUrl=$PUBLICURL \
+    -mserver="testnet.edv.gateway.tech:9333" \
+    -preStopSeconds=1 -metricsPort=1234
+```
+
+### Docker Compose
+
+For production environments, Docker Compose provides better management and configuration options. Create a `docker-compose.yml` file in your deployment directory:
+
+```yaml
+services:
+  edv1:
+    image: gatewaylabs/edv:testnet
+    container_name: edv1
+    ports:
+      - 8080:8080   # http
+      - 18080:18080 # grpc
+      - 1234:1234   # metrics
+    environment:
+      ORG: ""         # your-org
+      RACK: ""        # org-subidentity
+      BINDIP: ""      # network-interface-address
+      PUBLICURL: ""   # public-access-address
+    command: >
+      -v=${VOLUME_LOG_LEVEL:-3}
+      volume -dataCenter=$ORG -rack=$RACK
+      -dir /data
+      -events.dir /events
+      -port=8080 -ip=$BINDIP -publicUrl=$PUBLICURL
+      -mserver="testnet.edv.gateway.tech:9333"
+      -preStopSeconds=1 -metricsPort=1234
+    volumes:
+      - edv1-data:/data
+      - edv1-events:/events
+      - ca.crt:/etc/gatewayfs/ca.crt      # GatewayFS-signed Certificate
+      - node.crt:/etc/gatewayfs/node.crt  # Gateway-signed Certificate
+      - node.key:/etc/gatewayfs/node.key  # Locally created OpenSSL Key
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200m"
+        max-file: "3"
+```
+
+Start the node using Docker Compose:
+
+```bash
+docker-compose up -d
+```
+
+## Data Directory Structure
+
+The EDV node organizes data in a specific structure:
+
+```plaintext
+/data/
+  ├── chunks/       # Encrypted data chunks
+  ├── indexes/      # Data indexing information
+  ├── meta/         # Metadata storage
+  └── events/       # Event logs
+```
+
+Understanding this structure helps in monitoring and maintaining the node effectively.
+
+## Version Management
+
+### Checking Current Version
+
+Verify your node's current version:
+
+```bash
+docker inspect --format='{{index .Config.Labels "org.opencontainers.image.version"}}' volume1
+```
+
+### Update Process
+
+The update process involves pulling the latest image and redeploying the container:
+
+```bash
+# Pull latest image
+docker pull gatewaylabs/edv:testnet
+
+# Stop current container
+docker-compose down
+
+# Start new container with updated image
+docker-compose up -d
+```
+
+Storage volumes persist during updates, ensuring no data loss during the upgrade process.
+
+## Monitoring
+
+After deployment, verify your node's operation:
+
+```bash
+# Check container status
+docker ps -a
+
+# View container logs
+docker logs volume1
+
+# Verify metrics endpoint
+curl http://localhost:1234/metrics
+```
+
+A properly functioning node should show:
+
+- Container status as "Up"
+- No error messages in logs
+- Accessible metrics endpoint
+- Successful connection to the master server
+
+## Troubleshooting
+
+Common issues and their solutions:
+
+### Connection Issues
+
+If the node fails to connect to the master server, verify:
+
+- Network connectivity
+- Correct master server address
+- Proper port configuration
+- Firewall settings
+
+### Storage Issues
+
+For storage-related problems, check:
+
+- Available disk space
+- Volume mount points
+- File permissions
+- I/O performance
+
+### Performance Problems
+
+When experiencing performance issues, verify:
+
+- Resource utilization
+- Network bandwidth
+- Storage I/O rates
+- System logs for bottlenecks
+
+[Contact the Gateway Protocol team](/support) if you encounter persistent issues requiring additional support.
