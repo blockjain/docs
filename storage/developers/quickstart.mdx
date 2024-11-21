@@ -2,31 +2,40 @@
 title: Quickstart
 ---
 
-<Warning>This is for advanced users only. For 99% of people trying to use Encrypted Data Vaults, the best option is to use our API and SDKs!</Warning>
+This guide describes the process of integrating with Gateway's Storage Layer directly, from initial setup to storage confirmation.
 
-This guide describes the process of integrating with Gateway's Encrypted Data Vault (EDV) system, from initial setup through file storage.
+<Info>Check out the [Developer API](/developer-guide/api-reference/introduction) instead for commonly-used operations.</Info>
 
 ## Integration Flow
 
 ```mermaid
 sequenceDiagram
-    participant Client
+    participant Client as Client
     participant MasterNode as Gateway Master Node
-    participant Chain as Solana Chain
+    participant Chain as Payment Chain
     participant EDV as Data Vaults
 
     Client->>Client: Create Identity
-    Note over Client: Generate PRE Key<br/>Connect Solana Wallet
-    
-    Client->>MasterNode: POST /allocations
-    MasterNode-->>Client: Return File ID
-    
-    Client->>Chain: Initialize File Record
+    Note over Client: Custody Encryption Keys (PRE-compat.)
+    Note over Client: Custody Signing Keys (secp256k1)
+
+    Client->>+MasterNode: gRPC Request: GatewayFS.Assign
+    Note over MasterNode: Specify replication enforcements
+    MasterNode-->>-Client: gRPC Response: File ID
+
+    Client->>+Chain: eth.call ACL: Initialize File Record
     Note over Chain: Store File Metadata<br/>Set Permissions
-    
-    Client->>MasterNode: POST /files/{fileId}
-    MasterNode->>EDV: Distribute Shards
-    EDV-->>Client: Storage Confirmation
+    Chain-->>-Client: Transaction Posted: tx hash
+
+    Client->>+MasterNode: POST /{fileId}: Initialize File Record
+    MasterNode->>Chain: Consult fileId allocation Onchain
+    break when FileId not allocated Onchain
+        MasterNode-->>-Client: Surface failure
+    end
+    Note over MasterNode: Shard (encrypted) data <br>for EDV persistence
+    MasterNode->>EDV: Distribute Data Shards to EDVs
+    EDV-->>MasterNode: Write ACKs
+    MasterNode-->>Client: Storage Confirmation
 ```
 
 ## Step 1: Identity Setup
