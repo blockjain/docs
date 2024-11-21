@@ -1,12 +1,14 @@
 ---
 title: Running a Node
 ---
+<Warning>
+  **You must obtain an mTLS certificate** from the Gateway team to network with our Storage Layer.
+
+  See [Authentication Requirements](/storage/operators/requirements#authentication-requirements) to generate your certificate.
+</Warning>
 
 This guide walks through the process of setting up and running an Encrypted Data Vault (EDV) node. EDV nodes form the backbone of Gateway Protocol's distributed storage network, providing secure and private data storage capabilities.
 
-<Warning>
-  Before proceeding, you **must obtain an mTLS certificate** from the Gateway team. See [Authentication Requirements](/storage/operators/requirements#authentication-requirements) for details on requesting your certificate.
-</Warning>
 
 ## Installation Prerequisites
 
@@ -31,23 +33,28 @@ EDV nodes offer various configuration options to customize their behavior and pe
 
 The following parameters are crucial for proper node operation:
 
-- `dataCenter`: Geographical location identifier for the node
-- `rack`: Rack identifier within the datacenter
-- `dir`: Data directory path for storing encrypted data
-- `events.dir`: Directory path for event logs
-- `port`: HTTP port for client connections (default: 8080)
-- `ip`: Bind IP address for the node
-- `publicUrl`: Public URL or IP address for node access
-- `mserver`: Master server address for network coordination
-- `metricsPort`: Port for exposing Prometheus metrics
+| Field | Description |
+|-------|-------------|
+| `dataCenter` | Organization name |
+| `rack` | Rack identifier within the organization |
+| `dir` | Data directory path for storing encrypted data |
+| `events.dir` | Directory path for event logs |
+| `port` | HTTP port for client connections (default: 8080) |
+| `port.grpc` | gRPC port for client connections (default: 10000+`port`=18080) |
+| `ip` | Bind IP address for the node |
+| `publicUrl` | Public URL or IP address for node access |
+| `mserver` | Master server address for network coordination |
+| `metricsPort` | Port for exposing Prometheus metrics |
 
 ### Volume Management
 
 EDV nodes use Docker volumes for persistent storage. The primary volumes include:
 
-- `/data`: Primary storage for encrypted data
-- `/events`: Event log storage
-- `/etc/gatewayfs/certs`: Gateway-signed certificates for mTLS authentication
+| Path | Description |
+|------|-------------|
+| `/etc/gatewayfs/certs` | Directory for mTLS certificates (e.g., `node.key`, `node.crt`, `ca.crt`) |
+| `/data` | Primary storage for encrypted data |
+| `/events` | Event log storage |
   <Note>
   See [Authentication Requirements](/storage/operators/requirements#authentication-requirements) for details on requesting your certificate.
   </Note>
@@ -78,9 +85,9 @@ docker run -d \
     -p 1234:1234 \
     -v edv1-data:/data \
     -v edv1-events:/events \
-    -v $(pwd)/ca.crt:/etc/gatewayfs/ca.crt \
-    -v $(pwd)/node.crt:/etc/gatewayfs/node.crt \
-    -v $(pwd)/node.key:/etc/gatewayfs/node.key \
+    -v $(pwd)/ca.crt:/etc/gatewayfs/certs/ca.crt \
+    -v $(pwd)/node.crt:/etc/gatewayfs/certs/node.crt \
+    -v $(pwd)/node.key:/etc/gatewayfs/certs/node.key \
     --restart unless-stopped \
     --log-driver json-file \
     --log-opt max-size=200m \
@@ -123,15 +130,19 @@ services:
     volumes:
       - edv1-data:/data
       - edv1-events:/events
-      - ca.crt:/etc/gatewayfs/ca.crt      # GatewayFS-signed Certificate
-      - node.crt:/etc/gatewayfs/node.crt  # Gateway-signed Certificate
-      - node.key:/etc/gatewayfs/node.key  # Locally created OpenSSL Key
+      - ca.crt:/etc/gatewayfs/certs/ca.crt      # GatewayFS-signed Certificate
+      - node.crt:/etc/gatewayfs/certs/node.crt  # Gateway-signed Certificate
+      - node.key:/etc/gatewayfs/certs/node.key  # Locally created OpenSSL Key
     restart: unless-stopped
     logging:
       driver: "json-file"
       options:
         max-size: "200m"
         max-file: "3"
+
+volumes:
+  edv1-data:
+  edv1-events:
 ```
 
 Start the node using Docker Compose:

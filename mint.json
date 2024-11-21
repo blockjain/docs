@@ -105,7 +105,10 @@
     },
     {
       "group": "Trusted Execution Environments (TEEs)",
-      "pages": ["compute/tee/overview", "compute/tee/architecture"]
+      "pages": [
+        "compute/tee/overview",
+        "compute/tee/architecture"
+      ]
     },
     {
       "group": "Proxy Re-Encryption (PRE)",
@@ -128,14 +131,16 @@
     {
       "group": "Overview",
       "pages": [
-        "storage/data-layer",
-        "storage/coordination",
-        "storage/identity"
+        "storage/overview/data-layer",
+        "storage/overview/coordination",
+        "storage/overview/identity"
       ]
     },
     {
-      "group": "Implementation",
-      "pages": ["storage/implementation/quickstart"]
+      "group": "Developers",
+      "pages": [
+        "storage/developers/quickstart"
+      ]
     },
     {
       "group": "Node Operators",
@@ -147,11 +152,15 @@
     },
     {
       "group": "Help",
-      "pages": ["support"]
+      "pages": [
+        "support"
+      ]
     },
     {
       "group": "Developer Guides",
-      "pages": ["developer-guide/getting-started"]
+      "pages": [
+        "developer-guide/getting-started"
+      ]
     },
     {
       "group": "API Reference",
