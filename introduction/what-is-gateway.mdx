@@ -8,17 +8,11 @@ title: "What is Gateway"
 
 Blockchains can only process public information—a fundamental limitation that prevents them from becoming a universal computing platform. This limitation isn't just a technical constraint—it's the key reason why many practical applications haven't moved or been built on-chain. In order to build end to end applications on-chain, developers need infrastructure that allows them to handle ANY type of data and logic, whether it be sensitive, high value, personal, business secrets, or proprietary. We believe by unlocking this encrypted state as a native primitive, we're pioneering the era of unified blockchains.
 
-
-
 ## What is Encrypted State?
 
 Encrypted state means computation and storage of data that remains encrypted on-chain, yet can still be verifiably correct. True universal computation requires both public and encrypted state, enabling any type of computation to run on-chain.
 
-
-
 Just like HTTPS did for the internet, encrypted state transforms blockchain from "everything public" to "selectively private". As a developer, this means you can **build full stack applications leveraging any logic or data with all the properties and guarantees of a blockchain.**
-
-
 
 # **Introducing Gateway**
 
@@ -27,3 +21,13 @@ Just like HTTPS did for the internet, encrypted state transforms blockchain from
 Gateway is a Ethereum - compatible Layer &#x31;**.** Gateway introduces the Gateway Virtual Machine (GVM) which seamlessly handles both plaintext and encrypted state. This means developers can write standard Solidity contracts while gaining native access to encrypted state. By maintaining full EVM compatibility, the GVM allows developers to leverage their existing skills and tools.
 
 ## PET Marketplace
+
+Gateway offers different microservices that act as co-processors to the core network. These are specialized services that allow developers to offload computation that cannot be handled on chain at scale. Other services can be added to the network as demand emerges. Currently, the 4 microservices offered are:
+
+1. **Trusted Execution Environments (Nitro Enclaves)**: TEEs provide secure, isolated computing environments where sensitive code and data can be processed with hardware-level privacy guarantees, enabling confidential smart contract execution and private data processing that's verifiable by the network. This is especially relevant for heavier computations such as **encrypted inference or private AI.**
+
+2. **Proxy Re-Encryption (PRE)**: Proxy re-encryption allows users to delegate access to their encrypted data without ever decrypting it, enabling fine-grained data sharing and revocation in decentralized applications while keeping the original data secure and private - imagine private DeFi where you can grant a lending protocol temporary access to verify your credit score without revealing the underlying data.
+
+3. **Distributed File Storage (DFS)**: DFS spreads encrypted data across a decentralized network of nodes, enabling trustless, censorship-resistant storage while maintaining data privacy and accessibility - like a decentralized Dropbox where only authorized parties can decrypt and access specific files.
+
+4. **Garbled Circuits (GC):** GC acts as an evaluator that executes a secure function on a user's ciphertext inputs, without ever seeing the encrypted values. The entire computation is hidden from external observers, including inputs, outputs, and intermediate states - functioning as a more secure alternative to TEEs.&#x20;
