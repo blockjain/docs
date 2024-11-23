@@ -71,10 +71,8 @@
     {
       "group": "Gateway Protocol",
       "pages": [
-        "introduction/eli5",
-        "introduction/roadmap",
-        "introduction/use-cases",
-        "introduction/what-is-gateway"
+        "introduction/what-is-gateway",
+        "introduction/eli5"
       ]
     },
     {
