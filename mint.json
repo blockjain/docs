@@ -69,7 +69,7 @@
   ],
   "navigation": [
     {
-      "group": "Gateway Protocol",
+      "group": "Gateway",
       "pages": [
         "introduction/what-is-gateway",
         "introduction/eli5"
@@ -82,14 +82,6 @@
         "introduction/shield-testnet/faucet",
         "introduction/shield-testnet/bridge",
         "introduction/shield-testnet/hardhat"
-      ]
-    },
-    {
-      "group": "Core Concepts",
-      "pages": [
-        "introduction/core-concepts/private-state",
-        "introduction/core-concepts/private-compute",
-        "introduction/core-concepts/data-lake"
       ]
     },
     {
