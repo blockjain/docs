@@ -27,34 +27,34 @@
       "url": "mailto:support@mygateway.xyz"
     }
   ],
-  "topbarCtaButton": {
-    "name": "Dashboard",
-    "url": "https://mygateway.xyz/dashboard/user/home"
-  },
   "tabs": [
     {
-      "name": "API Reference",
-      "url": "developer-guide/api-reference"
+      "name": "PET Marketplace",
+      "url": "compute"
+    },
+    {
+      "name": "Storage",
+      "url": "storage"
+    },
+    {
+      "name": "Developer Guide",
+      "url": "developer-guide"
     },
     {
       "name": "Usecases",
       "url": "usecases"
-    },
-    {
-      "name": "FAQ",
-      "url": "FAQ"
     }
   ],
   "anchors": [
     {
       "name": "Gateway",
       "icon": "house",
-      "url": "https://mygateway.xyz"
+      "url": "https://gateway.tech"
     },
     {
       "name": "Explorer",
       "icon": "compass",
-      "url": "https://mygateway.xyz/explorer"
+      "url": "https://gateway.tech/explorer"
     },
     {
       "name": "Discord",
@@ -70,64 +70,103 @@
   "navigation": [
     {
       "group": "Gateway Protocol",
-      "pages": ["introduction"]
-    },
-    {
-      "group": "Gateway Protocol Architecture",
       "pages": [
-        "protocol-architecture/introduction",
-        "protocol-architecture/easy-explainer",
-        {
-          "group": "Core Concepts",
-          "pages": [
-            "protocol-architecture/core-concepts/client",
-            "protocol-architecture/core-concepts/data-layer"
-          ]
-        },
-        {
-          "group": "Process Flow",
-          "pages": [
-            "protocol-architecture/process-flows/create-identity",
-            "protocol-architecture/process-flows/contribute-data",
-            "protocol-architecture/process-flows/request-data",
-            "protocol-architecture/process-flows/delete-data"
-          ]
-        }
+        "introduction/eli5",
+        "introduction/roadmap",
+        "introduction/use-cases",
+        "introduction/what-is-gateway"
       ]
     },
     {
-      "group": "Key Terms",
+      "group": "Shield Testnet",
       "pages": [
-        {
-          "group": "Fundamentals",
-          "pages": [
-            "core-concepts/personal-data-assets",
-            "core-concepts/data-models",
-            "core-concepts/data-requests",
-            "core-concepts/data-proofs",
-            "core-concepts/privacy-and-security-standards"
-          ]
-        },
-        {
-          "group": "Roles",
-          "pages": [
-            "gateway-network/contributors",
-            "gateway-network/owners",
-            "gateway-network/requestors"
-          ]
-        }
+        "introduction/shield-testnet/wallet-setup",
+        "introduction/shield-testnet/faucet",
+        "introduction/shield-testnet/bridge",
+        "introduction/shield-testnet/hardhat"
+      ]
+    },
+    {
+      "group": "Core Concepts",
+      "pages": [
+        "introduction/core-concepts/private-state",
+        "introduction/core-concepts/private-compute",
+        "introduction/core-concepts/data-lake"
+      ]
+    },
+    {
+      "group": "Garbled Circuits",
+      "pages": [
+        "compute/garbled-circuits/overview",
+        "compute/garbled-circuits/benchmarks",
+        "compute/garbled-circuits/rust-sdk",
+        "compute/garbled-circuits/examples"
+      ]
+    },
+    {
+      "group": "Trusted Execution Environments (TEEs)",
+      "pages": [
+        "compute/tee/overview",
+        "compute/tee/architecture"
+      ]
+    },
+    {
+      "group": "Proxy Re-Encryption (PRE)",
+      "pages": [
+        "compute/pre/overview",
+        "compute/pre/benchmarks",
+        "compute/pre/api",
+        "compute/pre/examples"
+      ]
+    },
+    {
+      "group": "Homomorphic Encryption (Paillier)",
+      "pages": [
+        "compute/paillier/overview",
+        "compute/paillier/smart-contract",
+        "compute/paillier/integration-steps",
+        "compute/paillier/examples"
+      ]
+    },
+    {
+      "group": "Overview",
+      "pages": [
+        "storage/overview/data-layer",
+        "storage/overview/coordination",
+        "storage/overview/identity"
+      ]
+    },
+    {
+      "group": "Developers",
+      "pages": [
+        "storage/developers/quickstart"
+      ]
+    },
+    {
+      "group": "Node Operators",
+      "pages": [
+        "storage/operators/requirements",
+        "storage/operators/running-a-node",
+        "storage/operators/maintenance"
       ]
     },
     {
       "group": "Help",
-      "pages": ["support"]
+      "pages": [
+        "support"
+      ]
+    },
+    {
+      "group": "Developer Guides",
+      "pages": [
+        "developer-guide/getting-started"
+      ]
     },
     {
       "group": "API Reference",
       "pages": [
         "developer-guide/api-reference/introduction",
         "developer-guide/api-reference/authentication",
-        "developer-guide/api-reference/overview",
         {
           "icon": "id-badge",
           "group": "Accounts",
@@ -152,35 +191,41 @@
           "icon": "upload",
           "group": "Uploading Data",
           "pages": [
-            "developer-guide/api-reference/data-assets/create-a-new-data-asset",
-            "developer-guide/api-reference/data-assets/assign-acl-items-to-data-asset"
+            "developer-guide/api-reference/data-assets/create-a-new-data-asset"
           ]
         },
         {
           "icon": "download",
           "group": "Reading Data",
           "pages": [
-            "developer-guide/api-reference/data-assets/get-my-data-assets",
+            "developer-guide/api-reference/data-assets/get-received-data-assets",
+            "developer-guide/api-reference/data-assets/get-created-data-assets",
             "developer-guide/api-reference/data-assets/get-data-asset-by-id",
-            "developer-guide/api-reference/data-assets/download-data-asset-by-id",
-            "developer-guide/api-reference/data-assets/get-created-data-assets"
+            "developer-guide/api-reference/data-assets/download-data-asset-by-id"
           ]
         },
         {
           "icon": "pen-nib",
           "group": "Updating Data",
           "pages": [
-            "developer-guide/api-reference/data-assets/update-data-asset-by-id",
+            "developer-guide/api-reference/data-assets/update-data-asset-by-id"
+          ]
+        },
+        {
+          "icon": "boxes-packing",
+          "group": "Data Access Control",
+          "pages": [
+            "developer-guide/api-reference/data-assets/share-data-asset-by-id",
+            "developer-guide/api-reference/data-assets/assign-acl-items-to-data-asset",
             "developer-guide/api-reference/data-assets/update-acl-items-to-data-asset",
-            "developer-guide/api-reference/data-assets/update-data-asset-metadata-by-id"
+            "developer-guide/api-reference/data-assets/delete-assigned-role-by-acl"
           ]
         },
         {
           "icon": "eraser",
           "group": "Deleting Data",
           "pages": [
-            "developer-guide/api-reference/data-assets/delete-data-asset-by-id",
-            "developer-guide/api-reference/data-assets/delete-assigned-role-by-acl"
+            "developer-guide/api-reference/data-assets/delete-data-asset-by-id"
           ]
         },
         {
@@ -193,26 +238,31 @@
             "developer-guide/api-reference/data-models/get-data-model-by-id",
             "developer-guide/api-reference/data-models/update-data-model"
           ]
-        },
-        {
-          "icon": "boxes-packing",
-          "group": "Access Control",
-          "pages": [
-            "developer-guide/api-reference/data-assets/get-received-data-assets",
-            "developer-guide/api-reference/data-assets/share-data-asset-by-id"
-          ]
         }
       ]
     },
     {
-      "group": "Usecases",
+      "group": "Go SDK",
       "pages": [
-        "usecases/introduction",
-        "usecases/artificial-intelligence",
-        "usecases/financial",
-        "usecases/governance",
-        "usecases/gaming",
-        "usecases/loyalty-programs"
+        "developer-guide/go-sdk/quickstart",
+        "developer-guide/go-sdk/data-models",
+        "developer-guide/go-sdk/data-assets"
+      ]
+    },
+    {
+      "group": "Javascript SDK",
+      "pages": [
+        "developer-guide/javascript-sdk/quickstart",
+        "developer-guide/javascript-sdk/data-models",
+        "developer-guide/javascript-sdk/data-assets"
+      ]
+    },
+    {
+      "group": "Rust SDK",
+      "pages": [
+        "developer-guide/rust-sdk/quickstart",
+        "developer-guide/rust-sdk/data-models",
+        "developer-guide/rust-sdk/data-assets"
       ]
     }
   ],
@@ -236,5 +286,8 @@
       "source": "/developer-guide/api-reference-v3/:slug*",
       "destination": "/developer-guide/api-reference/:slug*"
     }
-  ]
+  ],
+  "primaryTab": {
+    "name": "Home"
+  }
 }

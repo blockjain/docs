@@ -1,0 +1,322 @@
+---
+title: Rust SDK
+---
+
+The Gateway Compute SDK provides a comprehensive toolkit for building and executing garbled circuits. This SDK enables developers to create privacy-preserving computations with type safety and efficient execution.
+
+## Installation
+
+Add the SDK to your Rust project:
+
+```toml
+[dependencies]
+gateway-compute = { git = "https://github.com/Gateway-DAO/gvm" }
+```
+
+## The `#[encrypted]` macro
+
+The #[encrypted] macro transforms regular Rust code into garbled circuit operations. It supports:
+
+### 1. Arithmetic Operations
+
+```rust
+#[encrypted(execute)]
+fn arithmetic_ops(a: u8, b: u8) -> u8 {
+    // Basic arithmetic
+    let sum = a + b;
+    let diff = a - b;
+    let product = a * b;
+    let quotient = a / b;
+    let remainder = a % b;
+    
+    // Compound assignments
+    let mut x = a;
+    x += b;  // Add and assign
+    x *= b;  // Multiply and assign
+    x /= b;  // Divide and assign
+    x %= b;  // Remainder and assign
+    
+    sum
+}
+```
+
+### 2. Comparison Operations
+
+```rust
+#[encrypted(execute)]
+fn comparison_ops(a: u32, b: u32) -> bool {
+    // All comparison operators are supported
+    let eq = a == b;
+    let neq = a != b;
+    let gt = a > b;
+    let gte = a >= b;
+    let lt = a < b;
+    let lte = a <= b;
+    
+    gt
+}
+```
+
+### 3. Bitwise Operations
+
+```rust
+#[encrypted(execute)]
+fn bitwise_ops(a: u8, b: u8) -> u8 {
+    let and = a & b;      // Bitwise AND
+    let or = a | b;       // Bitwise OR
+    let xor = a ^ b;      // Bitwise XOR
+    let not = !a;         // Bitwise NOT
+    
+    // Compound assignments
+    let mut x = a;
+    x &= b;  // AND and assign
+    x |= b;  // OR and assign
+    x ^= b;  // XOR and assign
+    
+    and
+}
+```
+
+### 4. Control Flow
+
+```rust
+#[encrypted(execute)]
+fn control_flow(value: u8) -> u8 {
+    // If-else expressions (must include else branch)
+    let result = if value > 5 {
+        value * 2
+    } else {
+        value + 1
+    };
+
+    // Match expressions with range patterns
+    let category = match value {
+        0 => 0,
+        1..=5 => 1,    // Inclusive range
+        6..10 => 2,    // Exclusive range
+        _ => 3,        // Default case
+    };
+    
+    // Range checking with if-let
+    if let 1..=100 = value {
+        value
+    } else {
+        0
+    }
+}
+```
+
+### 5. Constants and Literals
+
+```rust
+#[encrypted(execute)]
+fn constants(value: u32) -> u32 {
+    // Integer literals are automatically converted to circuit constants
+    let x = value + 42;
+    let y = value * 100;
+    
+    // Boolean literals
+    let is_valid = true;
+    let is_invalid = false;
+    
+    if is_valid {
+        x
+    } else {
+        y
+    }
+}
+```
+
+## Type System
+
+The SDK provides encrypted versions of standard integer types:
+
+```rust
+use gateway_compute::prelude::*;
+
+// Boolean and small integers
+type GarbledBoolean = GarbledUint<1>;
+type GarbledUint2 = GarbledUint<2>;
+type GarbledUint4 = GarbledUint<4>;
+
+// Standard width integers
+type GarbledUint8 = GarbledUint<8>;
+type GarbledUint16 = GarbledUint<16>;
+type GarbledUint32 = GarbledUint<32>;
+type GarbledUint64 = GarbledUint<64>;
+type GarbledUint128 = GarbledUint<128>;
+
+// Signed integers
+type GarbledInt8 = GarbledInt<8>;
+type GarbledInt16 = GarbledInt<16>;
+type GarbledInt32 = GarbledInt<32>;
+type GarbledInt64 = GarbledInt<64>;
+type GarbledInt128 = GarbledInt<128>;
+```
+
+## Circuit Building
+
+While the `#[encrypted]` macro is recommended, you can also build circuits manually:
+
+```rust
+use gateway_compute::prelude::*;
+
+fn build_manual_circuit(a: &GarbledUint32, b: &GarbledUint32) -> GarbledBoolean {
+    let mut builder = CircuitBuilder::default();
+    
+    let a_input = builder.input(a);
+    let b_input = builder.input(b);
+    
+    // Manual circuit construction
+    let sum = builder.add(&a_input, &b_input);
+    let threshold = builder.input(&100u32.into());
+    let result = builder.gt(&sum, &threshold);
+    
+    builder
+        .compile_and_execute::<1>(&vec![result].into())
+        .expect("Circuit execution failed")
+}
+```
+
+## Network Protocol
+
+The SDK implements a two-party computation protocol with distinct roles:
+
+### Garbler
+
+```rust
+use gateway_compute::prelude::*;
+
+fn garbler_protocol(circuit: &Circuit, input: &[bool]) -> Result<(), anyhow::Error> {
+    // Initialize garbler
+    let (mut garbler, initial_message) = GatewayGarbler::start(circuit, input)?;
+    
+    // Send initial message to evaluator
+    send_message(&initial_message);
+    
+    while !garbler.is_complete() {
+        // Receive message from evaluator
+        let message = receive_message();
+        
+        // Process message and generate response
+        let (next_garbler, response) = garbler.next(&message)?;
+        garbler = next_garbler;
+        
+        // Send response to evaluator
+        send_message(&response);
+    }
+    
+    Ok(())
+}
+```
+
+### Evaluator
+
+```rust
+use gateway_compute::prelude::*;
+
+fn evaluator_protocol(circuit: &Circuit, input: &[bool]) -> Result<Vec<bool>, anyhow::Error> {
+    // Initialize evaluator
+    let mut evaluator = GatewayEvaluator::new(circuit, input)?;
+    
+    while !evaluator.is_complete() {
+        // Receive message from garbler
+        let message = receive_message();
+        
+        // Process message and generate response
+        let (next_evaluator, response) = evaluator.next(&message)?;
+        evaluator = next_evaluator;
+        
+        // Send response to garbler
+        send_message(&response);
+    }
+    
+    // Get final message and compute output
+    let final_message = receive_message();
+    evaluator.output(&final_message)
+}
+```
+
+## Supported Operations
+
+The SDK supports a wide range of operations on encrypted types:
+
+### Arithmetic Operations
+
+- Addition (`+`)
+- Subtraction (`-`)
+- Multiplication (`*`)
+- Division (`/`)
+- Remainder (`%`)
+
+### Bitwise Operations
+
+- AND (`&`)
+- OR (`|`)
+- XOR (`^`)
+- NOT (`!`)
+- NAND
+- NOR
+- XNOR
+
+### Comparison Operations
+
+- Equal (`==`)
+- Not Equal (`!=`)
+- Greater Than (`>`)
+- Less Than (`<`)
+- Greater Than or Equal (`>=`)
+- Less Than or Equal (`<=`)
+
+### Control Flow
+
+- Conditional execution (if/else)
+
+## Error Handling
+
+The SDK uses `anyhow::Result` for error handling:
+
+```rust
+use anyhow::Result;
+
+fn process_encrypted_data() -> Result<()> {
+    let circuit = /* ... */;
+    let input = /* ... */;
+    
+    let evaluator = GatewayEvaluator::new(&circuit, &input)?;
+    // ... handle the rest of the computation
+    Ok(())
+}
+```
+
+## Best Practices
+
+1. Use the `#[encrypted]` Macro
+
+    - Prefer the macro over manual circuit building
+    - Enables natural Rust syntax
+    - Provides compile-time checks
+    - Automatically handles constant injection
+
+2. Type Selection
+
+    - Use the smallest bit width that satisfies your needs
+    - Consider unsigned types when possible
+
+3. Control Flow
+
+    - Always provide else branches in if expressions
+    - Use match expressions for complex conditionals
+    - Leverage range patterns for value categorization
+
+4. Performance Optimization
+
+    - Minimize circuit depth when possible
+    - Reuse intermediate results
+    - Consider batching operations
+
+5. Error Handling
+
+    - Use Result types for fallible operations
+    - Handle potential circuit compilation errors
+    - Validate inputs before encryption

@@ -1,0 +1,150 @@
+---
+title: Getting Started
+---
+
+The Gateway Rust SDK provides native Rust bindings for interacting with Gateway's encrypted storage and data sharing protocol. This SDK allows Rust developers to seamlessly integrate privacy-preserving data sharing capabilities into their applications.
+
+## Installation
+
+Add the SDK to your `Cargo.toml`:
+
+```toml
+[dependencies]
+gtw-rs-sdk = "0.1.0"
+tokio = { version = "1.0", features = ["full"] }
+```
+
+## Basic Setup
+
+```rust
+use gtw_rs_sdk::GtwSDK;
+
+#[tokio::main]
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    let mut gtw_sdk = GtwSDK::new().build().await?;
+    Ok(())
+}
+```
+
+## Authentication Methods
+
+The SDK supports two authentication methods:
+
+- Wallet-based authentication using a private key
+- JWT-based authentication
+
+Choose the method that best suits your application's needs:
+
+### Wallet-Based Authentication
+
+```rust
+use gtw_rs_sdk::{GtwSDK, WalletType};
+
+#[tokio::main]
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    let mut gtw_sdk = GtwSDK::new().build().await?;
+
+    // Authenticate with a Sui wallet
+    gtw_sdk.with_wallet(
+        WalletType::Sui,
+        "your-private-key"
+    )?;
+
+    // Verify authentication
+    match gtw_sdk.account.get_me().await {
+        Ok(account_info) => {
+            println!("Authenticated as: {}", account_info.username);
+            println!("DID: {}", account_info.did);
+        }
+        Err(e) => eprintln!("Authentication failed: {}", e),
+    }
+
+    Ok(())
+}
+```
+
+### JWT Authentication
+
+```rust
+use gtw_rs_sdk::GtwSDK;
+use std::env;
+
+#[tokio::main]
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    let mut gtw_sdk = GtwSDK::new().build().await?;
+
+    // Load JWT from environment
+    let token = env::var("BEARER_TOKEN")
+        .expect("BEARER_TOKEN not set");
+
+    gtw_sdk.with_bearer_token(&token)?;
+
+    Ok(())
+}
+```
+
+## Account Management
+
+### Profile Information
+
+```rust
+#[tokio::main]
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    let mut gtw_sdk = GtwSDK::new().build().await?;
+
+    match gtw_sdk.account.get_me().await {
+        Ok(account_info) => {
+            println!("Account Information:");
+            println!("  Username: {}", account_info.username);
+            println!("  DID: {}", account_info.did);
+            println!("  Storage Size: {}", account_info.storage_size);
+
+            if let Some(pic) = account_info.profile_picture {
+                println!("  Profile Picture: {}", pic);
+            }
+
+            println!("\nConnected Wallets:");
+            for wallet in account_info.wallet_addresses {
+                println!("  {} Wallet: {}",
+                    wallet.chain,
+                    wallet.address
+                );
+            }
+        }
+        Err(e) => eprintln!("Error: {}", e),
+    }
+
+    Ok(())
+}
+```
+
+### Wallet Management
+
+```rust
+#[tokio::main]
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    let mut gtw_sdk = GtwSDK::new().build().await?;
+
+    // Add a new wallet
+    match gtw_sdk
+        .account
+        .wallet
+        .add("0xa43B0b6dEB096f4dF07a0a122F3Ab824e9118D9D")
+        .await
+    {
+        Ok(response) => {
+            println!("Wallet added successfully");
+            println!("Chain: {}", response.chain);
+            println!("Address: {}", response.address);
+        }
+        Err(e) => eprintln!("Failed to add wallet: {}", e),
+    }
+
+    Ok(())
+}
+```
+
+## Next Steps
+
+- Learn about [Data Assets](./data-assets)
+- Explore [Data Models](./data-models)

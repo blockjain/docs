@@ -4,9 +4,13 @@ title: Gateway Protocol API
 description:
 ---
 
-The Gateway Protocol API (the "API") gives developers access to all aspects of the PDA. Developers can use the API to [Authenticate](/developer-guide/api-reference/auth/authenticate-account) users, define [Data Models](/developer-guide/api-reference/data-models/get-data-models), and essential [Create](/developer-guide/api-reference/data-assets/create-a-new-data-asset), [Read](/developer-guide/api-reference/data-assets/get-my-data-assets), [Update](/developer-guide/api-reference/data-assets/update-data-asset-by-id), and [Delete](/developer-guide/api-reference/data-assets/delete-data-asset-by-id) functionality.
+## Gateway API
+
+The Gateway Protocol API ("API") gives developers access to all aspects of the PDA. Developers can use the API to [Authenticate](/developer-guide/api-reference/auth/authenticate-account) users, define [Data Models](/developer-guide/api-reference/data-models/get-data-models), and essential [Create](/developer-guide/api-reference/data-assets/create-a-new-data-asset), [Read](/developer-guide/api-reference/data-assets/get-my-data-assets), [Update](/developer-guide/api-reference/data-assets/update-data-asset-by-id), and [Delete](/developer-guide/api-reference/data-assets/delete-data-asset-by-id) functionality.
 
 The API is a RESTful API and can be accessed via the [Swagger documentation](https://api.gateway.tech/swagger/index.html) and the documentation on this site directly.
+
+### Postman Collection
 
 Check out the Postman collection
 [here](https://www.postman.com/mygateway-xyz/workspace/gateway-public-api-v3/collection/38031245-c8c5dcd0-3c12-46e7-aa79-c2afc4234b37?action=share&creator=38031245&active-environment=38031245-b905a3a2-95ca-4fab-af34-101923ba14d3)
@@ -14,3 +18,57 @@ to get started with the API or use the button below to open the collection direc
 App.
 
 [<img src="https://run.pstmn.io/button.svg" alt="Run In Postman" />](https://app.getpostman.com/run-collection/38031245-c8c5dcd0-3c12-46e7-aa79-c2afc4234b37?action=collection%2Ffork&source=rip_markdown&collection-url=entityId%3D38031245-c8c5dcd0-3c12-46e7-aa79-c2afc4234b37%26entityType%3Dcollection%26workspaceId%3D02da6980-5a8d-40d5-872e-e98dd3895870)
+
+---
+
+## Keep In Mind
+
+Here are some things you need to know before you start using the API:
+
+- All the data that you would be storing on the Gateway Protocol is stored as Data Assets.
+- The data is encrypted as soon as the data asset is issued. Encryption part of the creation process. At all times, the data is fully encrypted. Only the data owner can decrypt the data which is a process that happens entirely on the client-side.
+- It is strongly encouraged to have a (Data Model)[/core-concepts/data-models] in place before you start using the API. The Data Model is a schema that defines the structure of the data that you would be storing on the Gateway Protocol.
+- Once data assets are issued to your users, you can start interacting with the data assets using the API for requesting data, updating data, and more.
+
+## Data Model Structure
+
+Data Models are structured in JSON format. JSON Schema is fully supported and there are additional contextual fields added to help make the data more readable and useable. Each Data Model is signed with the creator's signing key to establish provenance and verifiability.
+
+```json
+{
+  "type": "object",
+  "title": "Gateway ID",
+  "default": {},
+  "required": [],
+  "properties": {
+    "name": {
+      "type": "string",
+      "title": "Name"
+    },
+    "email": {
+      "type": "string",
+      "title": "E-mail"
+    },
+    "avatar": {
+      "type": "string",
+      "title": "Avatar",
+      "contentMediaType": "image/png"
+    },
+    "username": {
+      "type": "string",
+      "title": "Username"
+    },
+    "evmWallet": {
+      "type": "string",
+      "title": "EVM Wallet"
+    },
+    "solanaWallet": {
+      "type": "string",
+      "title": "Solana Wallet"
+    }
+  },
+  "additionalProperties": false
+}
+```
+
+> Read more about creating Data Models with the API [here](/developer-guide/api-reference/data-models/create-data-model).

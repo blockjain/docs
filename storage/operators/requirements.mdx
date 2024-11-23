@@ -1,0 +1,221 @@
+---
+title: Requirements
+---
+
+Operating an Encrypted Data Vault (EDV) node demands careful consideration of hardware specifications to ensure reliable performance, data security, and network stability. This guide outlines the necessary hardware components and their importance in maintaining a robust EDV node.
+
+## System Specifications
+
+### CPU Requirements
+
+The computational demands of an EDV node primarily come from cryptographic operations and high-volume data transactions. Processors must handle concurrent encryption processes, data validation, and network communications efficiently.
+
+| Component    | Minimum                   | Recommended                                                      |
+| ------------ | ------------------------- | ---------------------------------------------------------------- |
+| Cores        | 4-core processor          | 8-core processor                                                 |
+| Architecture | x86_64 with SHA extension | Intel: Ice Lake or later; AMD: Zen or later; Apple: M1 or higher |
+
+Modern processors with SHA extension support significantly improve performance by hardware-accelerating cryptographic operations. When selecting a CPU, consider not only the core count but also the processor's cryptographic instruction support. The recommended specifications ensure optimal performance for production environments where multiple concurrent operations are common.
+
+### Memory (RAM)
+
+Memory plays a crucial role in EDV operations, particularly in managing active connections, caching frequently accessed data, and handling concurrent data processing tasks. The amount of RAM directly impacts the node's ability to serve requests efficiently and maintain system responsiveness.
+
+| Type        | Specification      | Purpose                 |
+| ----------- | ------------------ | ----------------------- |
+| Minimum     | 16GB RAM           | Basic operations        |
+| Recommended | 32GB RAM or higher | Production environments |
+
+Memory requirements scale with operational load. Production environments benefit from additional RAM by maintaining larger cache sizes and handling more concurrent operations. The system uses memory for temporary storage during encryption operations, file transfers, and maintaining connection states with other nodes in the network.
+
+### Storage
+
+Storage configuration significantly influences EDV performance and reliability. The system requires fast, reliable storage to handle continuous read/write operations while maintaining data integrity.
+
+| Storage Type | Specifications  | Notes                   |
+| ------------ | --------------- | ----------------------- |
+| Minimum      | 500GB HDD/SSD   | Basic operations        |
+| Recommended  | 500GB+ NVMe SSD | Production environments |
+
+NVMe SSDs are strongly recommended for production environments due to their superior I/O performance and lower latency.
+
+The Gateway Protocol implements native data sharding with erasure coding, making traditional RAID configurations unnecessary and potentially detrimental to performance. Storage speed comparison:
+
+| Storage Type | Speed Range        | Capacity | Usage           |
+| ------------ | ------------------ | -------- | --------------- |
+| HDDs         | 7,200 - 15,000 RPM | 500GB+   | Not recommended |
+| SSDs (NVMe)  | 1.5GB/s - 3.0GB/s  | 500GB+   | Recommended     |
+
+## Network Requirements
+
+Network configuration directly impacts the EDV node's ability to communicate with other nodes and serve client requests. A stable, high-bandwidth connection ensures reliable data transfer and system responsiveness.
+
+### Authentication Requirements
+
+Node Operators must generate a Certificate Signing Request (CSR) and obtain an mTLS certificate from the GatewayLabs team before connecting to the Storage network. Follow these steps:
+
+#### 1. Install OpenSSL
+
+```bash
+# Ubuntu/Debian
+sudo apt-get update && sudo apt-get install -y openssl
+
+# CentOS/RHEL
+sudo yum install -y openssl
+
+# macOS (using Homebrew)
+brew install openssl
+```
+
+#### 2. Generate Key and CSR
+Create a new file called `generate_cert.sh` with the provided function:
+
+<Accordion title="generate_cert.sh">
+```bash
+generate_cert() {
+    local filename=$1
+    local san_list=$2
+
+    client_key="${output_dir}/${filename}.key"
+    client_csr="${output_dir}/${filename}.csr"
+
+    echo "Generating client certificates for $filename"
+    [ -n "$san_list" ] && echo "and SANs $san_list..."
+
+    openssl ecparam -name prime256v1 -genkey -noout -out "$client_key"
+
+    # Prepare SANs in the correct format
+    san_config=""
+    dns_index=1
+    ip_index=1
+    IFS=',' read -r -a sans <<< "$san_list"
+
+    # Extract the first SAN for CN
+    first_dns=""
+    first_ip=""
+
+    for san in "${sans[@]}"; do
+        if [[ "$san" =~ ^https:// || "$san" =~ ^http:// ]]; then
+            # Remove http/https and treat it as DNS
+            domain=$(echo "$san" | sed -E 's|https?://||')
+            san_config+="DNS:$domain,"
+            [ -z "$first_dns" ] && first_dns="$domain"
+        else
+            # Treat it as an IP address
+            san_config+="IP:$san,"
+            [ -z "$first_ip" ] && first_ip="$san"
+        fi
+    done
+
+    # Remove the trailing comma
+    san_config=${san_config%,}
+
+    # Write SANs to a temporary ext file
+    ext_file=$(mktemp)
+    echo -e "basicConstraints=CA:FALSE\nsubjectAltName=$san_config" > "$ext_file"
+
+    # Use the first DNS as CN, or fallback to first IP if no DNS is found
+    if [ -n "$first_dns" ]; then
+        cn_value="$first_dns"
+    else
+        cn_value="$first_ip"
+    fi
+
+    # Generate client CSR
+    openssl req -new -key "$client_key" -out "$client_csr" -subj "/CN=$cn_value"
+
+    echo "Client certificate generation completed for $filename."
+
+    # Clean up
+    rm -f "$ext_file"
+}
+```
+</Accordion>
+
+Make the script executable and run it with your node name and URLs/IPs:
+```bash
+chmod +x generate_cert.sh
+source generate_cert.sh
+
+# Generate certificate for your node
+# Syntax: generate_cert <node-name> "<comma-separated-urls-and-ips>"
+generate_cert mynode "https://node1.example.com,192.168.1.100"
+```
+
+<Note>
+The second parameter should be a comma-separated list of:
+- URLs where your node will be accessible (e.g., `https://node1.example.com`)
+- IP addresses where your node will be accessible (e.g., `192.168.1.100`)
+
+Example Calls:
+```bash
+# Node with one domain
+generate_cert mynode "https://node1.example.com"
+
+# Node with domain and IP
+generate_cert mynode "https://node1.example.com,192.168.1.100"
+
+# Node with multiple domains and IPs
+generate_cert mynode "https://node1.example.com,https://alt.example.com,192.168.1.100,10.0.0.1"
+```
+</Note>
+
+#### 3. Submit CSR to Gateway
+
+Contact the Gateway team through any of the following channels and provide your CSR file (`mynode.csr`):
+- Discord: [Gateway Community](https://discord.gg/zjHJZRZzts)
+- X: [@gateway_xyz](https://x.com/gateway_xyz)
+- Email: support@mygateway.xyz
+
+<Note>
+  Certificate issuance is currently a manual process but will be automated in a future update.
+</Note>
+
+#### 4. Receive and Save Certificates
+After review, the Gateway team will provide you with:
+- Gateway's CA certificate (`ca.crt`)
+- Your signed node certificate (`node.crt`)
+- Your node key (`node.key`)
+
+<Warning>
+Keep your private key (`node.key`) secure and never share it. The key should be readable only be the user running the EDV node.
+</Warning>
+
+### Bandwidth Specifications
+
+Production environments require significant bandwidth to handle concurrent data transfers and node communication. The minimum recommended bandwidth is 1 Gbps, with 10 Gbps recommended for high-performance operations. This capacity ensures smooth handling of large file transfers and intensive I/O operations.
+
+### Required Ports
+
+EDV nodes require specific ports to be accessible for different types of communication:
+
+| Service   | Port    	| Description										|
+| --------- | ---------	| -------------------------------------------------	|
+| HTTP      | 8080		| Primary data transfer and API communication		|
+| gRPC      | 18080		| Inter-node communication and system operations	|
+| Metrics	| 1234		| Performance monitoring and metrics collection	|
+
+
+Network stability is crucial for maintaining consistent node operation. Implement appropriate firewall rules while ensuring these ports remain accessible. Monitor network performance regularly to identify and address any connectivity issues promptly.
+
+## Scaling Considerations
+
+Understanding scaling requirements helps in planning hardware upgrades and maintaining optimal performance as network demands grow.
+
+### Vertical Scaling
+
+When scaling vertically, focus on addressing specific performance bottlenecks.
+
+- CPU upgrades provide better handling of concurrent cryptographic operations.
+- Memory expansion improves system responsiveness and caching capabilities.
+- Storage upgrades, particularly moving to faster NVMe drives or adding capacity, help manage increasing data volumes efficiently.
+
+### Infrastructure Planning
+
+Infrastructure planning should account for both immediate and future needs. Consider power supply requirements, cooling solutions, and physical space when planning hardware deployments. Monitor system metrics to identify potential bottlenecks before they impact performance. Regular evaluation of resource utilization helps in planning timely upgrades.
+
+## Planning for Production
+
+When preparing for production deployment, consider the complete operating environment. Ensure adequate cooling for high-performance components, especially in data center environments. Implement appropriate power backup solutions to maintain system availability. Monitor component temperatures and system performance metrics to maintain optimal operating conditions.
+
+Regular hardware maintenance and proactive monitoring help prevent system failures and maintain consistent performance. Document all hardware specifications, configurations, and maintenance procedures for reference and troubleshooting.

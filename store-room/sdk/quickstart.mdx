@@ -1,0 +1,203 @@
+---
+title: Quickstart
+description: "Let's get you started with Gateway Protocol in a few minutes."
+---
+
+In this JavaScript quickstart we will learn how to:
+
+- Install the Gateway SDK
+- Creating a Gateway Client
+- Interacting with the Protocol for various operations
+
+Here is the Github repository for this example code: [Gateway Protocol SDK Quickstart](https://github.com/Gateway-DAO/sdk-scripts-example/tree/main/src/v2/scripts)
+
+<Steps>
+  <Step title="Install @gateway-dao/sdk">
+
+First begin by installing the `@gateway-dao/sdk` package.
+
+<CodeGroup>
+
+```bash bun
+bun add @gateway-dao/sdk
+```
+
+```bash npm
+npm install @gateway-dao/sdk
+```
+
+```bash yarn
+yarn add @gateway-dao/sdk
+```
+
+```bash pnpm
+pnpm install @gateway-dao/sdk
+```
+
+</CodeGroup>
+
+</Step>
+
+<Step title="Setup the Gateway Client" >
+
+You will need an API Key and Bearer token to authenticate with the Gateway Protocol.
+You can obtain these from the [Gateway Dashboard](https://gateway.tech/dashboard/).
+
+There are two environments available for the Gateway Protocol API, Testnet and Sandbox Environment. Sandbox Environment is for developers who want to understand the protocol and play around with it. Both environments have similar developer experience.
+
+| Environment      | Testnet                               | Sandbox                                       |
+| ---------------- | ------------------------------------- | --------------------------------------------- |
+| API Endpoint URL | https://protocol.gateway.tech/graphql | https://sandbox.protocol.gateway.tech/graphql |
+| Dashboard URL    | https://gateway.tech/dashboard/       | https://sandbox.gateway.tech/dashboard/       |
+| Explorer URL     | https://gateway.tech/explorer         | https://sandbox.gateway.tech/explorer         |
+
+<Note>
+  If you are planning to use the **Testnet Environment**, you will have to
+  **Create an Organization** on the [Gateway
+  Dashboard](https://gateway.tech/dashboard/) and then you would be able to get
+  Developer Access to the Testnet Environment.
+
+For creating an orgnaization click on your profile icon on the bottom left corner and then click on "Create Organization". Fill the details and click on "Create Organization".
+
+After creating the organization, click on the organization name and then click on "Developer Access" and you will be able to find your API Key and Bearer Token.
+
+</Note>
+
+<Note>
+  If you are planning to use the **Sandbox Environment**, you just need to
+  create your account on the [Gateway
+  Dashboard](https://sandbox.gateway.tech/dashboard/) and then you would be able
+  to get Developer Access to the Sandbox Environment.
+</Note>
+
+To setup the gateway client we will authenticate with a bearer-token and a Api key as follows:
+
+```ts Node.js
+import { Gateway } from "@gateway-dao/sdk";
+
+const gatewayInstance = new Gateway({
+  apiKey: "your-api-key", // Replace with your API Key
+  token: "your-token", // Replace with your Bearer Token
+  url: "https://protocol.mygateway.xyz/graphql",
+  // this is for the testnet environment
+});
+```
+
+<Warning>
+  Make sure you add token without "Bearer" word as we add Bearer automatically
+  when you make request. Else it will give you Unauthorized error even if your
+  token is correct.
+</Warning>
+
+<Warning>
+  Do not share your authentication token with people you don’t trust. This gives
+  the user control over your account and they will be able to manage PDAs (and
+  more) with it. Use environment variables to keep it safe.
+</Warning>
+
+</Step>
+
+<Step title="Interacting with the Gateway Protocol" >
+
+Now that we have setup the Gateway Client, we can interact with the Gateway Protocol for various operations.
+
+# Create a Data Model
+
+```ts Node.js
+import { Gateway } from "@gateway-dao/sdk";
+
+const gatewayInstance = new Gateway({
+  apiKey
+  token
+  url
+});
+
+
+async function main() {
+  try {
+    const { createDataModel } = await gatewayInstance.dataModel.createDataModel({
+      title: "Your Data Model Title",
+      description: "A brief description of your data model.",
+      permissions: "ALL",
+      tags: ["Tag1", "Tag2"],
+      schema: {
+        type: "object",
+        default: {},
+        title: "Your Data Model Title",
+        required: ["field1", "field2", "field3"],
+        properties: {
+          field1: {
+            type: "string",
+            title: "Field 1",
+          },
+          field2: {
+            type: "number",
+            title: "Field 2",
+            default: 0,
+          },
+          field3: {
+            type: "boolean",
+            title: "Field 3",
+            default: false,
+          },
+        },
+      },
+    });
+    console.log("Data model created:", createDataModel);
+    console.log("Your Data model ID:", createDataModel.id);
+    return createDataModel;
+  } catch (error) {
+    console.log(error); // Can log it for debugging
+  }
+}
+
+main();
+```
+
+Once you have created a Data Model, you can use its Data Model ID to start issuing Personal Data Assets (PDAs) to users.
+
+## Create a PDA
+
+You can issue a Personal Data Asset (PDA) using the Data Model ID you created earlier.
+You can also choose an already existing Data Model ID to issue a PDA. Find the Data Model you require from the [Gateway Explorer](https://mygateway.xyz/explorer/data-models).
+
+Here is an example of how you can issue a PDA:
+
+```ts Node.js
+import { Gateway, UserIdentifierType } from "@gateway-dao/sdk";
+
+const gateway = new Gateway({
+  apiKey: "your-api-key",
+  token: "your-token",
+  url: "https://protocol.mygateway.xyz/graphql",
+});
+
+async function main() {
+  try {
+    let obj = {
+      dataModelId: "uuid-here",
+      description: "test",
+      title: "test",
+      claim: {
+        gatewayUse: "test",
+      },
+      owner: {
+        type: UserIdentifierType.GATEWAY_ID,
+        value: "test",
+      },
+    };
+    const { createPDA } = await gateway.pda.createPDA(obj);
+    console.log(createPDA);
+  } catch (error) {
+    console.log(error); // Can log it for debugging
+  }
+}
+
+main();
+```
+
+</Step>
+
+Congratulations! You have successfully created your first Data Model and issued a Personal Data Asset using that Data Model.
+
+</Steps>
