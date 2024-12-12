@@ -10,12 +10,12 @@ Add the SDK to your Rust project:
 
 ```toml
 [dependencies]
-gateway-compute = { git = "https://github.com/Gateway-DAO/gvm" }
+gateway-compute = { git = "https://github.com/GatewayLabs/circuit-sdk" }
 ```
 
 ## The `#[encrypted]` macro
 
-The #[encrypted] macro transforms regular Rust code into garbled circuit operations. It supports:
+The #\[encrypted] macro transforms regular Rust code into garbled circuit operations. It supports:
 
 ### 1. Arithmetic Operations
 
@@ -243,34 +243,49 @@ The SDK supports a wide range of operations on encrypted types:
 
 ### Arithmetic Operations
 
-- Addition (`+`)
-- Subtraction (`-`)
-- Multiplication (`*`)
-- Division (`/`)
-- Remainder (`%`)
+* Addition (`+`)
+
+* Subtraction (`-`)
+
+* Multiplication (`*`)
+
+* Division (`/`)
+
+* Remainder (`%`)
 
 ### Bitwise Operations
 
-- AND (`&`)
-- OR (`|`)
-- XOR (`^`)
-- NOT (`!`)
-- NAND
-- NOR
-- XNOR
+* AND (`&`)
+
+* OR (`|`)
+
+* XOR (`^`)
+
+* NOT (`!`)
+
+* NAND
+
+* NOR
+
+* XNOR
 
 ### Comparison Operations
 
-- Equal (`==`)
-- Not Equal (`!=`)
-- Greater Than (`>`)
-- Less Than (`<`)
-- Greater Than or Equal (`>=`)
-- Less Than or Equal (`<=`)
+* Equal (`==`)
+
+* Not Equal (`!=`)
+
+* Greater Than (`>`)
+
+* Less Than (`<`)
+
+* Greater Than or Equal (`>=`)
+
+* Less Than or Equal (`<=`)
 
 ### Control Flow
 
-- Conditional execution (if/else)
+* Conditional execution (if/else)
 
 ## Error Handling
 
@@ -293,30 +308,40 @@ fn process_encrypted_data() -> Result<()> {
 
 1. Use the `#[encrypted]` Macro
 
-    - Prefer the macro over manual circuit building
-    - Enables natural Rust syntax
-    - Provides compile-time checks
-    - Automatically handles constant injection
+   * Prefer the macro over manual circuit building
+
+   * Enables natural Rust syntax
+
+   * Provides compile-time checks
+
+   * Automatically handles constant injection
 
 2. Type Selection
 
-    - Use the smallest bit width that satisfies your needs
-    - Consider unsigned types when possible
+   * Use the smallest bit width that satisfies your needs
+
+   * Consider unsigned types when possible
 
 3. Control Flow
 
-    - Always provide else branches in if expressions
-    - Use match expressions for complex conditionals
-    - Leverage range patterns for value categorization
+   * Always provide else branches in if expressions
+
+   * Use match expressions for complex conditionals
+
+   * Leverage range patterns for value categorization
 
 4. Performance Optimization
 
-    - Minimize circuit depth when possible
-    - Reuse intermediate results
-    - Consider batching operations
+   * Minimize circuit depth when possible
+
+   * Reuse intermediate results
+
+   * Consider batching operations
 
 5. Error Handling
 
-    - Use Result types for fallible operations
-    - Handle potential circuit compilation errors
-    - Validate inputs before encryption
+   * Use Result types for fallible operations
+
+   * Handle potential circuit compilation errors
+
+   * Validate inputs before encryption
