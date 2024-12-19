@@ -2,11 +2,12 @@
 title: Examples
 ---
 
-This page contains practical examples of using Gateway's garbled circuits for privacy-preserving computations. For more examples and the complete source code, visit our [GitHub repository](https://github.com/Gateway-DAO/gvm/tree/main/compute/examples).
+This page contains practical examples of using Gateway's garbled circuits for privacy-preserving computations. For more examples and the complete source code, visit our [GitHub repository](https://github.com/GatewayLabs/gvm/tree/main/compute/examples).
 
 ## Core Examples
 
 ### 1. Discount Eligibility Check
+
 A simple example demonstrating threshold-based decision making:
 
 ```rust
@@ -26,6 +27,7 @@ This example shows:
 - Boolean return types
 
 ### 2. Loan Eligibility Assessment
+
 A complex example showcasing multi-criteria decision making:
 
 ```rust
@@ -76,6 +78,7 @@ This example demonstrates:
 - Categorical output encoding
 
 ### 3. Access Control System
+
 An example showing role-based access control:
 
 ```rust
@@ -106,6 +109,7 @@ This example illustrates:
 - Bitwise operations for permission flags
 
 ## Key Patterns
+
 ### Pattern 1: Range-Based Logic
 
 ```rust
@@ -141,6 +145,7 @@ if condition_a && condition_b {
 ```
 
 ## Testing Examples
+
 Each example can be tested using the provided main function:
 
 ```rust
@@ -149,7 +154,7 @@ fn main() {
     let credit_score = 780_u16;
     let income = 75_u16;
     let debt_ratio = 25_u16;
-    
+
     let eligibility = check_loan_eligibility(credit_score, income, debt_ratio);
     println!("Eligibility Level: {}", eligibility);
 }
@@ -181,4 +186,4 @@ Remember that these examples are running in a secure, encrypted environment wher
 
 ## Additional Resources
 
-You can find more examples in our [GitHub repository](https://github.com/Gateway-DAO/gvm/tree/main/compute/examples). Each example includes detailed comments and test cases. The repository also contains additional utilities and helper functions.
+You can find more examples in our [GitHub repository](https://github.com/GatewayLabs/gvm/tree/main/compute/examples). Each example includes detailed comments and test cases. The repository also contains additional utilities and helper functions.

@@ -4,65 +4,78 @@ title: Integration (SDK & API)
 
 Gateway provides an SDK and gRPC API to interact with Transform Encryption.
 
-<Warning>Key generation (e.g. keypairs, transformation keys) and encryption should be <b>performed on the client</b>.</Warning>
+<Warning>
+  Key generation (e.g. keypairs, transformation keys) and encryption should be{" "}
+  <b>performed on the client</b>.
+</Warning>
 
 ## SDK
 
-| Language | Library |
-| :--- | --- |
-| Rust | https://github.com/Gateway-DAO/gtw-recrypt |
-| Typescript / Javascript | [https://github.com/Gateway-DAO/recrypt-wasm-binding](https://github.com/Gateway-DAO/recrypt-wasm-binding/blob/main/lib/Api256Shim.ts) |
+| Language                | Library                                                                                                                                |
+| :---------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| Rust                    | https://github.com/GatewayLabs/gtw-recrypt                                                                                             |
+| Typescript / Javascript | [https://github.com/GatewayLabs/recrypt-wasm-binding](https://github.com/GatewayLabs/recrypt-wasm-binding/blob/main/lib/Api256Shim.ts) |
 
 <Info>
 Some operations require a `signing_keypair` to provide computation provenance.
 
 For example; <i>Who</i> performed <i>what</i> operation
+
 </Info>
 
 ### 1. Generate Key Pair
+
 Generate a new <b>encryption (private & public) keypair</b>. This will follow standard KPI practices where the public key encrypts data and the corresponding private key decrypts the ciphertext.
+
 <CodeGroup>
   ```rust Rust
   use recrypt_compute::crypto::encryption::recrypt::new_encryption_keypair;
   // or for larger key size:
   // use recrypt_compute::crypto::encryption::recrypt480::new_encryption_keypair;
 
-  let (priv_key, pub_key) = new_encryption_keypair();
-  ```
+let (priv_key, pub_key) = new_encryption_keypair();
 
-  ```typescript TypeScript (WASM)
-  import { Api480 } from "./Api480Shim";
+````
 
-  const { privateKey, publicKey } = Api480.generateKeyPair();
-  ```
+```typescript TypeScript (WASM)
+import { Api480 } from "./Api480Shim";
+
+const { privateKey, publicKey } = Api480.generateKeyPair();
+````
+
 </CodeGroup>
 
 ### 2. Encrypt Data
+
 Encrypt data using a public key.
+
 <CodeGroup>
   ```rust Rust
   use recrypt_compute::crypto::{encryption::recrypt::{new_encryption_keypair, encrypt}, signature::new_signing_keypair};
 
-  let data = "eu falo ingles";
+let data = "eu falo ingles";
 
-  let (_, pubkey) = new_encryption_keypair();
-  let signing_keypair = new_signing_keypair();
+let (\_, pubkey) = new_encryption_keypair();
+let signing_keypair = new_signing_keypair();
 
-  let encryption = encrypt(data.as_bytes(), &pubkey, &signing_keypair).unwrap();
-  ```
+let encryption = encrypt(data.as_bytes(), &pubkey, &signing_keypair).unwrap();
 
-  ```typescript TypeScript (WASM)
-  import { Api480 as api } from "./Api480Shim";
+````
 
-  const data = "eu falo ingles";
+```typescript TypeScript (WASM)
+import { Api480 as api } from "./Api480Shim";
 
-  const buffer = TextEncoder().encode(data);
-  const toPublicKey = api.generateKeyPair().publicKey;
-  const encryptedVal = api.encrypt(buffer, toPublicKey, privateSigningKey);
-  ```
+const data = "eu falo ingles";
+
+const buffer = TextEncoder().encode(data);
+const toPublicKey = api.generateKeyPair().publicKey;
+const encryptedVal = api.encrypt(buffer, toPublicKey, privateSigningKey);
+````
+
 </CodeGroup>
 
 ### 3. Generate Transform Key
+
 Generate a transform key for re-encryption using the sender's private key and the recipient's public key.
 
 The transformation key is a <b>unique primitive that does not expose either crypto artifact</b> in plaintext.
@@ -71,38 +84,40 @@ The transformation key is a <b>unique primitive that does not expose either cryp
   ```rust Rust
   use recrypt_compute::crypto::{encryption::recrypt::{new_encryption_keypair, new_transform_key}, signature::ed25519::new_signing_keypair};
 
-  let (privkey, pubkey) = new_encryption_keypair();
-  let (privkey2, pubkey2) = new_encryption_keypair();
-  let signing_keypair = new_signing_keypair();
+let (privkey, pubkey) = new_encryption_keypair();
+let (privkey2, pubkey2) = new_encryption_keypair();
+let signing_keypair = new_signing_keypair();
 
-  let transformkey = new_transform_key(&privkey, &pubkey2, &signing_keypair);
-  ```
+let transformkey = new_transform_key(&privkey, &pubkey2, &signing_keypair);
 
-  ```typescript TypeScript (WASM)
-  import { Api480 as api } from "./Api480Shim";
+````
 
-  const userKeys = api.generateKeyPair();
-  const deviceKeys = api.generateKeyPair();
+```typescript TypeScript (WASM)
+import { Api480 as api } from "./Api480Shim";
 
-  const transformKey = api.generateTransformKey(userKeys.privateKey, deviceKeys.publicKey, privateSigningKey);
-  ```
+const userKeys = api.generateKeyPair();
+const deviceKeys = api.generateKeyPair();
+
+const transformKey = api.generateTransformKey(userKeys.privateKey, deviceKeys.publicKey, privateSigningKey);
+````
+
 </CodeGroup>
 
 ### 4. Transform Ciphertext
+
 Transforms (re-encrypts) a ciphertext using a transform key.
+
 <CodeGroup>
-  ```rust Rust
-  use recrypt_compute::crypto::encryption::transform;
-  let transformed_data = transform(encryption.clone(), transformkey.clone(), &
-signing_keypair3);
-  ```
-  ```typescript TypeScript (WASM)
-  let signing_keypair = new_signing_keypair();
-  ```
+  ```rust Rust use recrypt_compute::crypto::encryption::transform; let
+  transformed_data = transform(encryption.clone(), transformkey.clone(), &
+  signing_keypair3); ``` ```typescript TypeScript (WASM) let signing_keypair =
+  new_signing_keypair(); ```
 </CodeGroup>
 
 ### 5. Decrypt Data
+
 Decrypts a ciphertext using a private key.
+
 <CodeGroup>
   ```rust Rust
   use recrypt_compute::crypto::encryption::decrypt;
@@ -115,18 +130,19 @@ Decrypts a ciphertext using a private key.
 </CodeGroup>
 
 ## Public API (Quickstart)
+
 ### Node Endpoints
 
 <CodeGroup>
 
 ```markdown Production
-pre.gateway.tech:443     // Primary production node
-pre-2.gateway.tech:443   // Secondary production node
+pre.gateway.tech:443 // Primary production node
+pre-2.gateway.tech:443 // Secondary production node
 ```
 
 ```markdown Testnet
-pre-testnet.gateway.tech:443     // Primary testnet node
-pre-testnet-2.gateway.tech:443   // Secondary testnet node
+pre-testnet.gateway.tech:443 // Primary testnet node
+pre-testnet-2.gateway.tech:443 // Secondary testnet node
 ```
 
 </CodeGroup>
@@ -137,7 +153,10 @@ pre-testnet-2.gateway.tech:443   // Secondary testnet node
 
 Generates a new public-private key pair for encryption.
 
-<Warning>Avoid using this gRPC endpoint in production environments to avoid <b>private key exposure</b>.</Warning>
+<Warning>
+  Avoid using this gRPC endpoint in production environments to avoid{" "}
+  <b>private key exposure</b>.
+</Warning>
 
 ```protobuf
 rpc GenerateKeyPair(Empty) returns (EncodedKeyPair);
@@ -157,7 +176,10 @@ const response = await client.GenerateKeyPair();
 
 Encrypts data using a public key.
 
-<Warning>Avoid using this gRPC endpoint in production environments to avoid <b>known-cipher vulnerabilities</b>.</Warning>
+<Warning>
+  Avoid using this gRPC endpoint in production environments to avoid{" "}
+  <b>known-cipher vulnerabilities</b>.
+</Warning>
 
 ```protobuf
 rpc Encrypt(EncryptRequest) returns (EncryptReply);
@@ -187,7 +209,10 @@ const response = await client.Encrypt({
 
 Generates a transform key for re-encryption.
 
-<Warning>Avoid using this gRPC endpoint in production environments to avoid <b>private key exposure</b>.</Warning>
+<Warning>
+  Avoid using this gRPC endpoint in production environments to avoid{" "}
+  <b>private key exposure</b>.
+</Warning>
 
 ```protobuf
 rpc GenerateTransformKey(GenerateTransformKeyRequest) returns (EncodedPayload);
@@ -235,7 +260,10 @@ const response = await client.Transform({
 
 Decrypts a ciphertext using a private key.
 
-<Warning>Avoid using this gRPC endpoint in production environments to avoid <b>private key exposure</b>.</Warning>
+<Warning>
+  Avoid using this gRPC endpoint in production environments to avoid{" "}
+  <b>private key exposure</b>.
+</Warning>
 
 ```protobuf
 rpc Decrypt(DecryptRequest) returns (EncodedPayload);
