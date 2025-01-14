@@ -137,10 +137,6 @@
       "pages": ["support"]
     },
     {
-      "group": "Developer Guides",
-      "pages": ["developer-guide/getting-started"]
-    },
-    {
       "group": "API Reference",
       "pages": [
         "developer-guide/api-reference/introduction",
